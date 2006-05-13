@@ -1,0 +1,17 @@
+Objetivo: 
+---------
+Definir plataformas de desarrollo y producción.
+
+Desarrollo:
+-----------
+Plataforma: Intel 32bits, Windows 2000 / XP
+DevEnv: Eclipse 3.1
+JDK: Java 5 Sun
+DB: MySQL 5.0.x
+WebContainer: Tomcat 5.5.17
+
+
+Producción:
+-----------
+Idem. para el software de base.
+Hard mínimo: P4 2G, 1GB ram.
