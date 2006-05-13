@@ -1,0 +1,15 @@
+Tags:
+-----
+TYYYYMMDD-SSS-dd
+T=letra fija
+YYYYMMDD=fecha
+SSS=explicación, utilizando la convención Java de separar mayus/mins
+dd=siglas del developer que hace el tag.
+
+Ejemplo: T20060707-preMergeDeQuotas-se
+Excepción: tag que se hacen justo antes de un branch (ver abajo)
+
+Branchs:
+--------
+Idem, pero comenzando con B en lugar de T.
+Siempre hacer un tag antes de un branch, siquiendo la nomenclatura recomendad por Eclipse (El tag es igual que el del branch pero con el prefijo "Root_")
