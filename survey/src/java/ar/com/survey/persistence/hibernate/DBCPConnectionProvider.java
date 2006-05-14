@@ -4,8 +4,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp.BasicDataSourceFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.connection.ConnectionProvider;
+
+
+
 
 /**
  * El provider para DBCP de hibernate 2.x no contempla todas las propiedades ni el mejor uso posible de DBCP.
@@ -26,7 +31,7 @@ import org.hibernate.connection.ConnectionProvider;
 public class DBCPConnectionProvider implements ConnectionProvider {
     //~ Instance fields ----------------------------------------------------------------------------
 
-    private ConnectionPool pool = null;
+    private BasicDataSource pool = null;
 
     //~ Methods ------------------------------------------------------------------------------------
 
@@ -35,7 +40,7 @@ public class DBCPConnectionProvider implements ConnectionProvider {
      * @return connection
      * @throws SQLException
      */
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {  
         return this.pool.getConnection();
     }
 
@@ -46,7 +51,7 @@ public class DBCPConnectionProvider implements ConnectionProvider {
     public void close() throws HibernateException {
         try {
             this.pool.close();
-        } catch (RuntimeException e) {
+        } catch (SQLException e) {
             throw new HibernateException(e);
         }
     }
@@ -56,7 +61,7 @@ public class DBCPConnectionProvider implements ConnectionProvider {
      * @throws SQLException
      */
     public void closeConnection(Connection conn) throws SQLException {
-        this.pool.closeConnection(conn);
+        conn.close();
     }
     /**
      * Configuracion de DBCP.
@@ -66,10 +71,27 @@ public class DBCPConnectionProvider implements ConnectionProvider {
      */
     public void configure(Properties props) throws HibernateException {
         try {
-            this.pool = ConnectionPoolRegistry.getPool("pool.properties");
+        	Properties prop = new Properties();
+        	prop.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("pool.properties"));
+            this.pool = (BasicDataSource) BasicDataSourceFactory.createDataSource(prop);
         } catch (Exception e) {
             throw new HibernateException(e);
         }
     }
+    /**
+     * Does this connection provider support aggressive release of JDBC
+     * connections and re-acquistion of those connections (if need be) later?
+     * <p/>
+     * This is used in conjunction with {@link org.hibernate.cfg.Environment.RELEASE_CONNECTIONS}
+     * to aggressively release JDBC connections.  However, the configured ConnectionProvider
+     * must support re-acquisition of the same underlying connection for that semantic to work.
+     * <p/>
+     * Typically, this is only true in managed environments where a container
+     * tracks connections by transaction or thread.
+     */
+	public boolean supportsAggressiveRelease() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
 

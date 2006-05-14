@@ -1,0 +1,55 @@
+<project name="survey" default="hbm2java" basedir=".">
+	<target name="hbm2java">
+		<echoproperties prefix="_"></echoproperties>
+		<!-- las 3 propiedades que siquen son necesarias si se ejecuta esto fuera de maven -->
+		<property name="maven.repo.local" value="D:/Java/.maven/repository"></property>
+		<property name="maven.src.dir" value="${basedir}/src"></property>
+		<property name="maven.build.dir" value="${basedir}/target"></property>
+		
+		<property name="javaOutput" value="${maven.build.dir}/generated/java"></property>
+		<property name="sqlOutput" value="${maven.build.dir}/generated/sql"></property>
+		
+		<taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask">
+			<classpath>
+				<pathelement path="${maven.src.dir}"/>
+				<pathelement path="${maven.build.dir}/classes"/>
+				<pathelement location="${basedir}/lib/hibernate-3.1.3.jar"/>
+				<pathelement location="${basedir}/lib/hibernate-tools-3.1.0.beta5.jar"/>
+				<pathelement location="${maven.repo.local}/freemarker/jars/freemarker-2.3.6.jar"/>
+				<pathelement location="${maven.repo.local}/commons-logging/jars/commons-logging-1.0.4.jar"/>
+				<pathelement location="${maven.repo.local}/dom4j/jars/dom4j-1.6.1.jar"/>
+				<pathelement location="${maven.repo.local}/commons-dbcp/jars/commons-dbcp-1.2.jar"/>
+				<pathelement location="${maven.repo.local}/commons-pool/jars/commons-pool-1.3.jar"/>
+				<pathelement location="${maven.repo.local}/commons-collections/jars/commons-collections-2.1.1.jar"/>
+				<pathelement location="${maven.repo.local}/mysql/jars/mysql-connector-java-3.1.12.jar"/>
+			</classpath>
+		</taskdef>
+		<mkdir dir="${javaOutput}"/>
+		<mkdir dir="${sqlOutput}"/>
+		<!--delete dir="${javaOutput}"></delete>
+		<delete dir="${sqlOutput}"></delete-->
+		
+		<hibernatetool destdir="${javaOutput}">
+			<classpath>
+				<path location="${maven.src.dir}/resources" />
+				<path location="${maven.src.dir}/java" />
+			</classpath>
+			<configuration 
+				configurationfile="${maven.src.dir}/resources/hibernate.cfg.xml" 
+				propertyfile="${maven.src.dir}/resources/hibernate.properties"/>
+			<hbm2java jdk5="true" ejb3="false">
+			</hbm2java>
+			<hbm2dao>
+			</hbm2dao>
+			<hbm2ddl destdir="${sqlOutput}"
+				format="true"
+				export="false"
+				drop="true"
+				update="false"
+				outputfilename="schema.ddl" 
+				>
+			</hbm2ddl>
+			<!--hbm2doc/-->
+		</hibernatetool>
+	</target>
+</project>

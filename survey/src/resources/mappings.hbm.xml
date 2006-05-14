@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="ar.com.survey.model">
+    <meta attribute="implement-equals">true</meta>
+
+    <class name="Survey">
+        <meta attribute="class-code">
+            private static final long serialVersionUID = 1L;
+        </meta>
+        <id name="id" type="long" access="field">
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+            <generator class="native" />
+        </id>
+        <version name="version" access="field">
+            <meta attribute="property-type">long</meta>
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+        </version>
+        <property name="name" type="string">
+            <meta attribute="use-in-equals">true</meta>
+            <meta attribute="use-in-tostring">true</meta>
+        </property>
+        <map name="quotas" lazy="true" cascade="all-delete-orphan"
+            inverse="true">
+            <key column="survey_id" not-null="true" on-delete="cascade" />
+            <map-key column="name" type="string"></map-key>
+            <one-to-many class="Quota" />
+        </map>
+        <list name="sections" cascade="all-delete-orphan" inverse="false">
+            <key column="survey_id" not-null="true" />
+            <list-index column="position" base="1" />
+            <one-to-many class="Section" />
+        </list>
+    </class>
+    <class name="Section">
+        <meta attribute="class-code">
+            private static final long serialVersionUID = 1L; public int
+            getPosition() { return this.getSurvey().getSections().indexOf(this);
+            }
+        </meta>
+        <id name="id" type="long" access="field">
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+            <generator class="native" />
+        </id>
+        <version name="version" access="field">
+            <meta attribute="property-type">long</meta>
+
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+        </version>
+        <property name="name" type="string">
+            <meta attribute="use-in-tostring">true</meta>
+        </property>
+        <property name="quotaMgmtScript" type="clob"><meta attribute="property-type">String</meta></property>
+        <property name="flowMgmtScript" type="clob"><meta attribute="property-type">String</meta></property>
+        <many-to-one name="survey" class="Survey" column="survey_id"
+            insert="false" update="false" not-null="true">
+            <meta attribute="use-in-equals">true</meta>
+            <meta attribute="use-in-tostring">true</meta>
+        </many-to-one>
+        <list name="questions" cascade="all-delete-orphan" inverse="false">
+            <key column="section_id" not-null="true" />
+            <list-index column="position" base="1" />
+            <one-to-many class="Question" />
+        </list>
+    </class>
+    <class name="Quota">
+        <meta attribute="class-code">
+            private static final long serialVersionUID = 1L;
+        </meta>
+        <id name="id" type="long" access="field">
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+            <generator class="native" />
+        </id>
+        <version name="version" access="field">
+            <meta attribute="property-type">long</meta>
+
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+        </version>
+        <property name="name" type="string">
+            <meta attribute="use-in-equals">true</meta>
+            <meta attribute="use-in-tostring">true</meta>
+        </property>
+        <property column="limit2" name="limit" type="integer">
+            <meta attribute="use-in-tostring">true</meta>
+        </property>
+        <property name="completed" type="integer">
+            <meta attribute="use-in-tostring">true</meta>
+        </property>
+        <many-to-one name="survey" class="Survey" column="survey_id"
+            insert="false" update="false" not-null="true">
+            <meta attribute="use-in-equals">true</meta>
+            <meta attribute="use-in-tostring">true</meta>
+        </many-to-one>
+    </class>
+    <class name="Question">
+        <meta attribute="class-code">
+            private static final long serialVersionUID = 1L; public int
+            getPosition() { return
+            this.getSection().getQuestions().indexOf(this); }
+        </meta>
+        <id name="id" type="long" access="field">
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+            <generator class="native" />
+        </id>
+        <version name="version" access="field">
+            <meta attribute="property-type">long</meta>
+
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+        </version>
+        <property name="title" type="string">
+            <meta attribute="use-in-tostring">true</meta>
+        </property>
+        <many-to-one name="section" class="Section" column="section_id"
+            not-null="true" insert="false" update="false">
+            <meta attribute="use-in-equals">true</meta>
+            <meta attribute="use-in-tostring">true</meta>
+        </many-to-one>
+    </class>
+    <class name="Person">
+        <meta attribute="class-code">
+            private static final long serialVersionUID = 1L;
+        </meta>
+        <id name="id" type="long" access="field">
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+            <generator class="native" />
+        </id>
+        <version name="version" access="field">
+            <meta attribute="property-type">long</meta>
+
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+        </version>
+        <property name="email" type="string">
+            <meta attribute="use-in-tostring">true</meta>
+        </property>
+        <property name="name" type="string">
+            <meta attribute="use-in-equals">true</meta>
+            <meta attribute="use-in-tostring">true</meta>
+        </property>
+    </class>
+</hibernate-mapping>
