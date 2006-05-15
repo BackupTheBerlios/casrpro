@@ -238,6 +238,12 @@
                 <war.bundle>true</war.bundle>
             </properties>
 		</dependency>
+        
+       <dependency>
+            <artifactId>servlet-api</artifactId>
+            <groupId>javax.servlet</groupId>
+            <version>2.3</version>
+        </dependency>
 
 
 	</dependencies>

@@ -43,7 +43,7 @@
 			</hbm2dao>
 			<hbm2ddl destdir="${sqlOutput}"
 				format="true"
-				export="false"
+				export="true"
 				drop="true"
 				update="false"
 				outputfilename="schema.ddl" 
