@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+                               "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+
+	<form-beans>
+		<!-- <form-bean name="productForm" type="com.aon.awg.menuadmin.forms.ProductForm"></form-bean>				-->
+	</form-beans>
+
+	<global-exceptions>
+<!--	    <exception key="java.lang.Exception" 
+	               type="java.lang.Exception" 
+	               handler="com.aon.awg.menuadmin.exceptionhandlers.MenuAdminExceptionHandler">
+	    </exception> -->
+	</global-exceptions>
+
+	<global-forwards>
+<!--        <forward name="global_dealerIdSelection" path="/dealerIdSelection.do" />                         -->
+	</global-forwards>
+
+	<!-- Action Mappings -->
+	<action-mappings>
+<!--		<action
+			path="/localLogin"
+		    type="org.springframework.web.struts.DelegatingActionProxy"
+		    parameter="method"
+		    name="localLoginForm"
+		    scope="request">
+   		    <forward name="init" path="/initAction.do?method=init" redirect="true"/>
+		</action> -->
+		
+	</action-mappings>
+
+	<message-resources parameter="struts.ApplicationResources" />
+
+<!--	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
+      <set-property property="definitions-config" value="/WEB-INF/classes/struts/tiles-defs.xml" />
+    </plug-in> -->
+    
+    <plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+      <set-property property="contextConfigLocation" value="/WEB-INF/classes/action-context.xml, /WEB-INF/classes/facade-context.xml, /WEB-INF/classes/dao-context.xml, /WEB-INF/classes/hibernate-context.xml"/>
+    </plug-in>
+</struts-config>

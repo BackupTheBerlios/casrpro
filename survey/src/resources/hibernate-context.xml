@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+ <!--
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+            <value>java:comp/env/jdbc/dsADM</value>
+		</property>
+	</bean>
+
+	<bean id="sessionFactoryParent" abstract="true" class="com.aon.awg.menuadmin.util.AonHibernateSessionFactory">
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>classpath:/com/aon/awg/menuadmin/businesslayer/mappings</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="sessionFactory" parent="sessionFactoryParent">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.DB2Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>	
+	</bean> -->
+	
+</beans>
