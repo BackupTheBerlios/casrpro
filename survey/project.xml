@@ -29,7 +29,7 @@
 		<developer>
 			<name>Claudio Petronio</name>
 			<id>cpetronio</id>
-			<email>TBD</email>
+			<email>cpetronio@gmail.com</email>
 		</developer>
 		<developer>
 			<name>Gaston Tchicourel</name>
@@ -244,6 +244,29 @@
             <groupId>javax.servlet</groupId>
             <version>2.3</version>
         </dependency>
+        
+        <!--Struts -->
+        <dependency>
+            <groupId>struts</groupId>
+            <artifactId>struts</artifactId>
+            <version>1.2.9</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+        
+        <!-- SPRING -->
+        <dependency>
+            <groupId>springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>1.2.6</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+        
 
 
 	</dependencies>
