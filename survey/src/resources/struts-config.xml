@@ -4,7 +4,7 @@
 <struts-config>
 
 	<form-beans>
-		<!-- <form-bean name="productForm" type="com.aon.awg.menuadmin.forms.ProductForm"></form-bean>				-->
+		<form-bean name="registerForm" type="ar.com.survey.web.struts.form.RegisterForm"></form-bean>
 	</form-beans>
 
 	<global-exceptions>
@@ -20,14 +20,14 @@
 
 	<!-- Action Mappings -->
 	<action-mappings>
-<!--		<action
-			path="/localLogin"
+		<action
+			path="/registerAction"
 		    type="org.springframework.web.struts.DelegatingActionProxy"
 		    parameter="method"
-		    name="localLoginForm"
+		    name="registerForm"
 		    scope="request">
-   		    <forward name="init" path="/initAction.do?method=init" redirect="true"/>
-		</action> -->
+   		    <forward name="registerForm" path="/register.jsp" redirect="true"/>
+		</action>
 		
 	</action-mappings>
 
