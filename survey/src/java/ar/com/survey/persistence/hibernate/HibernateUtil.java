@@ -1,10 +1,15 @@
 package ar.com.survey.persistence.hibernate;
 
-import org.hibernate.*;
-import org.hibernate.cfg.*;
-import org.apache.commons.logging.*;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
-import javax.naming.*;
+import org.apache.log4j.Logger;
+import org.hibernate.EmptyInterceptor;
+import org.hibernate.Interceptor;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Environment;
 
 /**
  * Basic Hibernate helper class for Hibernate configuration and startup.
@@ -41,9 +46,10 @@ import javax.naming.*;
  * @author christian@hibernate.org
  */
 public class HibernateUtil {
-
-    private static Log log = LogFactory.getLog(HibernateUtil.class);
-
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger log = Logger.getLogger(HibernateUtil.class);
     private static final String INTERCEPTOR_CLASS = "hibernate.util.interceptor_class";
 
     private static Configuration configuration;
@@ -210,6 +216,30 @@ public class HibernateUtil {
             configuration.setInterceptor(interceptor);
         } else {
             configuration.setInterceptor(EmptyInterceptor.INSTANCE);
+        }
+    }
+    public static Transaction beginTx() {
+    	return getSessionFactory().getCurrentSession().beginTransaction();
+    }
+    public static void closeTx() {
+    	getSessionFactory().getCurrentSession().getTransaction().commit();
+    }
+    public static void handleException(Logger l) {
+    	if (l == null) {
+    		l = log;
+    	}
+    	try {
+            if (getSessionFactory().getCurrentSession().getTransaction().isActive()) {
+                l.debug("Trying to rollback database transaction after exception");
+                getSessionFactory().getCurrentSession().getTransaction().rollback();
+                l.debug("Tx closed after exception");
+            }
+        } catch (Throwable rbEx) {
+            l.error("Could not rollback transaction after exception!", rbEx);
+        } finally {
+        	l.debug("Trying to close session after exception");
+        	getSessionFactory().getCurrentSession().close();
+        	l.debug("Session closed after exception");
         }
     }
 

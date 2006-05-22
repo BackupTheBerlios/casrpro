@@ -16,6 +16,7 @@ public class RegisterForm extends ActionForm {
 	private String firstName;
 	private String lastName;
 	private String state;
+	//TODO CP: no debería ser mejor un string? (SE)
 	private int postalCode;
 	private String birthDay, birthMonth, birthYear;
 	private String sex;
