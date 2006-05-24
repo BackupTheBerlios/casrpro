@@ -27,6 +27,9 @@ public class RegisterForm extends ActionForm {
 	private String firstSex, secondSex, thirdSex, forthSex, fifthSex;
 	private boolean acceptTerms;
 	
+	// Dispatch Action method property
+	private String method;
+	
 	public String getBirthDay() {
 		return birthDay;
 	}
@@ -177,6 +180,14 @@ public class RegisterForm extends ActionForm {
 	public void setAcceptTerms(boolean acceptTerms) {
 		this.acceptTerms = acceptTerms;
 	}
+	public String getMethod() {
+		return method;
+	}
+	public void setMethod(String method) {
+		this.method = method;
+	}
+	
+	
 	
 	
 	
