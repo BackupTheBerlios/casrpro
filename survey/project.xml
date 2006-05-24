@@ -316,10 +316,31 @@
                 <war.bundle>true</war.bundle>
             </properties>
         </dependency>
+	
+	<!-- Java Mail dependencies -->
+	
+	
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
+        
+           <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1</version>
+            <type>jar</type>
+            <properties>
+                <war.bundle>true</war.bundle>
+            </properties>
+        </dependency>
 
-	</dependencies>
-
-
+     </dependencies>
 
 	<build>
 
