@@ -16,16 +16,16 @@ public class RegisterForm extends ActionForm {
 	private String firstName;
 	private String lastName;
 	private String state;
-	//TODO CP: no debería ser mejor un string? (SE)
-	private int postalCode;
+	private String postalCode;
 	private String birthDay, birthMonth, birthYear;
 	private String sex;
 	private String married;
 	private String isEmployed;
 	private String educationLevel;
 	private String ocupation;
-	private int firstAge, secondAge, thirdAge, forthAge, fifthAge;
-	private String fistSex, secondSex, thirdSex, forthSex, fifithSex;
+	private String firstAge, secondAge, thirdAge, forthAge, fifthAge;
+	private String firstSex, secondSex, thirdSex, forthSex, fifthSex;
+	private boolean acceptTerms;
 	
 	public String getBirthDay() {
 		return birthDay;
@@ -63,22 +63,22 @@ public class RegisterForm extends ActionForm {
 	public void setEmailConfirm(String emailConfirm) {
 		this.emailConfirm = emailConfirm;
 	}
-	public String getFifithSex() {
-		return fifithSex;
+	public String getFifthSex() {
+		return fifthSex;
 	}
-	public void setFifithSex(String fifithSex) {
-		this.fifithSex = fifithSex;
+	public void setFifthSex(String fifithSex) {
+		this.fifthSex = fifithSex;
 	}
-	public int getFifthAge() {
+	public String getFifthAge() {
 		return fifthAge;
 	}
-	public void setFifthAge(int fifthAge) {
+	public void setFifthAge(String fifthAge) {
 		this.fifthAge = fifthAge;
 	}
-	public int getFirstAge() {
+	public String getFirstAge() {
 		return firstAge;
 	}
-	public void setFirstAge(int firstAge) {
+	public void setFirstAge(String firstAge) {
 		this.firstAge = firstAge;
 	}
 	public String getFirstName() {
@@ -87,16 +87,16 @@ public class RegisterForm extends ActionForm {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	public String getFistSex() {
-		return fistSex;
+	public String getFirstSex() {
+		return firstSex;
 	}
-	public void setFistSex(String fistSex) {
-		this.fistSex = fistSex;
+	public void setFirstSex(String fistSex) {
+		this.firstSex = fistSex;
 	}
-	public int getForthAge() {
+	public String getForthAge() {
 		return forthAge;
 	}
-	public void setForthAge(int forthAge) {
+	public void setForthAge(String forthAge) {
 		this.forthAge = forthAge;
 	}
 	public String getForthSex() {
@@ -129,16 +129,16 @@ public class RegisterForm extends ActionForm {
 	public void setOcupation(String ocupation) {
 		this.ocupation = ocupation;
 	}
-	public int getPostalCode() {
+	public String getPostalCode() {
 		return postalCode;
 	}
-	public void setPostalCode(int postalCode) {
+	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
-	public int getSecondAge() {
+	public String getSecondAge() {
 		return secondAge;
 	}
-	public void setSecondAge(int secondAge) {
+	public void setSecondAge(String secondAge) {
 		this.secondAge = secondAge;
 	}
 	public String getSecondSex() {
@@ -159,10 +159,10 @@ public class RegisterForm extends ActionForm {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public int getThirdAge() {
+	public String getThirdAge() {
 		return thirdAge;
 	}
-	public void setThirdAge(int thirdAge) {
+	public void setThirdAge(String thirdAge) {
 		this.thirdAge = thirdAge;
 	}
 	public String getThirdSex() {
@@ -170,6 +170,12 @@ public class RegisterForm extends ActionForm {
 	}
 	public void setThirdSex(String thirdSex) {
 		this.thirdSex = thirdSex;
+	}
+	public boolean isAcceptTerms() {
+		return acceptTerms;
+	}
+	public void setAcceptTerms(boolean acceptTerms) {
+		this.acceptTerms = acceptTerms;
 	}
 	
 	
