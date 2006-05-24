@@ -529,7 +529,7 @@
 </TD></TR>
 </TABLE>
                        
-
+<html:hidden property="method" value="register" />
 </html:form></P>
 
 </BODY></HTML>
