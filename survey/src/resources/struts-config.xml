@@ -26,7 +26,7 @@
 		    parameter="method"
 		    name="registerForm"
 		    scope="request">
-   		    <forward name="registerForm" path="/register.jsp" redirect="true"/>
+   		    <forward name="registerForm" path="/register.jsp"/>
 		</action>
 		
 	</action-mappings>
