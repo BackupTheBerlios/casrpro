@@ -4,67 +4,78 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="ar.com.survey.model">
     <meta attribute="implement-equals">true</meta>
-
     <class name="Survey">
         <meta attribute="class-code">
             private static final long serialVersionUID = 1L;
         </meta>
-        <id name="id" type="long" access="field">
+        <meta attribute="extends">ar.com.survey.model.SurveyAbstract</meta>
+        <id name="id" type="long" access="field" unsaved-value="0">
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
-            <generator class="native" />
+            <generator class="hilo" />
         </id>
-        <version name="version" access="field">
-            <meta attribute="property-type">long</meta>
+        <version name="version" type="integer" access="field">
+            <meta attribute="property-type">int</meta>
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
         </version>
-        <property name="name" type="string">
+
+        <property name="name" type="string" unique="false"
+            unique-key="surrogateKey">
             <meta attribute="use-in-equals">true</meta>
             <meta attribute="use-in-tostring">true</meta>
         </property>
-        <map name="quotas" lazy="true" cascade="all-delete-orphan"
-            inverse="true">
-            <key column="survey_id" not-null="true" on-delete="cascade" />
-            <map-key column="name" type="string"></map-key>
-            <one-to-many class="Quota" />
-        </map>
-        <list name="sections" cascade="all-delete-orphan" inverse="false">
+
+        <set name="quotas" cascade="all,delete-orphan" inverse="false">
             <key column="survey_id" not-null="true" />
-            <list-index column="position" base="1" />
+            <one-to-many class="Quota" />
+        </set>
+        <list name="sections" cascade="all,delete-orphan" inverse="false">
+            <key column="survey_id" not-null="true" />
+            <list-index column="position" base="0" />
             <one-to-many class="Section" />
         </list>
     </class>
     <class name="Section">
         <meta attribute="class-code">
-            private static final long serialVersionUID = 1L; public int
-            getPosition() { return this.getSurvey().getSections().indexOf(this);
-            }
+            private static final long serialVersionUID = 1L;
         </meta>
-        <id name="id" type="long" access="field">
+        <meta attribute="extends">ar.com.survey.model.SectionAbstract</meta>
+        <id name="id" type="long" access="field" unsaved-value="0">
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
-            <generator class="native" />
+            <generator class="hilo" />
+
         </id>
         <version name="version" access="field">
-            <meta attribute="property-type">long</meta>
-
+            <meta attribute="property-type">int</meta>
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
         </version>
-        <property name="name" type="string">
+        <property name="name" type="string" unique-key="surrogateKey">
             <meta attribute="use-in-tostring">true</meta>
+            <meta attribute="use-in-equals">true</meta>
         </property>
-        <property name="quotaMgmtScript" type="clob"><meta attribute="property-type">String</meta></property>
-        <property name="flowMgmtScript" type="clob"><meta attribute="property-type">String</meta></property>
+        <!--<property name="position" not-null="true">
+            <meta attribute="use-in-tostring">true</meta>
+            <meta attribute="use-in-equals">true</meta>
+            <meta attribute="property-type">int</meta>
+        </property>-->
+        <property name="quotaMgmtScript" type="clob">
+            <meta attribute="property-type">String</meta>
+        </property>
+        <property name="flowMgmtScript" type="clob">
+            <meta attribute="property-type">String</meta>
+        </property>
         <many-to-one name="survey" class="Survey" column="survey_id"
-            insert="false" update="false" not-null="true">
+            not-null="true" unique="false" unique-key="surrogateKey" insert="false" update="false">
             <meta attribute="use-in-equals">true</meta>
             <meta attribute="use-in-tostring">true</meta>
         </many-to-one>
+
         <list name="questions" cascade="all-delete-orphan" inverse="false">
             <key column="section_id" not-null="true" />
-            <list-index column="position" base="1" />
+            <list-index column="position" base="0" />
             <one-to-many class="Question" />
         </list>
     </class>
@@ -72,46 +83,52 @@
         <meta attribute="class-code">
             private static final long serialVersionUID = 1L;
         </meta>
-        <id name="id" type="long" access="field">
+        <meta attribute="extends">ar.com.survey.model.QuotaAbstract</meta>
+        <id name="id" type="long" access="field" unsaved-value="0">
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
-            <generator class="native" />
+            <generator class="hilo" />
         </id>
         <version name="version" access="field">
-            <meta attribute="property-type">long</meta>
-
+            <meta attribute="property-type">int</meta>
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
         </version>
-        <property name="name" type="string">
+        <property name="name" type="string" unique="false"
+            unique-key="surrogateKey">
             <meta attribute="use-in-equals">true</meta>
-            <meta attribute="use-in-tostring">true</meta>
-        </property>
-        <property column="limit2" name="limit" type="integer">
-            <meta attribute="use-in-tostring">true</meta>
-        </property>
-        <property name="completed" type="integer">
             <meta attribute="use-in-tostring">true</meta>
         </property>
         <many-to-one name="survey" class="Survey" column="survey_id"
-            insert="false" update="false" not-null="true">
+            insert="false" update="false" not-null="true" unique="false"
+            unique-key="surrogateKey">
             <meta attribute="use-in-equals">true</meta>
             <meta attribute="use-in-tostring">true</meta>
         </many-to-one>
+        <property column="limit2" name="limit" type="integer">
+            <meta attribute="property-type">int</meta>
+            <meta attribute="use-in-tostring">true</meta>
+        </property>
+        <property name="completed" type="integer">
+            <meta attribute="property-type">int</meta>
+            <meta attribute="use-in-tostring">true</meta>
+        </property>
     </class>
     <class name="Question">
+        <!-- TODO resolver el tema de la PK natural -->
         <meta attribute="class-code">
             private static final long serialVersionUID = 1L; public int
             getPosition() { return
             this.getSection().getQuestions().indexOf(this); }
         </meta>
-        <id name="id" type="long" access="field">
+        <meta attribute="extends">ar.com.survey.model.QuestionAbstract</meta>
+        <id name="id" type="long" access="field" unsaved-value="0">
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
-            <generator class="native" />
+            <generator class="hilo" />
         </id>
         <version name="version" access="field">
-            <meta attribute="property-type">long</meta>
+            <meta attribute="property-type">int</meta>
 
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
@@ -129,22 +146,24 @@
         <meta attribute="class-code">
             private static final long serialVersionUID = 1L;
         </meta>
-        <id name="id" type="long" access="field">
+        <meta attribute="extends">ar.com.survey.model.PersonAbstract</meta>
+        <id name="id" type="long" access="field" unsaved-value="0">
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
-            <generator class="native" />
+            <generator class="hilo" />
         </id>
         <version name="version" access="field">
-            <meta attribute="property-type">long</meta>
+            <meta attribute="property-type">int</meta>
 
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
         </version>
-        <property name="email" type="string">
+        <property name="email" type="string" unique="false"
+            unique-key="surrogateKey">
             <meta attribute="use-in-tostring">true</meta>
-        </property>
-        <property name="name" type="string">
             <meta attribute="use-in-equals">true</meta>
+        </property>
+        <property name="lastName" type="string">
             <meta attribute="use-in-tostring">true</meta>
         </property>
     </class>
