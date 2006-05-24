@@ -38,6 +38,6 @@
     </plug-in> -->
     
     <plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
-      <set-property property="contextConfigLocation" value="/WEB-INF/classes/action-context.xml, /WEB-INF/classes/facade-context.xml, /WEB-INF/classes/dao-context.xml, /WEB-INF/classes/hibernate-context.xml"/>
+      <set-property property="contextConfigLocation" value="/WEB-INF/classes/action-context.xml, /WEB-INF/classes/facade-context.xml, /WEB-INF/classes/dao-context.xml, /WEB-INF/classes/hibernate-context.xml, /WEB-INF/classes/util-context.xml"/>
     </plug-in>
 </struts-config>

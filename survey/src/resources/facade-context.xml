@@ -9,9 +9,16 @@
 	</bean>
 
 	
-	<bean id="mockMenuTypeFacade"
-		class="com.aon.awg.menuadmin.facade.mock.MockMenuTypeFacade" />
-
 	-->
+	
+	<bean id="registerFacade" 
+		class="ar.com.survey.web.facade.implementation.RegisterFacadeImp">
+		<property name="emailService">
+			<ref bean="emailService"/>
+		</property>
+		<property name="dbProps">
+			<ref bean="dbProps" />
+		</property>
+	</bean>
 
 </beans>
