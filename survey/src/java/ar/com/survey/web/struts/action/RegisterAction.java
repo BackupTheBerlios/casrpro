@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -15,6 +16,8 @@ import ar.com.survey.web.facade.IRegisterFacade;
 import ar.com.survey.web.struts.form.RegisterForm;
 
 public class RegisterAction extends DispatchAction {
+	
+	private static Logger logger = Logger.getLogger("RegisterAction.class");
 
 	private IRegisterFacade registerFacade;
 	
@@ -29,6 +32,8 @@ public class RegisterAction extends DispatchAction {
 			throws IOException, ServletException {
 			RegisterForm rf = (RegisterForm) form;
 			registerFacade.registerForm(rf);
+			System.out.println("se registro!!");
+			logger.debug("Se registro desde log!!");
 		return mapping.findForward("success");
 	}
 

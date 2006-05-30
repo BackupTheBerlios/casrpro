@@ -9,6 +9,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -73,9 +74,16 @@ public class MailServiceImpl implements IMailService {
 			message.setText(txtMessage);
 			// Send message
 			Transport.send(message);
+			log.setLevel(Level.DEBUG);
+			log.debug("Message sent to: " + to);
+			log.info("Message sent to: " + to);
+			System.out.println("message sent!");
 		}
 		catch (MessagingException me){
+			log.setLevel(Level.DEBUG);
+			System.out.println("Error al enviar mail: " + me.getMessage());
 			log.error(me.toString());
+			log.debug(me.toString());
 		}
 
 	}
