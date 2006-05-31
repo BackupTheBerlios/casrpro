@@ -142,7 +142,7 @@
             <meta attribute="use-in-tostring">true</meta>
         </many-to-one>
     </class>
-    <class name="Person">
+    <class name="Person" discriminator-value="Person" polymorphism="explicit">
         <meta attribute="class-code">
             private static final long serialVersionUID = 1L;
         </meta>
@@ -152,6 +152,7 @@
             <meta attribute="scope-get"></meta>
             <generator class="hilo" />
         </id>
+        <discriminator column="OBJECT_TYPE" type="string"></discriminator>
         <version name="version" access="field">
             <meta attribute="property-type">int</meta>
 
@@ -166,5 +167,32 @@
         <property name="lastName" type="string">
             <meta attribute="use-in-tostring">true</meta>
         </property>
+        <property name="firstName" type="string">
+            <meta attribute="use-in-tostring">true</meta>
+        </property>
+        <property name="state" type="string"/>
+        <property name="postalCode" type="string"/>
+        <property name="birthDate" type="calendar"/>
+        <property name="sex" type="string"/>
+        <property name="maritalStatus" type="string"/>
+        <property name="employed" type="boolean"/>
+        <property name="educationLevel" type="string"/>
+        <property name="ocupation" type="string"/>
+        <property name="firstAge" type="short"/>
+        <property name="secondAge" type="short"/>
+        <property name="thirdAge" type="short"/>
+        <property name="forthAge" type="short"/>
+        <property name="fifthAge" type="short"/>
+        <property name="firstSex" type="string"/>
+        <property name="secondSex" type="string"/>
+        <property name="thirdSex" type="string"/>
+        <property name="forthSex" type="string"/>
+        <property name="fifthSex" type="string"/>
+        <property name="registrationConfirmedDate" type="calendar"/> 
+        <subclass name="Registration" discriminator-value="Registration">
+           <meta attribute="extra-import">java.util.Calendar</meta>
+           <property name="registrationDate" type="calendar"/>
+           <property name="token" type="string"/>
+        </subclass>
     </class>
 </hibernate-mapping>

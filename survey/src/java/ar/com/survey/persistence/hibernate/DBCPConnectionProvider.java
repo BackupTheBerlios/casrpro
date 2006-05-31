@@ -90,7 +90,6 @@ public class DBCPConnectionProvider implements ConnectionProvider {
      * tracks connections by transaction or thread.
      */
 	public boolean supportsAggressiveRelease() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

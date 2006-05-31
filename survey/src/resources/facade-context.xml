@@ -12,7 +12,7 @@
 	-->
 	
 	<bean id="registerFacade" 
-		class="ar.com.survey.web.facade.implementation.RegisterFacadeImp">
+		class="ar.com.survey.registration.RegistrationComponent">
 		<property name="emailService">
 			<ref bean="emailService"/>
 		</property>

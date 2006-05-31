@@ -5,10 +5,10 @@ import ar.com.survey.persistence.DBTableHelper;
 import ar.com.survey.persistence.PersistenceTestCase;
 import ar.com.survey.persistence.Table;
 
-public class SurveyQuotaRelationship extends PersistenceTestCase {
+public class SurveyQuotaRelationshipTest extends PersistenceTestCase {
 
 	public static void main(String[] args) {
-		junit.textui.TestRunner.run(SurveyQuotaRelationship.class);
+		junit.textui.TestRunner.run(SurveyQuotaRelationshipTest.class);
 	}
 
 	protected void setUp() throws Exception {
