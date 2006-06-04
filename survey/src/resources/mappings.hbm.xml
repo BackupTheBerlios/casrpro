@@ -79,6 +79,41 @@
             <one-to-many class="Question" />
         </list>
     </class>
+    <class name="GenericQuestionData">
+        <meta attribute="class-code">
+            private static final long serialVersionUID = 1L;
+            public GenericQuestionData(int i, int j) {super(i,j);}
+        </meta>
+        <meta attribute="extends">ar.com.survey.model.GenericQuestionDataAbstract</meta>
+        <id name="id" type="long" access="field" unsaved-value="0">
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+            <generator class="hilo" />
+        </id>
+        <version name="version" access="field">       
+            <meta attribute="property-type">int</meta>
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+        </version>
+        <property name="encodedAxisX" type="clob">
+            <meta attribute="property-type">String</meta>
+            <meta attribute="scope-set">protected</meta>
+            <meta attribute="scope-get">protected</meta>
+        </property>
+        <property name="encodedAxisY" type="clob">
+            <meta attribute="property-type">String</meta>
+            <meta attribute="scope-set">protected</meta>
+            <meta attribute="scope-get">protected</meta>
+        </property>
+        <property name="encodedField" type="clob">
+            <meta attribute="property-type">String</meta>
+            <meta attribute="scope-set">protected</meta>
+            <meta attribute="scope-get">protected</meta>
+        </property>
+        <property name="title" type="string">
+            <meta attribute="property-type">String</meta>
+        </property>
+    </class>
     <class name="Quota">
         <meta attribute="class-code">
             private static final long serialVersionUID = 1L;
@@ -114,9 +149,8 @@
             <meta attribute="use-in-tostring">true</meta>
         </property>
     </class>
-    <class name="Question">
-        <!-- TODO resolver el tema de la PK natural -->
-        <meta attribute="class-code">
+    <class name="Question" discriminator-value="Question">
+        <meta attribute="class-code" inherit="false">
             private static final long serialVersionUID = 1L; public int
             getPosition() { return
             this.getSection().getQuestions().indexOf(this); }
@@ -127,20 +161,36 @@
             <meta attribute="scope-get"></meta>
             <generator class="hilo" />
         </id>
+        <discriminator column="OBJECT_TYPE" type="string"></discriminator>
         <version name="version" access="field">
             <meta attribute="property-type">int</meta>
 
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
         </version>
-        <property name="title" type="string">
-            <meta attribute="use-in-tostring">true</meta>
-        </property>
         <many-to-one name="section" class="Section" column="section_id"
             not-null="true" insert="false" update="false">
             <meta attribute="use-in-equals">true</meta>
             <meta attribute="use-in-tostring">true</meta>
         </many-to-one>
+        <subclass name="ar.com.survey.questions.single.TextAreaQuestion" discriminator-value="TextAreaQuestion">       
+        </subclass>
+        <subclass name="ar.com.survey.questions.single.StringQuestion" discriminator-value="StringQuestion">
+        </subclass>
+        <subclass name="ar.com.survey.questions.single.NumberQuestion" discriminator-value="NumberQuestion">
+        </subclass>
+        <subclass name="ar.com.survey.questions.list.StringListQuestion" discriminator-value="StringListQuestion">
+        </subclass>
+        <subclass name="ar.com.survey.questions.list.CheckBoxListQuestion" discriminator-value="CheckBoxListQuestion">
+        </subclass>
+        <subclass name="ar.com.survey.questions.list.RadioButtonListQuestion" discriminator-value="RadioButtonListQuestion">
+        </subclass>
+        <subclass name="ar.com.survey.questions.list.NumberListQuestion" discriminator-value="NumberListQuestion">
+        </subclass>
+        <subclass name="ar.com.survey.questions.matrix.RadioMatrixQuestion" discriminator-value="RadioMatrixQuestion">
+        </subclass>
+        <subclass name="ar.com.survey.questions.matrix.CheckBoxMatrixQuestion" discriminator-value="CheckBoxMatrixQuestion">
+        </subclass> 
     </class>
     <class name="Person" discriminator-value="Person" polymorphism="explicit">
         <meta attribute="class-code">
