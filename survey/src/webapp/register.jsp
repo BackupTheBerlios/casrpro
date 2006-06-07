@@ -18,7 +18,7 @@
 
 <TABLE WIDTH=85% CELLPADDING=0 BORDER=0>
   <tr>
-	<TD><img src="Images/logo.jpg"></TD>
+	<TD></TD>
   </TR>
 </TABLE>
 
@@ -61,21 +61,18 @@
 <TABLE cellSpacing=0 cellPadding=0 width="85%" border=0>
 <TR>
 	<TD vAlign=top class=b width=12 height=18>
-	<IMG height=18 src="files/t_l_on.gif" width=12></TD>
- 	<TD vAlign=top class=t_nolinkon align=middle 
-	background=files/t_b_on.gif height=18>Registración</TD>
-	<TD><IMG height=18 src="files/t_r_onB.gif" width=20></TD>
-	<TD class=b_s width="100%" background=files/t_bg.gif>
-	<IMG height=1 src="files/1x1.gif" width=1></TD>
+	</TD>
+ 	<TD vAlign=top class=t_nolinkon align=middle>Registración</TD>
+	<TD></TD>
+	<TD class=b_s width="100%">
+	</TD>
 
 </TR>
 </TABLE>
  
 <TABLE cellSpacing=0 cellPadding=0  width="85%" border=0>
 	<TBODY><TR>
-		<TD class=t_head height=5><IMG height=1 
-		src="files/1x1.gif" 
-		width=1></TD>
+		<TD class=t_head height=5></TD>
 	</TR></TBODY>
 </TABLE>
 
@@ -101,16 +98,14 @@
 
 <!-- section separator -->
  <TR>
-	<TD class=t_div align=middle height=20 width=25>
-	<IMG height=5 src="files/F_bul.gif" width=3></TD>
+	<TD class=t_div align=middle height=20 width=25></TD>
 	<TD class=t_div><SPAN class=bb>Email Address</SPAN></TD>
 	<TD class=t_div>&nbsp;</TD>
  </TR>
  <TR>
-	<TD align=middle height=10>
-	<IMG height=1 src="files/1x1.gif" width=1></TD>
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>	
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>
+	<TD align=middle height=10></TD>
+	<TD class=bb></TD>	
+	<TD class=bb></TD>
  </TR>
 <!-- end section separator -->
 
@@ -125,21 +120,21 @@
 <!-- NAME & ADDRESS --><!-- section separator -->
  <TR>
 	<TD align=middle height=10>
-	<IMG height=1 src="files/1x1.gif" width=1></TD>
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>	
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>
+	</TD>
+	<TD class=bb></TD>	
+	<TD class=bb></TD>
  </TR>
  <TR>
 	<TD class=t_div align=middle height=20>
-	<IMG height=5 src="files/F_bul.gif" width=3></TD>
+	</TD>
 	<TD class=t_div><SPAN class=bb>Nombre y Domicilio</SPAN></TD>
 	<TD class=t_div>&nbsp;</TD>
  </TR>
  <TR>
 	<TD align=middle height=10>
-	<IMG height=1 src="files/1x1.gif" width=1></TD>
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>	
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>
+	</TD>
+	<TD class=bb></TD>	
+	<TD class=bb></TD>
  </TR>
 <!-- end section separator -->
 
@@ -190,21 +185,21 @@
 <!-- section separator -->
  <TR>
 	<TD align=middle height=10>
-	<IMG height=1 src="files/1x1.gif" width=1></TD>
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>	
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>
+	</TD>
+	<TD class=bb></TD>	
+	<TD class=bb></TD>
  </TR>
  <TR>
 	<TD class=t_div align=middle height=20>
-	<IMG height=5 src="files/F_bul.gif" width=3></TD>
+	</TD>
 	<TD class=t_div><SPAN class=bb>Datos Personales</SPAN></TD>
 	<TD class=t_div>&nbsp;</TD>
  </TR>
  <TR>
 	<TD align=middle height=10>
-	<IMG height=1 src="files/1x1.gif" width=1></TD>
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>	
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>
+	</TD>
+	<TD class=bb></TD>	
+	<TD class=bb></TD>
  </TR>
 <!-- end section separator -->
 
@@ -373,7 +368,7 @@
   </TD></TR>
   <TR><TD align=middle height=10>&nbsp;</TD>
     <TD class=b height=30>Esta empleado?</TD>
-    <TD><html:select property="isEmployed"> 
+    <TD><html:select property="employmentType"> 
 	<html:option value="">seleccione uno</html:option>
 	<html:option value="1">Full time</html:option>
 	<html:option value="2">Part time</html:option>
@@ -410,21 +405,21 @@
 <!-- section separator -->
  <TR>
 	<TD align=middle height=10>
-	<IMG height=1 src="files/1x1.gif" width=1></TD>
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>	
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>
+	</TD>
+	<TD class=bb></TD>	
+	<TD class=bb></TD>
  </TR>
  <TR>
 	<TD class=t_div align=middle height=20>
-	<IMG height=5 src="files/F_bul.gif" width=3></TD>
+	</TD>
 	<TD class=t_div><SPAN class=bb>Datos del Grupo Familiar</SPAN></TD>
 	<TD class=t_div>&nbsp;</TD>
  </TR>
  <TR>
 	<TD align=middle height=10>
-	<IMG height=1 src="files/1x1.gif" width=1></TD>
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>	
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>
+	</TD>
+	<TD class=bb></TD>	
+	<TD class=bb></TD>
  </TR>
 <!-- section separator -->
 
@@ -484,21 +479,21 @@
 <!-- section separator -->
  <TR>
 	<TD align=middle height=10>
-	<IMG height=1 src="files/1x1.gif" width=1></TD>
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>	
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>
+	</TD>
+	<TD class=bb></TD>	
+	<TD class=bb></TD>
  </TR>
  <TR>
 	<TD class=t_div align=middle height=20>
-	<IMG height=5 src="files/F_bul.gif" width=3></TD>
+	</TD>
 	<TD class=t_div><SPAN class=bb>Terminos y Condiciones</SPAN></TD>
 	<TD class=t_div>&nbsp;</TD>
  </TR>
  <TR>
 	<TD align=middle height=10>
-	<IMG height=1 src="files/1x1.gif" width=1></TD>
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>	
-	<TD class=bb><IMG height=1 src="files/1x1.gif" width=1></TD>
+	</TD>
+	<TD class=bb></TD>	
+	<TD class=bb></TD>
  </TR>
 <!-- section separator -->
 

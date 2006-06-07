@@ -19,8 +19,8 @@ public class RegisterForm extends ActionForm {
 	private String postalCode;
 	private String birthDay, birthMonth, birthYear;
 	private String sex;
-	private String married;
-	private String isEmployed;
+	private String maritalStatus;
+	private String employmentType;
 	private String educationLevel;
 	private String ocupation;
 	private String firstAge, secondAge, thirdAge, forthAge, fifthAge;
@@ -108,11 +108,11 @@ public class RegisterForm extends ActionForm {
 	public void setForthSex(String forthSex) {
 		this.forthSex = forthSex;
 	}
-	public String getIsEmployed() {
-		return isEmployed;
+	public String getEmploymentType() {
+		return employmentType;
 	}
-	public void setIsEmployed(String isEmployed) {
-		this.isEmployed = isEmployed;
+	public void setEmploymentType(String isEmployed) {
+		this.employmentType = isEmployed;
 	}
 	public String getLastName() {
 		return lastName;
@@ -120,11 +120,11 @@ public class RegisterForm extends ActionForm {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getMarried() {
-		return married;
+	public String getMarritalStatus() {
+		return maritalStatus;
 	}
-	public void setMarried(String married) {
-		this.married = married;
+	public void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
 	}
 	public String getOcupation() {
 		return ocupation;

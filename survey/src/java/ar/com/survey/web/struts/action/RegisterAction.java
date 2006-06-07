@@ -16,6 +16,8 @@ import ar.com.survey.model.Registration;
 import ar.com.survey.registration.IRegistrationComponent;
 import ar.com.survey.registration.PersonExistsException;
 import ar.com.survey.registration.RegistrationExistsException;
+import ar.com.survey.web.component.RegistrationComponent;
+import ar.com.survey.web.struts.form.RegisterForm;
 
 public class RegisterAction extends DispatchAction {
 
@@ -40,12 +42,11 @@ public class RegisterAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-		Registration registration = new Registration();
-		// TODO Claudio: acá faltaría ahora entonces el mapping entre el form
-		// (view layer) y el bean (bussines layer)
-
+		RegisterForm rfm = (RegisterForm) form;
+		Registration registration = new RegistrationComponent().getRegistrationFromForm(rfm);
+		
 		try {
-			this.registerFacade.register(registration);
+			registerFacade.register(registration);
 		} catch (RegistrationExistsException e) {
 			// TODO Claudio forward al error con el msg correspondiente, le
 			// damos la opcion de hacer un resend de la notificación?..
