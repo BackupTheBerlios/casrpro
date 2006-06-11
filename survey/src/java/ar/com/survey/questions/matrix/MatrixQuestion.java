@@ -1,53 +1,23 @@
 package ar.com.survey.questions.matrix;
 
-import ar.com.survey.model.GenericQuestionData;
+import java.util.List;
+
 import ar.com.survey.model.Question;
-import ar.com.survey.questions.fields.Field;
 
 abstract class MatrixQuestion extends Question{
 
-	protected MatrixQuestion(int x, int y) {
-		this.genericQuestion = new GenericQuestionData(x,y);
+	protected MatrixQuestion() {
 	}
-
-	public String[] getAxisNamesX() {
-		return genericQuestion.getAxisNamesX();
+	final public List<String> getItems() { 
+		return super.getRowTitles();
 	}
-
-	public String getAxisNamesX(int i) {
-		return genericQuestion.getAxisNamesX(i);
+	final public void setItems(List<String> s) {
+		super.setRowTitles(s);
 	}
-
-	public String[] getAxisNamesY() {
-		return genericQuestion.getAxisNamesY();
+	final public List<String> getColumnsTitles() {
+		return super.getColumnTitles();
 	}
-
-	public String getAxisNamesY(int i) {
-		return genericQuestion.getAxisNamesY(i);
+	final public void setColumnsTitles(List<String> s) {
+		super.setColumnTitles(s);
 	}
-
-	protected Field getField(int x, int y) {
-		return genericQuestion.getField(x, y);
-	}
-	protected void setField(int x, int y, Field f) {
-		genericQuestion.setField(x,y,f);
-	}
-
-	public String getTitle() {
-		return genericQuestion.getTitle();
-	}
-
-	public void setAxisNamesX(String[] axisNamesX) {
-		genericQuestion.setAxisNamesX(axisNamesX);
-	}
-
-	public void setAxisNamesY(String[] axisNamesY) {
-		genericQuestion.setAxisNamesY(axisNamesY);
-	}
-
-	public void setTitle(String title) {
-		genericQuestion.setTitle(title);
-	}
-	
-	
 }

@@ -1,6 +1,6 @@
 package ar.com.survey.questions.list;
 
-import ar.com.survey.questions.fields.CheckBoxField;
+import ar.com.survey.questions.fields.BooleanField;
 
 
 public class CheckBoxListQuestion extends ListQuestion {
@@ -10,24 +10,15 @@ public class CheckBoxListQuestion extends ListQuestion {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public CheckBoxListQuestion(int totalItems) {
-		super(totalItems);
+	public CheckBoxListQuestion() {
 	}
-	private CheckBoxListQuestion() {
-		super(0);
-	}
+
 	@Override
-	public CheckBoxField getField(int y) {
-		return (CheckBoxField) super.getField(y);
+	public BooleanField getField(int y) {
+		return (BooleanField) super.getField(y);
 	}
 	
 	public boolean getBooleanField(int y) {
-		return ((CheckBoxField) super.getField(y)).isSelected();
+		return ((BooleanField) super.getField(y)).isSelected();
 	}
-
-	public void setField(int y, boolean b) {
-		super.setField(y, new CheckBoxField(b));
-	}
-	
-	
 }

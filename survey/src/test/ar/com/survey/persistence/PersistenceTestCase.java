@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import ar.com.survey.TestUtils;
 import ar.com.survey.model.PersonDAO;
 import ar.com.survey.model.QuestionDAO;
 import ar.com.survey.model.QuotaDAO;
@@ -22,16 +23,7 @@ public class PersistenceTestCase extends TestCase {
 	protected SectionDAO sectionDAO = new SectionDAO();
 	protected PersonDAO personDAO = new PersonDAO();
 	
-	private final static String testPrefix;
 	
-	static {
-		StringBuilder sb = new StringBuilder("t_");
-		for (int i = 0; i < 5; i++) {
-			sb.append((char) (Math.random() * 26 + 'a'));
-		}
-		sb.append('_');
-		testPrefix = sb.toString();
-	}
 	
 	/** This is usefull to "decorate" any string used in natural-id properties.
 	 * This makes possible to repeat persistence tests without needing to clean the DB
@@ -40,7 +32,7 @@ public class PersistenceTestCase extends TestCase {
 	 * @return
 	 */
 	protected static final String prefix(final String s) {
-		return testPrefix+s;		
+		return TestUtils.prefix(s);
 	}
 	
 	protected final Session getSession() {

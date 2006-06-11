@@ -61,10 +61,10 @@
             <meta attribute="use-in-equals">true</meta>
             <meta attribute="property-type">int</meta>
         </property>-->
-        <property name="quotaMgmtScript" type="clob">
+        <property name="quotaMgmtScript" type="text">
             <meta attribute="property-type">String</meta>
         </property>
-        <property name="flowMgmtScript" type="clob">
+        <property name="flowMgmtScript" type="text">
             <meta attribute="property-type">String</meta>
         </property>
         <many-to-one name="survey" class="Survey" column="survey_id"
@@ -79,7 +79,7 @@
             <one-to-many class="Question" />
         </list>
     </class>
-    <class name="GenericQuestionData">
+    <!-- class name="GenericQuestionData">
         <meta attribute="class-code">
             private static final long serialVersionUID = 1L;
             public GenericQuestionData(int i, int j) {super(i,j);}
@@ -95,17 +95,17 @@
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
         </version>
-        <property name="encodedAxisX" type="clob">
+        <property name="encodedAxisX" type="text">
             <meta attribute="property-type">String</meta>
             <meta attribute="scope-set">protected</meta>
             <meta attribute="scope-get">protected</meta>
         </property>
-        <property name="encodedAxisY" type="clob">
+        <property name="encodedAxisY" type="text">
             <meta attribute="property-type">String</meta>
             <meta attribute="scope-set">protected</meta>
             <meta attribute="scope-get">protected</meta>
         </property>
-        <property name="encodedField" type="clob">
+        <property name="encodedField" type="text">
             <meta attribute="property-type">String</meta>
             <meta attribute="scope-set">protected</meta>
             <meta attribute="scope-get">protected</meta>
@@ -113,7 +113,7 @@
         <property name="title" type="string">
             <meta attribute="property-type">String</meta>
         </property>
-    </class>
+    </class-->
     <class name="Quota">
         <meta attribute="class-code">
             private static final long serialVersionUID = 1L;
@@ -151,9 +151,7 @@
     </class>
     <class name="Question" discriminator-value="Question">
         <meta attribute="class-code" inherit="false">
-            private static final long serialVersionUID = 1L; public int
-            getPosition() { return
-            this.getSection().getQuestions().indexOf(this); }
+            private static final long serialVersionUID = 1L;
         </meta>
         <meta attribute="extends">ar.com.survey.model.QuestionAbstract</meta>
         <id name="id" type="long" access="field" unsaved-value="0">
@@ -161,36 +159,87 @@
             <meta attribute="scope-get"></meta>
             <generator class="hilo" />
         </id>
-        <discriminator column="OBJECT_TYPE" type="string"></discriminator>
+        <discriminator column="object_type" type="string"></discriminator>
         <version name="version" access="field">
             <meta attribute="property-type">int</meta>
-
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
         </version>
+        <property name="title" type="string"></property>
+        <property name="description" type="string"></property>
+        <!--property name="columnCount" type="int"></property-->
+        <!--property name="rowCount" type="int"></property-->
+        <list name="columnTitles" cascade="all-delete-orphan" inverse="false" table="columnTitles">
+            <meta attribute="scope-set">protected final</meta>
+            <meta attribute="scope-get">protected final</meta>
+            <key column="question_id" not-null="true" />
+            <list-index column="position" base="0" />
+            <element type="string" column="title"/>
+        </list>
+        <list name="rowTitles" cascade="all-delete-orphan" inverse="false" table="rowTitles">
+            <meta attribute="scope-set">protected final</meta>
+            <meta attribute="scope-get">protected final</meta>
+            <key column="question_id" not-null="true" />
+            <list-index column="position" base="0" />
+            <element type="string" column="title"/>
+        </list>
+        <bag name="fields" cascade="all-delete-orphan" inverse="false">
+            <meta attribute="scope-set">protected final</meta>
+            <meta attribute="scope-get">protected final</meta>
+            <key column="question_id" not-null="true" />
+            <!--list-index column="position" base="0" /-->
+            <one-to-many class="ar.com.survey.questions.fields.Field" />
+        </bag>
         <many-to-one name="section" class="Section" column="section_id"
             not-null="true" insert="false" update="false">
             <meta attribute="use-in-equals">true</meta>
             <meta attribute="use-in-tostring">true</meta>
         </many-to-one>
-        <subclass name="ar.com.survey.questions.single.TextAreaQuestion" discriminator-value="TextAreaQuestion">       
+        <subclass name="ar.com.survey.questions.single.SingleFieldQuestion" discriminator-value="SingleFieldQuestion">                   
+            <subclass name="ar.com.survey.questions.single.StringQuestion" discriminator-value="StringQuestion">
+                <subclass name="ar.com.survey.questions.single.TextAreaQuestion" discriminator-value="TextAreaQuestion">       
+                </subclass>
+            </subclass>
+            <subclass name="ar.com.survey.questions.single.NumberQuestion" discriminator-value="NumberQuestion">
+            </subclass>        
         </subclass>
-        <subclass name="ar.com.survey.questions.single.StringQuestion" discriminator-value="StringQuestion">
+        <subclass name="ar.com.survey.questions.list.ListQuestion" discriminator-value="ListQuestion">
+            <subclass name="ar.com.survey.questions.list.StringListQuestion" discriminator-value="StringListQuestion">
+            </subclass>
+            <subclass name="ar.com.survey.questions.list.CheckBoxListQuestion" discriminator-value="CheckBoxListQuestion">
+            </subclass>
+            <subclass name="ar.com.survey.questions.list.RadioButtonListQuestion" discriminator-value="RadioButtonListQuestion">
+            </subclass>
+            <subclass name="ar.com.survey.questions.list.NumberListQuestion" discriminator-value="NumberListQuestion">
+            </subclass>
         </subclass>
-        <subclass name="ar.com.survey.questions.single.NumberQuestion" discriminator-value="NumberQuestion">
+        <subclass name="ar.com.survey.questions.matrix.MatrixQuestion" discriminator-value="MatrixQuestion">        
+            <subclass name="ar.com.survey.questions.matrix.RadioMatrixQuestion" discriminator-value="RadioMatrixQuestion">
+            </subclass>
+            <subclass name="ar.com.survey.questions.matrix.CheckBoxMatrixQuestion" discriminator-value="CheckBoxMatrixQuestion">
+            </subclass> 
         </subclass>
-        <subclass name="ar.com.survey.questions.list.StringListQuestion" discriminator-value="StringListQuestion">
+    </class>
+    <class name="ar.com.survey.questions.fields.Field" discriminator-value="Field">
+        <!--<meta attribute="extends">ar.com.survey.questions.fields.Field</meta>-->
+        <id name="id" type="long" access="field" unsaved-value="0">
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+            <generator class="hilo" />
+        </id>
+        <discriminator column="object_type" type="string"></discriminator>
+        <property name="xpos" type="int"></property>
+        <property name="ypos" type="int"></property>
+        
+        <subclass name="ar.com.survey.questions.fields.NumberField" discriminator-value="NumberField">
+            <property name="number" type="int"/>     
         </subclass>
-        <subclass name="ar.com.survey.questions.list.CheckBoxListQuestion" discriminator-value="CheckBoxListQuestion">
+        <subclass name="ar.com.survey.questions.fields.StringField" discriminator-value="StringField">
+            <property name="string" type="text"/>
         </subclass>
-        <subclass name="ar.com.survey.questions.list.RadioButtonListQuestion" discriminator-value="RadioButtonListQuestion">
+        <subclass name="ar.com.survey.questions.fields.BooleanField" discriminator-value="RadioField">
+            <property name="selected" type="boolean"/>
         </subclass>
-        <subclass name="ar.com.survey.questions.list.NumberListQuestion" discriminator-value="NumberListQuestion">
-        </subclass>
-        <subclass name="ar.com.survey.questions.matrix.RadioMatrixQuestion" discriminator-value="RadioMatrixQuestion">
-        </subclass>
-        <subclass name="ar.com.survey.questions.matrix.CheckBoxMatrixQuestion" discriminator-value="CheckBoxMatrixQuestion">
-        </subclass> 
     </class>
     <class name="Person" discriminator-value="Person" polymorphism="explicit">
         <meta attribute="class-code">

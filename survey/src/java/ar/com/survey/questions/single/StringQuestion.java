@@ -18,13 +18,7 @@ public class StringQuestion extends SingleFieldQuestion {
 		return (StringField) super.getField();
 	}
 	
-	public String getStringField(int y) {
+	public String getStringField() {
 		return ((StringField) super.getField()).getString();
 	}
-
-	public void setField(String b) {
-		super.setField(new StringField(b));
-	}
-	
-	
 }

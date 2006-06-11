@@ -18,13 +18,7 @@ public class NumberQuestion extends SingleFieldQuestion {
 		return (NumberField) super.getField();
 	}
 	
-	public int getNumberField(int y) {
-		return ((NumberField) super.getField()).getN();
+	public int getNumberField() {
+		return ((NumberField) super.getField()).getNumber();
 	}
-
-	public void setField(int b) {
-		super.setField(new NumberField(b));
-	}
-	
-	
 }

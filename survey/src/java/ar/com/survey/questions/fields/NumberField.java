@@ -2,22 +2,22 @@ package ar.com.survey.questions.fields;
 
 public class NumberField extends Field{
 
-	public int n;
+	public int number;
 	public NumberField(int v) {
-		this.n = v;
+		this.number = v;
 	}
 
 	@Override
 	public String getValue() {
-		return ""+n;
+		return ""+number;
 	}
 
-	public int getN() {
-		return n;
+	public int getNumber() {
+		return number;
 	}
 
-	public void setN(int n) {
-		this.n = n;
+	public void setNumber(int n) {
+		this.number = n;
 	}
 
 }

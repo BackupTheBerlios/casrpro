@@ -55,7 +55,11 @@
 			</hbm2ddl>
 			<!--hbm2doc/-->
 		</hibernatetool>
-		<delete dir="${javaOutput}/ar/com/survey/questions">
+		<delete>
+			<fileset dir="${javaOutput}/ar/com/survey/questions" defaultexcludes="true">
+				<!--exclude name="**/Field.java"/-->
+	            <include name="**/*"/>			  
+			</fileset>
 		</delete>
 	</target>
 </project>

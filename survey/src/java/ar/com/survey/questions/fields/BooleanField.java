@@ -1,9 +1,9 @@
 package ar.com.survey.questions.fields;
 
-public class RadioField extends Field {
+public class BooleanField extends Field {
 
 	boolean selected;
-	public RadioField(boolean s) {
+	public BooleanField(boolean s) {
 		this.selected = s;
 	}
 	public boolean isSelected() {
