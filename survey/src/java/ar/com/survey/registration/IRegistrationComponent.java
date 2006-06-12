@@ -1,7 +1,7 @@
 package ar.com.survey.registration;
 
-import ar.com.survey.model.Registration;
+import ar.com.survey.model.Person;
 
 public interface IRegistrationComponent {
-	void register(Registration r) throws RegistrationExistsException, PersonExistsException;
+	void register(Person r) throws RegistrationExistsException, PersonExistsException;
 }

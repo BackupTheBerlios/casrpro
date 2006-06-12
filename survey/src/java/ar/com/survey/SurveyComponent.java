@@ -8,13 +8,8 @@ public class SurveyComponent {
 		super();
 	}
 	
-	/** Given a partially ansered questionnaire, calculates the next section that should be posted
-	 * in the view, according Quota and Flow scripts.
-	 * @param s
-	 * @param currentSection
-	 * @return
-	 */
-	public Section getNextSection(Survey s, int currentSection) {
-		return null;
-	}
+
+//	public FillingSurvey initFilling(Survey s, Person p) {
+//		return null;
+//	}
 }

@@ -41,8 +41,14 @@ public abstract class QuestionAbstract implements Serializable {
     abstract protected List<String> getRowTitles();   
     abstract protected void setRowTitles(List<String> rowTitles);
 
-    abstract protected Collection<Field> getFields();   
-    abstract protected void setFields(Collection<Field> fields);
+    private Collection<Field> fields;
+    
+    protected Collection<Field> getFields() {
+    	return this.fields;   
+    }
+    protected void setFields(Collection<Field> fields) {
+    	this.fields = fields;
+    }
     
 
 

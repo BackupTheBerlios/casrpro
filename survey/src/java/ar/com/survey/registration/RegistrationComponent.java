@@ -2,9 +2,8 @@ package ar.com.survey.registration;
 
 import java.util.Calendar;
 
+import ar.com.survey.model.Person;
 import ar.com.survey.model.PersonDAO;
-import ar.com.survey.model.Registration;
-import ar.com.survey.model.RegistrationDAO;
 import ar.com.survey.util.Base64;
 import ar.com.survey.util.IDbProps;
 import ar.com.survey.util.IMailService;
@@ -16,19 +15,18 @@ public class RegistrationComponent implements IRegistrationComponent {
 	private IMailService emailService;
 	private IDbProps dbProps;
 
-	public void register(Registration r) throws RegistrationExistsException, PersonExistsException {
+	public void register(Person r) throws RegistrationExistsException, PersonExistsException {
 		PersonDAO personDAO = new PersonDAO();
-		RegistrationDAO registrationDAO = new RegistrationDAO();
 		
-		if (personDAO.findBySurrogateKey(r) != null) throw new PersonExistsException();
-		if (registrationDAO.findBySurrogateKey(r) != null) throw new RegistrationExistsException();
+//		if (personDAO.findBySurrogateKey(r) != null) throw new PersonExistsException();
+//		if (registrationDAO.findBySurrogateKey(r) != null) throw new RegistrationExistsException();
 		String token = generateToken(r);
 		r.setRegistrationDate(Calendar.getInstance());
 		r.setToken(token);
-		registrationDAO.createOrUpdate(r);
+		personDAO.createOrUpdate(r);
 		sendNotification(r);		
 	}
-	private void sendNotification(Registration r) {
+	private void sendNotification(Person r) {
 		String emailText = dbProps.getValue("EmailText");
 		emailText = emailText.replaceFirst("$link",dbProps.getValue("Url")+"?token="+r.getToken());
 		emailService.setEmailReceiver(r.getEmail());
@@ -39,7 +37,7 @@ public class RegistrationComponent implements IRegistrationComponent {
 		emailService.sendEmail();
 	}
 
-	private String generateToken(Registration r) {
+	private String generateToken(Person r) {
 		//String urlToken = dbProps.getValue("Url");
 		
 		StringBuilder token = new StringBuilder();

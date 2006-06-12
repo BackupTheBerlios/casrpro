@@ -30,6 +30,10 @@
             <key column="survey_id" not-null="true" />
             <one-to-many class="Quota" />
         </set>
+        <bag name="filledSurveys2" cascade="all,delete-orphan" inverse="false">
+            <key column="survey_id" not-null="true" />
+            <one-to-many class="FilledSurvey" />
+        </bag>
         <list name="sections" cascade="all,delete-orphan" inverse="false">
             <key column="survey_id" not-null="true" />
             <list-index column="position" base="0" />
@@ -79,41 +83,6 @@
             <one-to-many class="Question" />
         </list>
     </class>
-    <!-- class name="GenericQuestionData">
-        <meta attribute="class-code">
-            private static final long serialVersionUID = 1L;
-            public GenericQuestionData(int i, int j) {super(i,j);}
-        </meta>
-        <meta attribute="extends">ar.com.survey.model.GenericQuestionDataAbstract</meta>
-        <id name="id" type="long" access="field" unsaved-value="0">
-            <meta attribute="scope-set"></meta>
-            <meta attribute="scope-get"></meta>
-            <generator class="hilo" />
-        </id>
-        <version name="version" access="field">       
-            <meta attribute="property-type">int</meta>
-            <meta attribute="scope-set"></meta>
-            <meta attribute="scope-get"></meta>
-        </version>
-        <property name="encodedAxisX" type="text">
-            <meta attribute="property-type">String</meta>
-            <meta attribute="scope-set">protected</meta>
-            <meta attribute="scope-get">protected</meta>
-        </property>
-        <property name="encodedAxisY" type="text">
-            <meta attribute="property-type">String</meta>
-            <meta attribute="scope-set">protected</meta>
-            <meta attribute="scope-get">protected</meta>
-        </property>
-        <property name="encodedField" type="text">
-            <meta attribute="property-type">String</meta>
-            <meta attribute="scope-set">protected</meta>
-            <meta attribute="scope-get">protected</meta>
-        </property>
-        <property name="title" type="string">
-            <meta attribute="property-type">String</meta>
-        </property>
-    </class-->
     <class name="Quota">
         <meta attribute="class-code">
             private static final long serialVersionUID = 1L;
@@ -153,6 +122,7 @@
         <meta attribute="class-code" inherit="false">
             private static final long serialVersionUID = 1L;
         </meta>
+        <meta attribute="scope-class">public abstract</meta>
         <meta attribute="extends">ar.com.survey.model.QuestionAbstract</meta>
         <id name="id" type="long" access="field" unsaved-value="0">
             <meta attribute="scope-set"></meta>
@@ -183,13 +153,6 @@
             <list-index column="position" base="0" />
             <element type="string" column="title"/>
         </list>
-        <bag name="fields" cascade="all-delete-orphan" inverse="false">
-            <meta attribute="scope-set">protected final</meta>
-            <meta attribute="scope-get">protected final</meta>
-            <key column="question_id" not-null="true" />
-            <!--list-index column="position" base="0" /-->
-            <one-to-many class="ar.com.survey.questions.fields.Field" />
-        </bag>
         <many-to-one name="section" class="Section" column="section_id"
             not-null="true" insert="false" update="false">
             <meta attribute="use-in-equals">true</meta>
@@ -221,15 +184,19 @@
         </subclass>
     </class>
     <class name="ar.com.survey.questions.fields.Field" discriminator-value="Field">
-        <!--<meta attribute="extends">ar.com.survey.questions.fields.Field</meta>-->
+        <meta attribute="scope-class">public abstract</meta>
+        <meta attribute="extends">ar.com.survey.questions.fields.AbstractField</meta>
         <id name="id" type="long" access="field" unsaved-value="0">
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
             <generator class="hilo" />
         </id>
         <discriminator column="object_type" type="string"></discriminator>
-        <property name="xpos" type="int"></property>
+        <!--TODO y los orphans ?? -->
+        <many-to-one name="question" class="Question" column="survey_id" cascade="all">
+        </many-to-one>
         <property name="ypos" type="int"></property>
+        <property name="xpos" type="int"></property>
         
         <subclass name="ar.com.survey.questions.fields.NumberField" discriminator-value="NumberField">
             <property name="number" type="int"/>     
@@ -241,7 +208,7 @@
             <property name="selected" type="boolean"/>
         </subclass>
     </class>
-    <class name="Person" discriminator-value="Person" polymorphism="explicit">
+    <class name="Person">
         <meta attribute="class-code">
             private static final long serialVersionUID = 1L;
         </meta>
@@ -251,7 +218,6 @@
             <meta attribute="scope-get"></meta>
             <generator class="hilo" />
         </id>
-        <discriminator column="OBJECT_TYPE" type="string"></discriminator>
         <version name="version" access="field">
             <meta attribute="property-type">int</meta>
 
@@ -287,11 +253,34 @@
         <property name="thirdSex" type="string"/>
         <property name="forthSex" type="string"/>
         <property name="fifthSex" type="string"/>
-        <property name="registrationConfirmedDate" type="calendar"/> 
-        <subclass name="Registration" discriminator-value="Registration">
-           <meta attribute="extra-import">java.util.Calendar</meta>
-           <property name="registrationDate" type="calendar"/>
-           <property name="token" type="string"/>
-        </subclass>
+        <property name="registrationConfirmedDate" type="calendar"/>         
+        <property name="registrationDate" type="calendar"/>
+        <property name="token" type="string"/>
+        <bag name="filledSurveys" cascade="all,delete-orphan" inverse="false">
+            <key column="person_id" not-null="true" />
+            <one-to-many class="FilledSurvey" />
+        </bag>
     </class>
+    <class name="FilledSurvey">
+        <meta attribute="extends">ar.com.survey.model.AbstractFilledSurvey</meta>
+        <id name="id" type="long" access="field" unsaved-value="0">
+            <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta>
+            <generator class="hilo" />
+        </id>
+        <bag name="fields" cascade="all-delete-orphan" inverse="false">
+            <meta attribute="scope-set">protected</meta>
+            <meta attribute="scope-get">protected</meta>
+            <key column="question_id" not-null="true" />
+            <one-to-many class="ar.com.survey.questions.fields.Field" />
+        </bag>
+        <property name="initDate" type="calendar"/>
+        <property name="finishDate" type="calendar"/>
+        <property name="state" type="string"/>
+        <many-to-one name="person" class="Person" column="person_id" insert="false" update="false">
+        </many-to-one>
+        <many-to-one name="survey" class="Survey" column="survey_id" insert="false" update="false">
+        </many-to-one>
+    </class>
+    
 </hibernate-mapping>

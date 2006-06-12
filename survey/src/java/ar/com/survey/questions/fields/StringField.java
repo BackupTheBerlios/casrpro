@@ -2,6 +2,10 @@ package ar.com.survey.questions.fields;
 
 public class StringField extends Field {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String string;
 	public StringField(String s) {
 		this.string = s;
