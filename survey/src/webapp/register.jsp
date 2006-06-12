@@ -359,7 +359,7 @@
   </TD></TR>
   <TR><TD align=middle height=10>&nbsp;</TD>
     <TD class=b height=30>y su estado civil es ...?</TD>
-    <TD><html:select property="married"> 
+    <TD><html:select property="maritalStatus"> 
 	<html:option value="">seleccione uno</html:option>
 	<html:option value="1">Soltero</html:option>
 	<html:option value="2">Casado</html:option>
