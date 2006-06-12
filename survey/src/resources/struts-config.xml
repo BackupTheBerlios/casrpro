@@ -27,6 +27,9 @@
 		    name="registerForm"
 		    scope="request">
    		    <forward name="registerForm" path="/register.jsp"/>
+   		    <forward name="success" path="/registerOk.jsp"/>
+   		    <forward name="error" path="/registerErr.jsp"/>
+   		    <forward name="exists" path="/registerExists.jsp"/>
 		</action>
 		
 	</action-mappings>

@@ -5,7 +5,7 @@ import org.apache.struts.action.ActionForm;
 public class RegisterForm extends ActionForm {
 
 	/**
-	 * 
+	 * Required by Eclipse
 	 */
 	private static final long serialVersionUID = 1L;
 	
@@ -120,7 +120,7 @@ public class RegisterForm extends ActionForm {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getMarritalStatus() {
+	public String getMaritalStatus() {
 		return maritalStatus;
 	}
 	public void setMaritalStatus(String maritalStatus) {
