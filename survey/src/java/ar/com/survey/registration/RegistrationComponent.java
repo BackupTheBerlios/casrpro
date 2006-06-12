@@ -11,6 +11,8 @@ import ar.com.survey.util.IMailService;
 public class RegistrationComponent implements IRegistrationComponent {
 
 	//TODO Seba: implementar el limpiador de regsitraciones vencidad con un TimerThread.
+	// Esto queres verlo vos sebas o queres que implemente todo el sistema y vos directamente
+	// me das el api para consultar la base y borrar?
 	
 	private IMailService emailService;
 	private IDbProps dbProps;
@@ -28,7 +30,10 @@ public class RegistrationComponent implements IRegistrationComponent {
 	}
 	private void sendNotification(Person r) {
 		String emailText = dbProps.getValue("EmailText");
-		emailText = emailText.replaceFirst("$link",dbProps.getValue("Url")+"?token="+r.getToken());
+		int pos = emailText.indexOf("$link");
+		emailText = emailText.substring(0, pos)
+			+ dbProps.getValue("Url")+"?token="+r.getToken()
+			+ emailText.substring(pos+5);
 		emailService.setEmailReceiver(r.getEmail());
 		emailService.setEmailSender(dbProps.getValue("EmailFrom"));
 		emailService.setEmailServer(dbProps.getValue("EmailHost"));
@@ -38,11 +43,9 @@ public class RegistrationComponent implements IRegistrationComponent {
 	}
 
 	private String generateToken(Person r) {
-		//String urlToken = dbProps.getValue("Url");
 		
 		StringBuilder token = new StringBuilder();
 		Calendar today = Calendar.getInstance();
-		
 		token.append(today.get(Calendar.DAY_OF_WEEK));
 		token.append(today.get(Calendar.MONTH));
 		token.append(today.get(Calendar.YEAR));
@@ -50,7 +53,6 @@ public class RegistrationComponent implements IRegistrationComponent {
 		token.append(r.getEmail());
 		token.append(Math.random());
 		
-		//urlToken += "?token=" + Base64.encodeObject(token.toString());
 		return Base64.encodeObject(token.toString());
 		
 	}
