@@ -11,6 +11,8 @@ public class DbPropsImpl implements IDbProps {
 				+ "vaya a este link $link");
 		props = new Properties();
 		props.setProperty("EmailHost", "localhost");
+		props.setProperty("EmailUser", "cpetronio");
+		props.setProperty("EmailPass", "carspro");
 		props.setProperty("EmailText", emailText);
 		props.setProperty("EmailFrom", "cpetronio@carspro.com");
 		props.setProperty("EmailSubject", "Envío de confirmación");

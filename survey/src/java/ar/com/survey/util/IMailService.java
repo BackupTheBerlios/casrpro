@@ -21,5 +21,9 @@ public interface IMailService {
 	
 	public void sendEmail();
 	
+	public void sendEmailWithAuth();
+	
+	public void setAuthValues(String username, String password);
+	
 
 }

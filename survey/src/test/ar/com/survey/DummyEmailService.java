@@ -27,4 +27,12 @@ public class DummyEmailService implements IMailService {
 	public void sendEmail() {
 	}
 
+	public void sendEmailWithAuth() {
+		
+	}
+
+	public void setAuthValues(String username, String password) {
+		
+	}
+
 }
