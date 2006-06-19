@@ -10,9 +10,6 @@ import ar.com.survey.util.IMailService;
 
 public class RegistrationComponent implements IRegistrationComponent {
 
-	//TODO Seba: implementar el limpiador de regsitraciones vencidad con un TimerThread.
-	// Esto queres verlo vos sebas o queres que implemente todo el sistema y vos directamente
-	// me das el api para consultar la base y borrar?
 	
 	private IMailService emailService;
 	private IDbProps dbProps;
@@ -20,8 +17,15 @@ public class RegistrationComponent implements IRegistrationComponent {
 	public void register(Person r) throws RegistrationExistsException, PersonExistsException {
 		PersonDAO personDAO = new PersonDAO();
 		
-//		if (personDAO.findBySurrogateKey(r) != null) throw new PersonExistsException();
-//		if (registrationDAO.findBySurrogateKey(r) != null) throw new RegistrationExistsException();
+		Person personInDB = personDAO.findBySurrogateKey(r);
+		
+		if (personInDB != null) {
+			if (personInDB.getRegistrationConfirmedDate() != null) {				
+				throw new PersonExistsException();				
+			} else {
+				throw new RegistrationExistsException();
+			}			
+		}
 		String token = generateToken(r);
 		r.setRegistrationDate(Calendar.getInstance());
 		r.setToken(token);
@@ -45,13 +49,13 @@ public class RegistrationComponent implements IRegistrationComponent {
 	private String generateToken(Person r) {
 		
 		StringBuilder token = new StringBuilder();
-		Calendar today = Calendar.getInstance();
-		token.append(today.get(Calendar.DAY_OF_WEEK));
-		token.append(today.get(Calendar.MONTH));
-		token.append(today.get(Calendar.YEAR));
+//		Calendar today = Calendar.getInstance();
+//		token.append(today.get(Calendar.DAY_OF_WEEK));
+//		token.append(today.get(Calendar.MONTH));
+//		token.append(today.get(Calendar.YEAR));
 		token.append(Math.random());
-		token.append(r.getEmail());
-		token.append(Math.random());
+		token.append(r.getEmail().hashCode());
+		token.append(System.currentTimeMillis());
 		
 		return Base64.encodeObject(token.toString());
 		
@@ -72,6 +76,7 @@ public class RegistrationComponent implements IRegistrationComponent {
 	public void setEmailService(IMailService emailService) {
 		this.emailService = emailService;
 	}
-	
-
+	public void confirmRegistration(String token) {
+		// TODO se		
+	}
 }

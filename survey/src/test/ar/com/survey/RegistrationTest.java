@@ -1,10 +1,13 @@
 package ar.com.survey;
 
 import ar.com.survey.model.Person;
+import ar.com.survey.model.enums.Sex;
 import ar.com.survey.persistence.DBTableHelper;
 import ar.com.survey.persistence.PersistenceTestCase;
 import ar.com.survey.persistence.Table;
+import ar.com.survey.registration.PersonExistsException;
 import ar.com.survey.registration.RegistrationComponent;
+import ar.com.survey.registration.RegistrationExistsException;
 import ar.com.survey.util.DbPropsImpl;
 
 public class RegistrationTest extends PersistenceTestCase {
@@ -24,17 +27,29 @@ public class RegistrationTest extends PersistenceTestCase {
 	 * 
 	 */
 	public void testRegistration() {
+		boolean flagEx = false;
+		this.beginTx();
 		DBTableHelper tPerson = new DBTableHelper(Table.PERSON);
 		
 		RegistrationComponent rc = new RegistrationComponent();
 		rc.setEmailService(new DummyEmailService());
 		rc.setDbProps(new DbPropsImpl());
 		
-		Person reg1 = new Person();
-		reg1.setFirstName(prefix("name1"));
-		rc.register(reg1);
+		
+		rc.register(createPerson("1"));
+		this.closeTx();
 		
 		tPerson.checkDeltaAndMark(1);
+		
+		try {
+			flagEx = false;
+			rc.register(createPerson("1"));
+		} catch (RegistrationExistsException e) {
+			flagEx = true;
+		}
+		assertTrue(flagEx);
+		
+		
 		
 		
 		
@@ -88,6 +103,15 @@ public class RegistrationTest extends PersistenceTestCase {
 		surveyDAO.createOrUpdate(s1);					
 		this.closeTx();*/
 
+	}
+
+	private Person createPerson(String s) {
+		Person reg1 = new Person();
+		reg1.setFirstName(prefix("firstName"+s));
+		reg1.setLastName(prefix("LastName"+s));
+		reg1.setEmail(prefix(s+"email@site.com"));
+		reg1.setSex(Sex.MALE);
+		return reg1;
 	}		
 		
 	
