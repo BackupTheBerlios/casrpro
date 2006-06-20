@@ -29,7 +29,7 @@ public class RegistrationComponent implements IRegistrationComponent {
 		String token = generateToken(r);
 		r.setRegistrationDate(Calendar.getInstance());
 		r.setToken(token);
-		personDAO.createOrUpdate(r);
+		// personDAO.createOrUpdate(r);
 		sendNotification(r);		
 	}
 	private void sendNotification(Person r) {
