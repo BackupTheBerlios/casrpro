@@ -7,4 +7,9 @@
 				<ref bean="registerFacade" />
 			</property>
 	</bean>	
+	
+	<bean name="/admin/searchAction"
+		class="ar.com.survey.web.struts.action.SearchAction">
+	</bean>	
+	
 </beans>
