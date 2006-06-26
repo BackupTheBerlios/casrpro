@@ -269,6 +269,10 @@
             <key column="person_id" not-null="true" />
             <one-to-many class="FilledSurvey" />
         </bag-->
+        <set name="roles" cascade="all-delete-orphan" inverse="false" table="roles">
+            <key column="person_id" not-null="true" />
+            <element type="string" column="role"/>
+        </set>
     </class>
     <class name="FilledSurvey">
         <meta attribute="extends">ar.com.survey.model.AbstractFilledSurvey</meta>
