@@ -35,8 +35,18 @@ public class RegistrationTest extends PersistenceTestCase {
 		rc.setEmailService(new DummyEmailService());
 		rc.setDbProps(new DbPropsImpl());
 		
+		Person p1 = createPerson("1");
+		Person p2 = createPerson("2");
 		
-		rc.register(createPerson("1"));
+		rc.register(p1);
+		assertNotNull(p1.getRegistrationDate());
+		assertNull(p1.getRegistrationConfirmedDate());
+		this.closeTx();
+		tPerson.checkDeltaAndMark(1);
+		
+		rc.register(p2);
+		assertNotNull(p2.getRegistrationDate());
+		assertNull(p2.getRegistrationConfirmedDate());
 		this.closeTx();
 		
 		tPerson.checkDeltaAndMark(1);
@@ -48,6 +58,28 @@ public class RegistrationTest extends PersistenceTestCase {
 			flagEx = true;
 		}
 		assertTrue(flagEx);
+		
+		//invalid token
+		assertFalse(rc.confirmRegistration("invalidToken"));
+		assertFalse(rc.confirmRegistration(""));
+		assertFalse(rc.confirmRegistration(null));
+		
+		//valid registration
+		assertTrue(rc.confirmRegistration(p1.getToken()));
+		this.closeTx();
+		tPerson.checkDeltaAndMark(0);
+		
+		//duplicate registration
+		try {
+			flagEx = false;
+			rc.confirmRegistration(p1.getToken());
+		} catch (PersonExistsException e) {
+			flagEx = true;
+		}
+		assertTrue(flagEx);
+		
+		
+		
 		
 		
 		

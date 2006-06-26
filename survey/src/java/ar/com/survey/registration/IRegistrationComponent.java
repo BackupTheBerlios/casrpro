@@ -7,6 +7,7 @@ public interface IRegistrationComponent {
 	 * Registers a person. An email will be sent.
 	 * Preconditions: all required fields in R (primary key + not nulls i DB) are filled.
 	 * Post: these fields will be filled by this componente: Token, RegistrationDate 
+	 * Post: email sent using email component.
 	 * 
 	 * @param r required not null
 	 * @throws RegistrationExistsException if someone already posted the registration, but did not confirmed it yet.
@@ -16,8 +17,8 @@ public interface IRegistrationComponent {
 
 	/** Confirms a registration.
 	 * @param token required not null
-	 * @throws InvalidTokenException if the token is not present in the DB 
+	 * @return boolean if the token is not present in the DB 
 	 * @throws PersonExistsException if the token is present, but already confirmed (duplicate confirmation, maybe)
 	 */
-	void confirmRegistration(String token) throws InvalidTokenException, PersonExistsException;
+	boolean confirmRegistration(String token) throws PersonExistsException;
 }

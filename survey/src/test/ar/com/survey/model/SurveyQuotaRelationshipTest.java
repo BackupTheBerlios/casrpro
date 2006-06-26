@@ -82,8 +82,8 @@ public class SurveyQuotaRelationshipTest extends PersistenceTestCase {
 		
 		tQuota.checkDeltaAndMark(0);
 		tSurvey.checkDeltaAndMark(1);
-		s1 = surveyDAO.findBySurrogateKey(new Survey(prefix("name1"),null,null,null));
-		s2 = surveyDAO.findBySurrogateKey(new Survey(prefix("name2"),null,null,null));
+		s1 = surveyDAO.findBySurrogateKey(createSurvey(prefix("name1")));
+		s2 = surveyDAO.findBySurrogateKey(createSurvey(prefix("name2")));
 		assertEquals(3,s1.getQuotas().size());
 		assertEquals(1,s2.getQuotas().size());
 		assertNull(s1.getQuota(prefix("q1")));
@@ -158,6 +158,12 @@ public class SurveyQuotaRelationshipTest extends PersistenceTestCase {
 		//end
 		this.closeTx();
 		this.closeSession();	
+	}
+
+	private Survey createSurvey(String n) {
+		Survey s =  new Survey();
+		s.setName(n);
+		return s;
 	}		
 		
 		

@@ -25,6 +25,15 @@
             <meta attribute="use-in-equals">true</meta>
             <meta attribute="use-in-tostring">true</meta>
         </property>
+        <property name="creationDate" type="calendar" unique="false">
+        </property>
+        <property name="startDate" type="calendar" unique="false">
+        </property>
+        <property name="finishDate" type="calendar" unique="false">
+        </property>
+        <property name="status" type="string" unique="false">
+        </property>
+
 
         <set name="quotas" cascade="all,delete-orphan" inverse="false">
             <key column="survey_id" not-null="true" />
