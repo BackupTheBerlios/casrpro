@@ -37,6 +37,19 @@ public class RegisterAction extends DispatchAction {
 
 	private IRegistrationComponent registerFacade;
 
+	/**
+	 * 
+	 * This method persists a user to the database and sends a confirmation token
+	 * by email
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	public ActionForward register(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -63,12 +76,37 @@ public class RegisterAction extends DispatchAction {
 		return forward;
 	}
 	
+	/**
+	 * This method is used to finalize the registration process
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	public ActionForward confirmReg(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		logger.info("registered!! " + request.getParameter("token"));
-		return null;
-		
+		String token = request.getParameter("token");
+		if(token!=null){
+			logger.info("confirm: " + token);
+			try {
+				boolean isConfirmed = registerFacade.confirmRegistration(request.getParameter("token"));
+				if(isConfirmed)
+					return mapping.findForward("confirmSuccess");
+				else
+					return mapping.findForward("confirmError");
+			}
+			catch(PersonExistsException pe){
+				return mapping.findForward("confirmExists");
+			}
+		}
+		else {
+			return mapping.findForward("confirmError");
+		}
 	}
 
 	protected ActionForward unspecified(ActionMapping mapping, ActionForm form,
