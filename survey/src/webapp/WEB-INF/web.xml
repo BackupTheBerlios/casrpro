@@ -3,6 +3,15 @@
 <web-app id="survey">
 	<display-name>survey</display-name>
 
+	<filter>
+	   <filter-name>Hibernate Filter</filter-name>
+	   <filter-class>ar.com.survey.persistence.hibernate.HibernateThreadFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+      <filter-name>Hibernate Filter</filter-name>
+      <url-pattern>*.do</url-pattern>
+   </filter-mapping>  
 
 	<!-- Struts Action Servlet Configuration -->
 	<servlet>
@@ -24,6 +33,10 @@
 		<servlet-name>action</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+	
+	<listener>
+		<listener-class>ar.com.survey.persistence.hibernate.HibernateServletContextListener</listener-class>
+	</listener>
 
 	<welcome-file-list>
 		<welcome-file>register.jsp</welcome-file>
