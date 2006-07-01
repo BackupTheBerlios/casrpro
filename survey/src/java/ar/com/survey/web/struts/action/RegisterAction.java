@@ -30,6 +30,10 @@ public class RegisterAction extends DispatchAction {
 	// entonces, este service también deberia ser thread safe????
 	// si pasa eso con todos, puede llegar a ser una cagad... se puede hacer
 	// distinto?
+	
+	// TODO Sebastián: che si es verdad que no es thread safe, pero si los metodos
+	// del componente los hacemos lo mas stateless posible no deberiamos tener
+	// drama o no?? vos que pensas?
 
 	private IRegistrationComponent registerFacade;
 
@@ -57,6 +61,14 @@ public class RegisterAction extends DispatchAction {
 			forward = mapping.findForward("exists");
 		}
 		return forward;
+	}
+	
+	public ActionForward confirmReg(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		logger.info("registered!! " + request.getParameter("token"));
+		return null;
+		
 	}
 
 	protected ActionForward unspecified(ActionMapping mapping, ActionForm form,
