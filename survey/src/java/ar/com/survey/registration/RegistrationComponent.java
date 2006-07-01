@@ -76,7 +76,7 @@ public class RegistrationComponent implements IRegistrationComponent {
 		String emailText = dbProps.getValue("EmailText");
 		int pos = emailText.indexOf("$link");
 		emailText = emailText.substring(0, pos)
-			+ dbProps.getValue("Url")+"?token="+r.getToken()
+			+ dbProps.getValue("Url")+"&token="+r.getToken()
 			+ emailText.substring(pos+5);
 		emailService.setEmailReceiver(r.getEmail());
 		emailService.setEmailSender(dbProps.getValue("EmailFrom"));
