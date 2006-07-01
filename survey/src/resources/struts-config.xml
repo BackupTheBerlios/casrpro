@@ -31,6 +31,9 @@
    		    <forward name="success" path="/registerOk.jsp"/>
    		    <forward name="error" path="/registerErr.jsp"/>
    		    <forward name="exists" path="/registerExists.jsp"/>
+   		    <forward name="confirmSuccess" path="/confirmSuccess.jsp"/>
+   		    <forward name="confirmError" path="/confirmError.jsp"/>
+   		    <forward name="confirmExists" path="/registerExists.jsp"/>
 		</action>
 		
 		<action
