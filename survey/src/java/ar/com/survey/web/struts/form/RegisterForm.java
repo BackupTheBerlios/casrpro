@@ -1,5 +1,11 @@
 package ar.com.survey.web.struts.form;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+
 
 public class RegisterForm extends BaseForm {
 
@@ -175,6 +181,43 @@ public class RegisterForm extends BaseForm {
 	}
 	public void setAcceptTerms(boolean acceptTerms) {
 		this.acceptTerms = acceptTerms;
+	}
+	
+	/**
+	 * Validate the properties that have been sent from the HTTP request, and
+	 * return an ActionErrors object that encapsulates any validation errors
+	 * that have been found. If no errors are found, return an empty
+	 * ActionErrors object.
+	 */
+	public ActionErrors validate(ActionMapping mapping,
+			HttpServletRequest request) {
+		
+		ActionErrors errors = new ActionErrors();
+		
+		if(getMethod()!=null && getMethod().equals("register")){
+
+			// Verify that must complete fields are completed
+			
+			if ( (getEmail() == null || getEmail().length() < 1)
+					|| (getEmailConfirm() == null || getEmailConfirm().length()<1)
+					|| (getFirstName() == null || getFirstName().length()<1)
+					|| (getLastName() == null || getLastName().length()<1) 
+					|| (getState() == null || getState().length()<1)
+					|| (getPostalCode() == null || getPostalCode().length()<1)
+					|| (getSex() == null || getSex().length()<1)
+					|| (getMaritalStatus() == null || getMaritalStatus().length()<1)
+					|| (getEducationLevel() == null || getEducationLevel().length()<1)
+					|| (isAcceptTerms() == false)) {
+				errors.add("registerErrors", new ActionMessage(
+						"ar.com.survey.error.register.mustComplete"));
+			}
+			else {
+				if(!getEmail().equals(getEmailConfirm()))
+					errors.add("registerErrors", new ActionMessage(
+					"ar.com.survey.error.register.emailMatch"));
+			}
+		}
+		return errors;
 	}
 	
 }

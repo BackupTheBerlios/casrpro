@@ -1,4 +1,8 @@
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
+<%@ page import="ar.com.survey.model.enums.Sex" %>
+<%@ page import="ar.com.survey.model.enums.MaritalStatus" %>
 
 <html>
 <HEAD>
@@ -85,7 +89,10 @@
   <TABLE cellSpacing=0 cellPadding=0 width="85%" border=0>
        <TBODY>
           <TR>
-             <TD class=t_body>
+             <TD class=t_body><logic:messagesPresent>
+			    <html:messages id="registerErrors" /> 
+			    <bean:write name="registerErrors" />
+			     </logic:messagesPresent>
     
     <!---------------------------Joinup Form---------------------->
 
@@ -353,17 +360,18 @@
     <TD class=b height=30>Usted es ...?</TD>
     <TD><html:select property="sex"> 
 	<html:option value="">seleccione uno</html:option>
-	<html:option value="1">Hombre</html:option>
-	<html:option value="2">Mujer</html:option>
+	<html:option value="<%= Sex.MALE.getCode() %>"><%= Sex.MALE.getDescription() %></html:option>
+	<html:option value="<%= Sex.FEMALE.getCode() %>"><%= Sex.FEMALE.getDescription() %></html:option>
 	</html:select>
   </TD></TR>
   <TR><TD align=middle height=10>&nbsp;</TD>
     <TD class=b height=30>y su estado civil es ...?</TD>
-    <TD><html:select property="maritalStatus"> 
+    <TD><html:select property="maritalStatus">
 	<html:option value="">seleccione uno</html:option>
-	<html:option value="1">Soltero</html:option>
-	<html:option value="2">Casado</html:option>
-	<html:option value="3">Separado/divorciado/viudo</html:option>
+	<html:option value="<%= MaritalStatus.SINGLE.getCode() %>"><%= MaritalStatus.SINGLE.getDescription() %></html:option>
+    <html:option value="<%= MaritalStatus.MARRIED.getCode() %>"><%= MaritalStatus.MARRIED.getDescription() %></html:option>
+    <html:option value="<%= MaritalStatus.DIVORCED.getCode() %>"><%= MaritalStatus.DIVORCED.getDescription() %></html:option>
+    <html:option value="<%= MaritalStatus.WIDOWED.getCode() %>"><%= MaritalStatus.WIDOWED.getDescription() %></html:option>
 	</html:select>
   </TD></TR>
   <TR><TD align=middle height=10>&nbsp;</TD>

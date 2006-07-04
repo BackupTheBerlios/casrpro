@@ -26,6 +26,8 @@
 		    type="org.springframework.web.struts.DelegatingActionProxy"
 		    parameter="method"
 		    name="registerForm"
+	        validate="true"
+	        input="/register.jsp"
 		    scope="request">
    		    <forward name="registerForm" path="/register.jsp"/>
    		    <forward name="success" path="/registerOk.jsp"/>

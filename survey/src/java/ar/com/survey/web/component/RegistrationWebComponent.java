@@ -18,15 +18,22 @@ public class RegistrationWebComponent {
 		calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(rfm.getBirthDay()));
 		calendar.set(Calendar.MONTH, Integer.parseInt(rfm.getBirthMonth()));
 		calendar.set(Calendar.YEAR, Integer.parseInt(rfm.getBirthYear()));
+		person.setFirstName(rfm.getFirstName());
+		person.setLastName(rfm.getLastName());
 		person.setBirthDate(calendar);
 		person.setEducationLevel(rfm.getEducationLevel());
 		person.setEmail(rfm.getEmail());
-		//TODO Sebastian: Reemplazar el isEmployed de registracion por un string que sea tipo de employment
+		person.setMaritalStatus(rfm.getMaritalStatus());
+		person.setOcupation(rfm.getOcupation());
+		person.setPostalCode(rfm.getPostalCode());
+		person.setSex(rfm.getSex());
+		person.setState(rfm.getState());
+		//TODO Sebastián: Reemplazar el isEmployed de registracion por un string que sea tipo de employment
 		// registration.setEmployed(rfm.getEmploymentType());
 		
 		// check for the different kids, if they exist persist each
 		
-		// TODO Sebastián: Remover firstName, secondName, thirdName, forthName, FifthName
+		// TODO Sebastián: Remover secondName, thirdName, forthName, FifthName
 		// ya que el form ultimo no los pide
 		
 		if(rfm.getFirstAge()!=null && !rfm.getFirstAge().equals("")){
@@ -53,14 +60,6 @@ public class RegistrationWebComponent {
 			person.setFifthAge(Short.parseShort(rfm.getFifthAge()));
 			person.setFifthSex(rfm.getFifthAge());
 		}
-		
-		person.setLastName(rfm.getLastName());
-		person.setMaritalStatus(rfm.getMaritalStatus());
-		person.setOcupation(rfm.getOcupation());
-		person.setPostalCode(rfm.getPostalCode());
-		
-		person.setSex(rfm.getSex());
-		person.setState(rfm.getState());
 		
 		return person;
 	}
