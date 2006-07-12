@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
-<beans> 
+<beans>
 	<bean name="emailService"
 		class="ar.com.survey.util.MailServiceImpl" />
 
-	<bean name="dbProps"
-		class="ar.com.survey.util.DbPropsImpl" />		
-		
+	<bean name="dbProps" class="ar.com.survey.util.DbPropsImpl" />
+
+	<!-- Timer stuff -->
+
+	<bean name="scheduledRemoverTask"
+		class="org.springframework.scheduling.timer.ScheduledTimerTask">
+		<property name="timerTask">
+			<ref bean="personRemoverTask" />
+		</property>
+		<!-- Time of a minute per run -->
+		<property name="period">
+			<value>60000</value>
+		</property>
+	</bean>
+
+	<bean name="personRemoverTask"
+		class="ar.com.survey.util.PersonRemoverTask" />
+
+	<bean
+		class="org.springframework.scheduling.timer.TimerFactoryBean">
+		<property name="scheduledTimerTasks">
+			<list>
+				<ref bean="scheduledRemoverTask" />
+			</list>
+		</property>
+	</bean>
+
 </beans>
