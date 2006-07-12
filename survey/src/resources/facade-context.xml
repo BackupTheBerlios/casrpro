@@ -12,13 +12,17 @@
 	-->
 	
 	<bean id="registerFacade" 
-		class="ar.com.survey.registration.RegistrationComponent">
+		class="ar.com.survey.registration.RegistrationComponent" singleton="false">
 		<property name="emailService">
 			<ref bean="emailService"/>
 		</property>
 		<property name="dbProps">
 			<ref bean="dbProps" />
 		</property>
+	</bean>
+	
+	<bean id="searchFacade"
+		class="ar.com.survey.admin.DummySearchComponent" singleton="false">
 	</bean>
 
 </beans>

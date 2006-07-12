@@ -22,19 +22,6 @@ import ar.com.survey.web.struts.form.RegisterForm;
 public class RegisterAction extends DispatchAction {
 
 	private static Logger logger = Logger.getLogger(RegisterAction.class);
-
-	// TODO Clauio: creo que voy entendiendo cómo Spring la inyetca los services
-	// a cada action
-	// pero... esta variable es de clase y struts reutiliza los actions, los
-	// cuales deben ser thread-safe ...
-	// entonces, este service también deberia ser thread safe????
-	// si pasa eso con todos, puede llegar a ser una cagad... se puede hacer
-	// distinto?
-	
-	// TODO Sebastián: che si es verdad que no es thread safe, pero si los metodos
-	// del componente los hacemos lo mas stateless posible no deberiamos tener
-	// drama o no?? vos que pensas?
-
 	private IRegistrationComponent registerFacade;
 
 	/**

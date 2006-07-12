@@ -16,7 +16,7 @@ public class RegistrationWebComponent {
 		Person person = new Person();
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(rfm.getBirthDay()));
-		calendar.set(Calendar.MONTH, Integer.parseInt(rfm.getBirthMonth()));
+		calendar.set(Calendar.MONTH, Integer.parseInt(rfm.getBirthMonth())-1);
 		calendar.set(Calendar.YEAR, Integer.parseInt(rfm.getBirthYear()));
 		person.setFirstName(rfm.getFirstName());
 		person.setLastName(rfm.getLastName());

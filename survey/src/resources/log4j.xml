@@ -26,8 +26,8 @@
         <appender-ref ref="STDOUT" />
     </logger>
     <logger name="org" additivity="false">
-        <level value="debug" />
-        <appender-ref ref="FILE" />
+        <level value="error" />
+        <appender-ref ref="STDOUT" />
     </logger>
 
 

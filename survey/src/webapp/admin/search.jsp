@@ -1,11 +1,15 @@
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="ar.com.survey.model.enums.SurveyState" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Panel de Opiniones</title>
+<title>Panel de Opiniones asd</title>
 <style type="text/css">
 <!--
 body,td {
@@ -110,58 +114,30 @@ a:active {
 		</tr>
 		</table>
 	</html:form>
-	<form method="POST" name="formList">
+	<c:if test="${ requestScope.surveys != null}">
+	<form method="post" name="formList">
 
 		<table width="100%" border="0" cellpadding="2" cellspacing="0">
 		<tr>
 			<td>
 				<table width="520" border="1" cellpadding="2" cellspacing="0">
 				<tr bgcolor="#CCCCCC">
-					<td width="60">ID</td>
 					<td width="200">Nombre</td>
 					<td width="80">Fecha de<br>Creacion</td>
-
 					<td width="60">Status</td>
 					<td width="60">&nbsp;</td>
 					<td width="60">&nbsp;</td>
 				</tr>
+				<c:forEach items="${ requestScope.surveys }" var="survey">
+				<jsp:useBean id="survey" class="ar.com.survey.model.Survey" />
 				<tr>
-					<td>000001</td>
-					<td align="left"><a href="#">Cuestionario X - Cervezas</a></td>
-
-					<td>27/04/2006</td>
-					<td>Cerrado</td>
-					<td><a href="#">Editar</a></td>
-					<td><a href="#" onClick="confirm('Confirma la baja del cuestionario?');">Borrar</a></td>
+					<td align="left"><a href="#">${ survey.name }</a></td>
+					<td><%= new SimpleDateFormat("dd/mm/yyyy").format(survey.getCreationDate().getTime()) %></td>
+					<td><%= SurveyState.valueOf(survey.getStatus()).getDescription() %></td>
+					<td><a href="editAction.do?id=<%= survey.getId() %>">Editar</a></td>
+					<td><a href="deleteAction.do?id=<%= survey.getId() %>" onclick="confirm('Confirma la baja del cuestionario?');">Borrar</a></td>
 				</tr>
-				<tr>
-					<td>000002</td>
-
-					<td align="left"><a href="#">Cuestionario Y - Vinos</a></td>
-					<td>12/05/2006</td>
-					<td>Cerrado</td>
-					<td><a href="#">Editar</a></td>
-					<td><a href="#" onClick="confirm('Confirma la baja del cuestionario?');">Borrar</a></td>
-				</tr>
-
-				<tr>
-					<td>000003</td>
-					<td align="left"><a href="#">Cuestionario Z - Gaseosas</a></td>
-					<td>29/05/2006</td>
-					<td>Abierto</td>
-					<td><a href="#">Editar</a></td>
-
-					<td><a href="#" onClick="confirm('Confirma la baja del cuestionario?');">Borrar</a></td>
-				</tr>
-				<tr>
-					<td>000004</td>
-					<td align="left"><a href="#">Cuestionario A - Bebidas</a></td>
-					<td>09/06/2006</td>
-					<td>Cerrado</td>
-
-					<td><a href="#">Editar</a></td>
-					<td><a href="#" onClick="confirm('Confirma la baja del cuestionario?');">Borrar</a></td>
-				</tr>
+				</c:forEach>
 				<tr>
 					<td colspan="6" align="right"><a href="SurveyNew.html">Nuevo Cuestionario</a></td>
 				</tr>
@@ -174,6 +150,7 @@ a:active {
 		</tr>
 		</table>
 	</form>
+	</c:if>
 	</td>
   </tr>
   <tr>

@@ -10,6 +10,9 @@
 	
 	<bean name="/admin/searchAction"
 		class="ar.com.survey.web.struts.action.SearchAction">
+		<property name="searchFacade">
+				<ref bean="searchFacade" />
+			</property>
 	</bean>	
 	
 </beans>
