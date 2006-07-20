@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+    <definition name=".adminLayout" path="/admin/common/layouts/adminLayout.jsp">
+        <put name="header" value="/admin/common/header.jsp" />
+        <put name="menu" value="/admin/common/menu.jsp" />
+        <put name="body" value="/admin/index.jsp" />
+        <put name="footer" value="/admin/common/footer.jsp" />
+    </definition>
+
+
+<!-- Start of Survey definitions -->
+
+    <definition name=".newSurvey" extends=".adminLayout">
+        <put name="body"   value="/admin/surveyNew.jsp" />
+    </definition>
+    
+    <definition name=".newSection" extends=".adminLayout">
+        <put name="body"   value="/admin/sectionNew.jsp" />
+    </definition>
+    
+    <definition name=".login" extends=".adminLayout">
+        <put name="body"   value="/admin/index.jsp" />
+    </definition>
+    
+     <definition name=".persistOk" extends=".adminLayout">
+        <put name="body"   value="/admin/surveyPersistOk.jsp" />
+    </definition>
+
+<!-- End of Survey definitions -->
+
+</tiles-definitions>

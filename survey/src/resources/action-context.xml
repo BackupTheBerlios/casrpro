@@ -8,11 +8,15 @@
 			</property>
 	</bean>	
 	
-	<bean name="/admin/searchAction"
+	<bean name="/admin/search"
 		class="ar.com.survey.web.struts.action.SearchAction">
 		<property name="searchFacade">
 				<ref bean="searchFacade" />
 			</property>
-	</bean>	
+	</bean>
+	
+	<bean name="/admin/survey"
+		class="ar.com.survey.web.struts.action.SurveyAction">
+	</bean>		
 	
 </beans>

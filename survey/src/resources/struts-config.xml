@@ -6,6 +6,7 @@
 	<form-beans>
 		<form-bean name="registerForm" type="ar.com.survey.web.struts.form.RegisterForm" />
 		<form-bean name="searchForm" type="ar.com.survey.web.struts.form.SearchForm" />
+		<form-bean name="surveyForm" type="ar.com.survey.web.struts.form.SurveyForm" />
 	</form-beans>
 
 	<global-exceptions>
@@ -39,7 +40,7 @@
 		</action>
 		
 		<action
-			path="/admin/searchAction"
+			path="/admin/search"
 		    type="org.springframework.web.struts.DelegatingActionProxy"
 		    parameter="method"
 		    name="searchForm"
@@ -49,13 +50,32 @@
    		    <forward name="searchForm" path="/admin/search.jsp"/>
 		</action>
 		
+		<action
+			path="/admin/survey"
+		    type="org.springframework.web.struts.DelegatingActionProxy"
+		    parameter="method"
+		    name="surveyForm"
+		    validate="true"
+		    input=".newSurvey"
+		    scope="request">
+   		    <forward name="newSurvey" path=".newSurvey"/>
+   		    <forward name="newSection" path=".newSection"/>
+   		    <forward name="persistOk" path=".persistOk"/>
+		</action>
+		
+		<action
+			path="/admin/login"
+		    type="ar.com.survey.web.struts.action.LoginAction">
+   		    <forward name="index" path=".login"/>
+		</action>
+		
 	</action-mappings>
 
 	<message-resources parameter="ApplicationResources" />
 
-<!--	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
-      <set-property property="definitions-config" value="/WEB-INF/classes/struts/tiles-defs.xml" />
-    </plug-in> -->
+	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
+      <set-property property="definitions-config" value="/WEB-INF/classes/tiles-defs.xml" />
+    </plug-in>
     
     <plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
       <set-property property="contextConfigLocation" value="/WEB-INF/classes/action-context.xml, /WEB-INF/classes/facade-context.xml, /WEB-INF/classes/dao-context.xml, /WEB-INF/classes/hibernate-context.xml, /WEB-INF/classes/util-context.xml"/>
