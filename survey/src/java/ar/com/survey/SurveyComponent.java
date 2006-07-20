@@ -7,6 +7,7 @@ public class SurveyComponent implements ISurveyComponent {
 	public SurveyComponent() {
 		super();
 	}
+	
 	public void createSurvey(Survey s) {
 	}
 	public void updateSurvey(Survey s) {
