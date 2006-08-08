@@ -1,0 +1,25 @@
+body,td {
+	color: #666666;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+body {
+	background-color: #CCCCCC;
+	/*background-image: url();*/
+}
+a {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #666666;
+}
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {
+	text-decoration: none;
+}
