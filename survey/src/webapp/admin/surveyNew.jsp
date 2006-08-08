@@ -10,13 +10,22 @@ function addNewCuota(){
  popModal('quotaNew.jsp');
 }
 
-function popModal(url) {
-	WindowObjectReference = window.open(url,window,'dialogHeight:200px;dialogWidth:420px;center:1;edge:raised;help:0;resizable:0;scroll:0;status:0');
-}
-
 function deleteRow(rowNum){
 	if(confirm('Seguro desea borrar la cuota seleccionada?')){
-		document.getElementById("cuotas").deleteRow(rowNum);
+		getElement("cuotas").deleteRow(rowNum);
+		removeQuotaInSessionSurvey(rowNum);
+		updateTableLinks(rowNum);
+	}
+}
+
+function updateTableLinks(rowNum){
+	var table =	getElement("cuotas");
+	for(i=rowNum;i<table.rows.length;i++){	
+		var row = table.rows[i];
+		var editLink = "<a href='javascript:editRow(" + i + ");'>Editar</a>"; 
+		row.cells[2].innerHTML=editLink;
+		var deleteLink = "<a href='javascript:deleteRow(" + i + ");'>Borrar</a>";
+		row.cells[3].innerHTML=deleteLink;
 	}
 }
 
@@ -26,21 +35,21 @@ function editRow(rowNum){
 }
 
 function updateRow(name, count){
-	var table =	document.getElementById("cuotas");
+	var table =	getElement("cuotas");
 	var row = table.rows[currentRow];
 	row.cells[0].innerHTML=name;
 	row.cells[1].innerHTML=count;
 }
 
 function getCellValue(cellPos){
-	var table =	document.getElementById("cuotas");
+	var table =	getElement("cuotas");
 	var row = table.rows[currentRow];
 	return row.cells[cellPos].innerHTML;
 }
 
 function addRow(name, count)
 {
-var table = document.getElementById("cuotas");
+var table = getElement("cuotas");
 var lastRow = table.rows.length;
 var row = table.insertRow(lastRow);
   
@@ -64,7 +73,48 @@ var row = table.insertRow(lastRow);
 	var deleteLink = "<a href='javascript:deleteRow(" + lastRow + ");'>Borrar</a>"; 
 	cellDelete.innerHTML = deleteLink ;
 	
+}
+
+function addQuotaToSession(name, value){
+
+  var req = newXMLHttpRequest();
+  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  req.onreadystatechange = handlerFunction;
+  
+  var urlAjax = "survey.do?method=addQuotaToSessionSurvey&name=" + name + "&value=" + value ;
+  req.open("GET", urlAjax, true);
+  
+  req.send("");
+
 } 
+
+function updateQuotaInSession(name, value){
+  
+  var req = newXMLHttpRequest();
+  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  req.onreadystatechange = handlerFunction;
+  
+  var urlAjax = "survey.do?method=updateQuotaInSessionSurvey&name=" 
+  	+ name + "&value=" + value + "&row=" + currentRow ;
+  req.open("GET", urlAjax, true);
+  
+  req.send("");
+
+}
+
+function removeQuotaInSessionSurvey(row){
+
+	var req = newXMLHttpRequest();
+    var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+    req.onreadystatechange = handlerFunction;
+  
+    var urlAjax = "survey.do?method=removeQuotaInSessionSurvey&row=" + row ;
+    req.open("GET", urlAjax, true);
+  
+    req.send("");
+    
+}
+
 
 -->
 </script>

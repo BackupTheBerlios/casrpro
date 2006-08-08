@@ -79,11 +79,6 @@ a:active {
 			<td>
 				<table width="350" border="1" cellpadding="2" cellspacing="0">
 				<tr>
-					<td width="150" align="left">ID</td>
-
-					<td colspan="2" align="left"><html:text property="id" size="10" maxlength="40" /></td>
-				</tr>
-				<tr>
 					<td width="150" align="left">Nombre</td>
 					<td colspan="2" align="left"><html:text property="name" size="10" maxlength="40" /></td>
 				</tr>
@@ -134,8 +129,8 @@ a:active {
 					<td align="left"><a href="#">${ survey.name }</a></td>
 					<td><%= new SimpleDateFormat("dd/mm/yyyy").format(survey.getCreationDate().getTime()) %></td>
 					<td><%= SurveyState.valueOf(survey.getStatus()).getDescription() %></td>
-					<td><a href="editAction.do?id=<%= survey.getId() %>">Editar</a></td>
-					<td><a href="deleteAction.do?id=<%= survey.getId() %>" onclick="confirm('Confirma la baja del cuestionario?');">Borrar</a></td>
+					<td><a href="editAction.do?name=<%= survey.getName() %>">Editar</a></td>
+					<td><a href="deleteAction.do?name=<%= survey.getName() %>" onclick="confirm('Confirma la baja del cuestionario?');">Borrar</a></td>
 				</tr>
 				</c:forEach>
 				<tr>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Nueva Cuota</title>
-<link href="css/css.css" rel="stylesheet" type="text/css">
+<link href="../css/css.css" rel="stylesheet" type="text/css">
 <script language="JavaScript" type="text/javascript">
 <!--
 
@@ -11,6 +11,7 @@
 		var count = document.forms[0].count.value;
 		if (window.opener && !window.opener.closed){
 			window.opener.addRow(name, count);
+			window.opener.addQuotaToSession(name, count);
 		}
 		window.close();
 	}

@@ -6,9 +6,6 @@
 
 <script language="JavaScript" type="text/javascript">
 <!--
-function popModal(url) {
-	window.showModalDialog(url,window,'dialogHeight:250px;dialogWidth:420px;center:1;edge:raised;help:0;resizable:0;scroll:0;status:0');
-}
 -->
 </script>
 </head>
