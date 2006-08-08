@@ -6,7 +6,13 @@
 <script language="JavaScript" src="../../js/common.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
-
+	function fillOpenerRow(){
+		var text = document.forms[0].textData.value;
+		if (window.opener && !window.opener.closed){
+			window.opener.addRow(text);
+		}
+		window.close();
+	}
 -->
 </script>
 </head>
@@ -23,14 +29,14 @@
 </tr>
 <tr>
 	<td width="150" align="left">Texto</td>
-	<td width="250" align="left"><input type="text" name="" size="50" /></td>
+	<td width="250" align="left"><input type="text" name="textData" size="50" /></td>
 </tr>
 <tr>
 	<td colspan="2">&nbsp;</td>
 </tr>
 <tr>
 	<td colspan="2" align="right">
-		<input type="button" name="" value="Aceptar" onClick="window.close();"/>&nbsp;
+		<input type="button" name="" value="Aceptar" onClick="fillOpenerRow();"/>&nbsp;
 		<input type="button" name="" value="Cancelar" onClick="window.close();"/>&nbsp;
 	</td>
 </tr>

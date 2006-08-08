@@ -22,7 +22,7 @@ function selectQuestion() {
 		case 6: url = 'popUp/QuestionNew01.jsp'; break;
 	}
 
-	popModal(url,540,600,1);
+	popModal(url,"popQuestion",540,600,1);
 }
 
 function deleteRow(rowNum){
@@ -37,7 +37,7 @@ function editRow(rowNum){
 	var row = table.rows[rowNum];
 	var type = row.cells[2].innerHTML;
 	var url = "survey.do?method=popup&row=" + rowNum + "&type=" + type;
-	popModal(url);
+	popModal(url,"editRowQuestion");
 }
 
 function addRow(name, type){

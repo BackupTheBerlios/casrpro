@@ -39,25 +39,25 @@ function updateTableLinks(rowNum){
 
 function editRow(rowNum){
 	currentRow = rowNum;
-	popModal("answerUpdate01.jsp");
+	popModal("answerUpdate01.jsp", "answerQuestionUpdater");
 }
 
 function updateRow(name, value){
-	var table =	document.getElementById("preguntas");
+	var table =	document.getElementById("respuestas");
 	var row = table.rows[currentRow];
 	row.cells[0].innerHTML=name;
 	row.cells[1].innerHTML=value;
 }
 
 function getCellValue(cellPos){
-	var table =	document.getElementById("preguntas");
+	var table =	document.getElementById("respuestas");
 	var row = table.rows[currentRow];
 	return row.cells[cellPos].innerHTML;
 }
 
 function addRow(name, value){
 
-var table = document.getElementById("preguntas");
+var table = document.getElementById("respuestas");
 var lastRow = table.rows.length;
 var row = table.insertRow(lastRow);
   
@@ -120,7 +120,7 @@ var row = table.insertRow(lastRow);
 <tr>
 	<td width="150" align="left">Agregar Respuesta</td>
 	<td width="400" align="left">
-		<input type="button" name="" value=">>" onClick="popModal('AnswerNew01.jsp',250,420,0);"/>&nbsp;
+		<input type="button" name="" value=">>" onClick="popModal('AnswerNew01.jsp','AnswerNew11',250,420,0);"/>&nbsp;
 	</td>
 </tr>
 <tr>

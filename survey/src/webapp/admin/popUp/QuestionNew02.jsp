@@ -38,48 +38,43 @@ function updateTableLinks(rowNum){
 
 function editRow(rowNum){
 	currentRow = rowNum;
-	popModal("answerUpdate01.jsp");
+	popModal("AnswerUpdate01.jsp", "answerUpdater011");
 }
 
 function updateRow(name, value){
-	var table =	document.getElementById("preguntas");
+	var table =	document.getElementById("respuestas");
 	var row = table.rows[currentRow];
 	row.cells[0].innerHTML=name;
 	row.cells[1].innerHTML=value;
 }
 
 function getCellValue(cellPos){
-	var table =	document.getElementById("preguntas");
+	var table =	document.getElementById("respuestas");
 	var row = table.rows[currentRow];
 	return row.cells[cellPos].innerHTML;
 }
 
-function addRow(name, value){
+function addRow(text){
 
-var table = document.getElementById("preguntas");
+var table = document.getElementById("respuestas");
 var lastRow = table.rows.length;
 var row = table.insertRow(lastRow);
   
   // right cell
   var cellName = row.insertCell(0);
   cellName.innerHTML = name;
-  
-  // select cell
-  var cellValue = row.insertCell(1);
-  cellValue.innerHTML = value;
-  
+   
   // edit cell
   
-  var cellEdit = row.insertCell(2);
+  var cellEdit = row.insertCell(1);
   var editLink = "<a href='javascript:editRow(" + lastRow + ");'>Editar</a>"; 
   cellEdit.innerHTML = editLink;
   
   // delete cell
   
-	var cellDelete = row.insertCell(3);
+	var cellDelete = row.insertCell(2);
 	var deleteLink = "<a href='javascript:deleteRow(" + lastRow + ");'>Borrar</a>"; 
 	cellDelete.innerHTML = deleteLink ;
-	
 }
 	
 -->
@@ -88,7 +83,7 @@ var row = table.insertRow(lastRow);
 
 <body style="background-color: #FFFFFF;">
 <br>
-<table width="550" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF" id="respuestas">
+<table width="550" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
 <form method="POST" name="formMain">
 <tr>
 	<td colspan="5" align="center" bgcolor="#CCCCCC">Main</td>
@@ -136,7 +131,7 @@ var row = table.insertRow(lastRow);
 <tr>
 	<td width="150" align="left">Agregar Respuesta</td>
 	<td colspan="4" align="left">
-		<input type="button" name="" value=">>" onClick="popModal('AnswerNew02.jsp',250,420,0);"/>&nbsp;
+		<input type="button" name="" value=">>" onClick="popModal('AnswerNew02.jsp','AnswerNew022',250,420,0);"/>&nbsp;
 	</td>
 </tr>
 <tr>
@@ -147,7 +142,7 @@ var row = table.insertRow(lastRow);
 </tr>
 <tr>
 	<td colspan="5" align="center">
-		<table width="400" border="1" cellpadding="2" cellspacing="0">
+		<table width="400" border="1" cellpadding="2" cellspacing="0" id="respuestas">
 		<tr bgcolor="#CCCCCC">
 			<td width="240">Texto</td>
 			<td width="60">&nbsp;</td>

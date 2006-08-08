@@ -38,25 +38,25 @@ function updateTableLinks(rowNum){
 
 function editRow(rowNum){
 	currentRow = rowNum;
-	window.open("answerUpdate01.jsp","testingUp","");
+	popModal("answerUpdate01.jsp","testingUp");
 }
 
 function updateRow(name, value){
-	var table =	document.getElementById("preguntas");
+	var table =	document.getElementById("respuestas");
 	var row = table.rows[currentRow];
 	row.cells[0].innerHTML=name;
 	row.cells[1].innerHTML=value;
 }
 
 function getCellValue(cellPos){
-	var table =	document.getElementById("preguntas");
+	var table =	document.getElementById("respuestas");
 	var row = table.rows[currentRow];
 	return row.cells[cellPos].innerHTML;
 }
 
 function addRow(name, value){
 
-var table = document.getElementById("preguntas");
+var table = document.getElementById("respuestas");
 var lastRow = table.rows.length;
 var row = table.insertRow(lastRow);
   
@@ -89,7 +89,7 @@ var row = table.insertRow(lastRow);
 
 <body style="background-color: #FFFFFF;">
 <br>
-<table width="550" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF" id="respuestas">
+<table width="550" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
 <form method="POST" name="formMain">
 <tr>
 	<td colspan="2" align="center" bgcolor="#CCCCCC">Main</td>
@@ -120,7 +120,7 @@ var row = table.insertRow(lastRow);
 <tr>
 	<td width="150" align="left">Agregar Respuesta</td>
 	<td width="400" align="left">
-		<input type="button" name="" value=">>" onClick="popModal('AnswerNew01.jsp',250,420,0);"/>&nbsp;
+		<input type="button" name="" value=">>" onClick="popModal('AnswerNew01.jsp','AnswerNew0111',250,420,0);"/>&nbsp;
 	</td>
 </tr>
 <tr>
@@ -131,7 +131,7 @@ var row = table.insertRow(lastRow);
 </tr>
 <tr>
 	<td colspan="2" align="center">
-		<table width="450" border="1" cellpadding="2" cellspacing="0">
+		<table width="450" border="1" cellpadding="2" cellspacing="0" id="respuestas">
 		<tr bgcolor="#CCCCCC">
 			<td width="240">Texto</td>
 			<td width="50">Valor</td>

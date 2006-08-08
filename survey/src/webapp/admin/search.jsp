@@ -53,12 +53,12 @@ a:active {
 
   </tr>
   <tr>
-    <td width="780" height="20" align="center"><a href="Index.html">Home</a> | <a href="SurveyNew.html">Nuevo Cuestionario</a> | <a href="SurveyList.html">Listar Cuestionarios</a> | <a href="#">Logout</a></td>
+    <td width="780" height="20" align="center"><a href="index.html">Home</a> | <a href="survey.do">Nuevo Cuestionario</a> | <a href="search.do">Listar Cuestionarios</a> | <a href="#">Logout</a></td>
   </tr>
 
   <tr>
     <td width="780" height="420" align="center" valign="top">
-    <html:form action="/admin/searchAction">
+    <html:form action="/admin/search">
 	<html:hidden property="method" value="" />
 		<table width="100%" border="0" cellpadding="2" cellspacing="0">
 		<tr>
@@ -129,12 +129,12 @@ a:active {
 					<td align="left"><a href="#">${ survey.name }</a></td>
 					<td><%= new SimpleDateFormat("dd/mm/yyyy").format(survey.getCreationDate().getTime()) %></td>
 					<td><%= SurveyState.valueOf(survey.getStatus()).getDescription() %></td>
-					<td><a href="editAction.do?name=<%= survey.getName() %>">Editar</a></td>
-					<td><a href="deleteAction.do?name=<%= survey.getName() %>" onclick="confirm('Confirma la baja del cuestionario?');">Borrar</a></td>
+					<td><a href="survey.do?name=<%= survey.getName() %>">Editar</a></td>
+					<td><a href="search.do?name=<%= survey.getName() %>" onclick="confirm('Confirma la baja del cuestionario?');">Borrar</a></td>
 				</tr>
 				</c:forEach>
 				<tr>
-					<td colspan="6" align="right"><a href="SurveyNew.html">Nuevo Cuestionario</a></td>
+					<td colspan="6" align="right"><a href="survey.do">Nuevo Cuestionario</a></td>
 				</tr>
 				</table>
 

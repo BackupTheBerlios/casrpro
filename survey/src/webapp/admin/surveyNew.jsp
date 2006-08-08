@@ -7,7 +7,7 @@
  var currentRow = 0;
 
 function addNewCuota(){
- popModal('quotaNew.jsp');
+ popModal('quotaNew.jsp','newQuota');
 }
 
 function deleteRow(rowNum){
@@ -31,7 +31,7 @@ function updateTableLinks(rowNum){
 
 function editRow(rowNum){
 	currentRow = rowNum;
-	popModal("quotaUpdate.jsp");
+	popModal("quotaUpdate.jsp", "quotaUpdater");
 }
 
 function updateRow(name, count){
