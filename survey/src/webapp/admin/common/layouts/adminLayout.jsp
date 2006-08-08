@@ -3,9 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Panel de Opiniones</title>
-<link href="css/css.css" rel="stylesheet" type="text/css">
+<link href="../css/css.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" type="text/javascript" src="../js/simpleAjax.js"></script>
+<script language="JavaScript" type="text/javascript" src="../js/common.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
+
 -->
 </script>
 </head>
