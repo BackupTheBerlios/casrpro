@@ -89,15 +89,12 @@ public class RegistrationComponent implements IRegistrationComponent {
 	private String generateToken(Person r) {
 		
 		StringBuilder token = new StringBuilder();
-//		Calendar today = Calendar.getInstance();
-//		token.append(today.get(Calendar.DAY_OF_WEEK));
-//		token.append(today.get(Calendar.MONTH));
-//		token.append(today.get(Calendar.YEAR));
 		token.append(Math.random());
 		token.append(r.getEmail().hashCode());
 		token.append(System.currentTimeMillis());
-		
-		return Base64.encodeObject(token.toString());
+		String result = Base64.encodeObject(token.toString());
+		// Added a replacer for equals values causing the outlooks email clients to break link
+		return result.replace('=', '3');
 		
 	}
 
