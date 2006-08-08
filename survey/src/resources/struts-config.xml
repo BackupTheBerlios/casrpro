@@ -61,6 +61,7 @@
    		    <forward name="newSurvey" path=".newSurvey"/>
    		    <forward name="newSection" path=".newSection"/>
    		    <forward name="persistOk" path=".persistOk"/>
+   		    <forward name="popOpen" path="/admin/popUp/QuestionNew01.jsp"/>
 		</action>
 		
 		<action
