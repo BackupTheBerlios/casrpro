@@ -36,41 +36,48 @@ public class SearchAction extends DispatchAction {
 		// verify which filter has been posted
 		int switchFlag = 0;
 		SearchForm sform = (SearchForm) form;
-		if (sform.getId() != null && !sform.getId().equals(""))
-			switchFlag++;
-
+		
 		if (sform.getName() != null && !sform.getName().equals(""))
-			switchFlag += 2;
+			switchFlag += 1;
 
 		if (sform.getCreationDate() != null
 				&& !sform.getCreationDate().equals(""))
-			switchFlag += 4;
+			switchFlag += 2;
 
 		if (sform.getStatus() != null && !sform.getStatus().equals(""))
-			switchFlag += 8;
+			switchFlag += 4;
 
 		Collection surveys = null;
 		
 		switch (switchFlag) {
 
 		case 1:
-			surveys = searchFacade.getSurveysByID(sform.getId());
-			break;
-
-		case 2:
 			surveys = searchFacade.getSurveysByName(sform.getName());
 			break;
 
-		case 4:
+		case 2:
 			surveys = searchFacade.getSurveysByCreationDate(sform.getCreationDate());
 			break;
-
-		case 8:
+			
+		case 3:
+			surveys = searchFacade.getSurveysByNameAndCreationDate(sform.getName(), sform.getCreationDate());
+			break;
+			
+		case 4:
 			surveys = searchFacade.getSurveysByStatus(sform.getStatus());
 			break;
+			
+		case 5:
+			surveys = searchFacade.getSurveysByNameAndStatus(sform.getName(), sform.getStatus());
+			break;
+
+		case 6:
+			surveys = searchFacade.getSurveysByCreationDateAndStatus(sform.getCreationDate(), sform.getStatus());
+			break;
+
 
 		default:
-			surveys = searchFacade.getSurveysByFullDescription(sform.getId(), sform
+			surveys = searchFacade.getSurveysByFullDescription(sform
 					.getName(), sform.getCreationDate(), sform.getStatus());
 
 		}

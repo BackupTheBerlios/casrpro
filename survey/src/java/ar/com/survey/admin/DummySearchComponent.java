@@ -16,7 +16,6 @@ public class DummySearchComponent implements ISearchComponent {
 		survey.setFinishDate(Calendar.getInstance());
 		survey.setName("Survey inicial");
 		survey.setStatus(SurveyState.OPEN.getCode());
-		survey.setId(1);
 		al.add(survey);
 		
 		survey = new Survey();
@@ -24,7 +23,6 @@ public class DummySearchComponent implements ISearchComponent {
 		survey.setFinishDate(Calendar.getInstance());
 		survey.setName("Survey segundo");
 		survey.setStatus(SurveyState.OPEN.getCode());
-		survey.setId(2);
 		al.add(survey);
 		
 		survey = new Survey();
@@ -32,7 +30,6 @@ public class DummySearchComponent implements ISearchComponent {
 		survey.setFinishDate(Calendar.getInstance());
 		survey.setName("Survey tercero");
 		survey.setStatus(SurveyState.CLOSED.getCode());
-		survey.setId(3);
 		al.add(survey);
 		
 		return al;
@@ -50,8 +47,20 @@ public class DummySearchComponent implements ISearchComponent {
 		return getSurveysByID("123");
 	}
 
-	public Collection getSurveysByFullDescription(String id, String name,
+	public Collection getSurveysByFullDescription(String name,
 			String date, String statusCode) {
+		return getSurveysByID("123");
+	}
+
+	public Collection getSurveysByNameAndStatus(String name, String status) {
+		return getSurveysByID("123");
+	}
+
+	public Collection getSurveysByNameAndCreationDate(String name, String creationDate) {
+		return getSurveysByID("123");
+	}
+
+	public Collection getSurveysByCreationDateAndStatus(String creationDate, String status) {
 		return getSurveysByID("123");
 	}
 

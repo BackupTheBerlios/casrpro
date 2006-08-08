@@ -13,14 +13,6 @@ public interface ISearchComponent {
 	
 	/**
 	 * 
-	 * @param id filter to search for
-	 * @return Collection of survey objects found for the supplied id
-	 *  
-	 */
-	public Collection getSurveysByID(String id);
-	
-	/**
-	 * 
 	 * @param name filter to search for
 	 * @return Collection of survey objects found for the supplied name
 	 * 
@@ -52,6 +44,31 @@ public interface ISearchComponent {
 	 * @return Collection of survey objects found for the supplied filters
 	 * 
 	 */
-	public Collection getSurveysByFullDescription(String id, String name, String date, String statusCode);
+	public Collection getSurveysByFullDescription(String name, String date, String statusCode);
+	
+	/**
+	 * 
+	 * @param name
+	 * @param status
+	 * @return
+	 */
+	public Collection getSurveysByNameAndStatus(String name, String status);
+	
+	
+	/**
+	 * 
+	 * @param name
+	 * @param creationDate
+	 * @return
+	 */
+	public Collection getSurveysByNameAndCreationDate(String name, String creationDate);
+	
+	/**
+	 * 
+	 * @param creationDate
+	 * @param status
+	 * @return
+	 */
+	public Collection getSurveysByCreationDateAndStatus(String creationDate, String status);
 	
 }

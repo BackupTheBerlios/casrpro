@@ -13,7 +13,7 @@ public class SearchForm extends BaseForm {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String id, name, creationDate, status;
+	private String name, creationDate, status;
 
 	public String getCreationDate() {
 		return creationDate;
@@ -21,14 +21,6 @@ public class SearchForm extends BaseForm {
 
 	public void setCreationDate(String creationDate) {
 		this.creationDate = creationDate;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -62,8 +54,7 @@ public class SearchForm extends BaseForm {
 
 			// Verify that at least one filter value has been posted
 			
-			if ( (getId() == null || getId().length() < 1)
-					&& (getStatus() == null || getStatus().length()<1)
+			if ( getStatus() == null || getStatus().length()<1 
 					&& (getName() == null || getName().length()<1)
 					&& (getCreationDate() == null || getCreationDate().length()<1) ){
 				errors.add("searchFilters", new ActionMessage(

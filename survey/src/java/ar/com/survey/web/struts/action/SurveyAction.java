@@ -53,4 +53,42 @@ public class SurveyAction extends DispatchAction {
 		return mapping.findForward("persistOk");
 	}
 	
+	public ActionForward popup(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		return mapping.findForward("popOpen");
+	}
+	
+	/* Quota management methods */
+	
+	public ActionForward addQuotaToSessionSurvey(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+			new SurveyWebComponent().addQuotaToSessionSurvey(request);
+		return null;
+	}
+	
+	public ActionForward updateQuotaInSessionSurvey(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+			new SurveyWebComponent().updateQuotaInSessionSurvey(request);
+		return null;
+	}
+	
+	public ActionForward removeQuotaInSessionSurvey(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+			new SurveyWebComponent().removeQuotaInSessionSurvey(request);
+		return null;
+	}
+	
+	/* Question management methods */
+	
+	public ActionForward addQuestionToSessionSection(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+			new SurveyWebComponent().addQuestionToSessionSection(request);
+		return null;
+	}
+	
 }
