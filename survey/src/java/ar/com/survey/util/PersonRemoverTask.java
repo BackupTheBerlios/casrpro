@@ -12,7 +12,7 @@ public class PersonRemoverTask extends TimerTask {
 	 * task to run, overrides default run method
 	 */
 	public void run() {
-		logger.info("Ejecucion del limpiador: " + System.currentTimeMillis());
+//		logger.info("Ejecucion del limpiador: " + System.currentTimeMillis());
 	}
 
 }

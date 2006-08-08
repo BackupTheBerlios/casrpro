@@ -11,12 +11,12 @@ public class DbPropsImpl implements IDbProps {
 				+ "vaya a este link $link");
 		props = new Properties();
 		props.setProperty("EmailHost", "localhost");
-		props.setProperty("EmailUser", "cpetronio");
-		props.setProperty("EmailPass", "carspro");
+//		props.setProperty("EmailUser", "cpetronio");
+//		props.setProperty("EmailPass", "carspro");
 		props.setProperty("EmailText", emailText);
-		props.setProperty("EmailFrom", "cpetronio@carspro.com");
+		props.setProperty("EmailFrom", "info@paneldeopiniones.com");
 		props.setProperty("EmailSubject", "Envío de confirmación");
-		props.setProperty("Url", "http://localhost:8081/survey/registerAction.do?method=confirmReg");
+		props.setProperty("Url", "http://www.paneldeopiniones.com/survey/registerAction.do?method=confirmReg");
 	}
 	
 	public String getValue(String key) {
