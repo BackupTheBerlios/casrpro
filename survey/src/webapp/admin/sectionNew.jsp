@@ -11,18 +11,33 @@ function submitForm(hiddenValue){
 
 function selectQuestion() {
 	var url;
+	var windowHeight = 500;
 
 	switch (document.forms[0].questionType.selectedIndex) {
-		case 0: alert('Seleccione un tipo de pregunta'); return false; break;
-		case 1: url = 'popUp/QuestionNew04.jsp'; break;
-		case 2: url = 'popUp/QuestionNew03.jsp'; break;
-		case 3: url = 'popUp/QuestionNew01.jsp'; break;
-		case 4: url = 'popUp/QuestionNew02.jsp'; break;
-		case 5: url = 'popUp/QuestionNew05.jsp'; break;
-		case 6: url = 'popUp/QuestionNew01.jsp'; break;
+		case 0: alert('Seleccione un tipo de pregunta'); 
+				return false; 
+				break;
+		case 1: url = 'popUp/QuestionNew04.jsp'; 
+				break;
+		case 2: url = 'popUp/QuestionNew03.jsp'; 
+				windowHeight = 650;
+				break;
+		case 3: url = 'popUp/QuestionNew06.jsp'; 
+				windowHeight = 600;
+				break;
+		case 4: url = 'popUp/QuestionNew02.jsp'; 
+				windowHeight = 600;
+				break;
+		case 5: url = 'popUp/QuestionNew05.jsp'; 
+				break;
+		case 6: url = 'popUp/QuestionNew01.jsp'; 
+				windowHeight = 600;
+				break;
 	}
 
-	popModal(url,"popQuestion",540,600,1);
+	
+
+	popModal(url,"popQuestion",windowHeight,600,1);
 }
 
 function deleteRow(rowNum){
