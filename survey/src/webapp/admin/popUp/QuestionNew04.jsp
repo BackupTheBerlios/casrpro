@@ -3,7 +3,8 @@
 <head>
 <title>Nueva Pregunta</title>
 <link href="../../css/css.css" rel="stylesheet" type="text/css">
-
+<script language="JavaScript" src="../../js/common.js"></script>
+<script language="JavaScript" src="../../js/validations.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 function fillOpenerRow(){
@@ -30,7 +31,7 @@ function fillOpenerRow(){
 </tr>
 <tr>
 	<td width="150" align="left">Sección</td>
-	<td width="400" align="left">Sección 3</td>
+	<td width="400" align="left"><script type="text/javascript" language="JavaScript">document.write(opener.document.forms[0].sectionName.value);</script></td>
 </tr>
 <tr>
 	<td width="150" align="left">Tipo de Pregunta</td>
@@ -46,15 +47,15 @@ function fillOpenerRow(){
 </tr>
 <tr>
 	<td width="150" align="left">Pregunta</td>
-	<td width="400" align="left"><textarea cols="50" rows="5"></textarea></td>
+	<td width="400" align="left"><textarea cols="50" rows="5" name="question"></textarea></td>
 </tr>
 <tr>
 	<td width="150" align="left">Tipo de Respuesta</td>
 	<td width="400" align="left">
-		<select name="">
+		<select name="answerType">
 			<option value="">Seleccione un Tipo de Respuesta</option>
-			<option value="">Textarea</option>
-			<option value="">Textbox</option>
+			<option value="textArea">Textarea</option>
+			<option value="textBox">Textbox</option>
 		</select>
 	</td>
 </tr>
@@ -63,7 +64,7 @@ function fillOpenerRow(){
 </tr>
 <tr>
 	<td colspan="2" align="right">
-		<input type="button" name="" value="Aceptar" onClick="fillOpenerRow();"/>&nbsp;
+		<input type="button" name="" value="Aceptar" onClick="verifySimple();"/>&nbsp;
 		<input type="button" name="" value="Cancelar" onClick="window.close();"/>&nbsp;
 	</td>
 </tr>

@@ -3,42 +3,21 @@
 <head>
 <title>Nueva Pregunta</title>
 <link href="../../css/css.css" rel="stylesheet" type="text/css">
-<script language="JavaScript" src="../../js/validations.js"></script>
 <script language="JavaScript" src="../../js/common.js"></script>
-<script language="JavaScript" type="text/javascript" src="../../js/functions.js"></script>
+<script language="JavaScript" src="../../js/validations.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
-function selectTipo(obj) {
-	var dn = getObject('divNone');
-	var di = getObject('divInd');
-	var dt = getObject('divTot');
-
-	switch (obj.selectedIndex) {
-		case 0:
-			hideLayer(di); hideLayer(dt); showLayer(dn);
-		break;
-		case 1:
-			hideLayer(dn); hideLayer(dt); showLayer(di);
-		break;
-		case 2:
-			hideLayer(dn); hideLayer(di); showLayer(dt);
-		break;
-		default:
-			hideLayer(di); hideLayer(dt); showLayer(dn);
-		break;
-	}
-}
-
-function fillOpenerRow(){
+	function fillOpenerRow(){
 		var name = document.forms[0].name.value;
-		var type = "Numérica";
+		var type = "Múltiple";
 		if (window.opener && !window.opener.closed){
 			window.opener.addRow(name, type);
 		}
 		window.close();
 	}
 	
-	var currentRow = 0;
+
+var currentRow = 0;
 
 function deleteRow(rowNum){
 	if(confirm('Seguro desea borrar la respuesta seleccionada?')){
@@ -60,7 +39,7 @@ function updateTableLinks(rowNum){
 
 function editRow(rowNum){
 	currentRow = rowNum;
-	popModal('AnswerUpdate01.jsp','AnswerUpdate011',150,420,0)
+	popModal('AnswerUpdate01.jsp','AnswerUpNew11',150,420,0)
 }
 
 function updateRow(name){
@@ -84,7 +63,7 @@ var row = table.insertRow(lastRow);
   // right cell
   var cellName = row.insertCell(0);
   cellName.innerHTML = name;
-   
+  
   // edit cell
   
   var cellEdit = row.insertCell(1);
@@ -96,7 +75,9 @@ var row = table.insertRow(lastRow);
 	var cellDelete = row.insertCell(2);
 	var deleteLink = "<a href='javascript:deleteRow(" + lastRow + ");'>Borrar</a>"; 
 	cellDelete.innerHTML = deleteLink ;
+	
 }
+
 -->
 </script>
 </head>
@@ -106,84 +87,46 @@ var row = table.insertRow(lastRow);
 <table width="550" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
 <form method="POST" name="formMain">
 <tr>
-	<td colspan="3" align="center" bgcolor="#CCCCCC">Main</td>
+	<td colspan="2" align="center" bgcolor="#CCCCCC">Main</td>
 </tr>
 <tr>
-	<td colspan="3">&nbsp;</td>
+	<td colspan="2">&nbsp;</td>
 </tr>
 <tr>
 	<td width="150" align="left">Sección</td>
-	<td colspan="2" align="left"><script type="text/javascript" language="JavaScript">document.write(opener.document.forms[0].sectionName.value);</script></td>
+	<td width="400" align="left"><script type="text/javascript" language="JavaScript">document.write(opener.document.forms[0].sectionName.value);</script></td>
 </tr>
 <tr>
 	<td width="150" align="left">Tipo de Pregunta</td>
-	<td colspan="2" align="left">Numérica</td>
+	<td width="400" align="left">Múltiple</td>
 </tr>
 <tr>
 	<td width="150" align="left">Nombre</td>
-	<td colspan="2" align="left"><input type="text" name="name" size="50" /></td>
+	<td width="400" align="left"><input type="text" name="name" size="50" /></td>
 </tr>
 <tr>
 	<td width="150" align="left">Imagen Asociada</td>
-	<td colspan="2" align="left"><input type="text" name="image" /></td>
+	<td width="400" align="left"><input type="text" name="image" /></td>
 </tr>
 <tr>
 	<td width="150" align="left">Pregunta</td>
-	<td colspan="2" align="left"><textarea cols="50" rows="5" name="question"></textarea></td>
-</tr>
-<tr>
-	<td width="150" align="left">Validación</td>
-	<td width="80" align="left">
-		<select name="validationType" onChange="selectTipo(this);">
-			<option value="none">Ninguna</option>
-			<option value="individual">Individual</option>
-			<option value="total">Total</option>
-		</select>
-	</td>
-	<td width="320" align="left">
-		<div id="divNone">
-		<table width="320" border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td width="320" align="left">&nbsp;</td>
-		</tr>
-		</table>
-		</div>
-		<div id="divInd" style="display:none;">
-		<table width="320" border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td width="75" align="left">Mínimo</td>
-			<td width="75" align="left"><input type="text" name="min" size="6" /></td>
-			<td width="20" align="left">&nbsp;</td>
-			<td width="75" align="left">Máximo</td>
-			<td width="75" align="left"><input type="text" name="max" size="6" /></td>
-		</tr>
-		</table>
-		</div>
-		<div id="divTot" style="display:none;">
-		<table width="320" border="0" cellspacing="0" cellpadding="0">
-		<tr>
-			<td width="75" align="left">Total</td>
-			<td width="245" align="left"><input type="text" name="total" size="6" /></td>
-		</tr>
-		</table>
-		</div>
-	</td>
+	<td width="400" align="left"><textarea cols="50" rows="5" name="question"></textarea></td>
 </tr>
 <tr>
 	<td width="150" align="left">Agregar Respuesta</td>
-	<td colspan="2" align="left">
-		<input type="button" name="" value=">>" onClick="popModal('AnswerNew01.jsp','newAnsd123',150,420,0);"/>&nbsp;
+	<td width="400" align="left">
+		<input type="button" name="" value=">>" onClick="popModal('AnswerNew01.jsp','AnswerNew11',150,420,0);"/>&nbsp;
 	</td>
 </tr>
 <tr>
-	<td colspan="3">&nbsp;</td>
+	<td colspan="2">&nbsp;</td>
 </tr>
 <tr>
-	<td colspan="3" align="center" bgcolor="#CCCCCC">Respuestas</td>
+	<td colspan="2" align="center" bgcolor="#CCCCCC">Respuestas</td>
 </tr>
 <tr>
-	<td colspan="3" align="center">
-		<table width="400" border="1" cellpadding="2" cellspacing="0" id="respuestas">
+	<td colspan="2" align="center">
+		<table width="450" border="1" cellpadding="2" cellspacing="0" id="respuestas">
 		<tr bgcolor="#CCCCCC">
 			<td width="240">Texto</td>
 			<td width="60">&nbsp;</td>
@@ -193,13 +136,13 @@ var row = table.insertRow(lastRow);
 	</td>
 </tr>
 <tr>
-	<td colspan="3" align="right">
-		<input type="button" name="" value="Aceptar" onClick="verifyNumeric();"/>&nbsp;
+	<td colspan="2" align="right">
+		<input type="button" name="" value="Aceptar" onClick="verifyUnique();"/>&nbsp;
 		<input type="button" name="" value="Cancelar" onClick="window.close();"/>&nbsp;
 	</td>
 </tr>
 <tr>
-	<td colspan="3">&nbsp;</td>
+	<td colspan="2">&nbsp;</td>
 </tr>
 </form>
 </table>

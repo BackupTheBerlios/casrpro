@@ -2,16 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Nueva Respuesta</title>
-<link href="css/css.css" rel="stylesheet" type="text/css">
+<link href="../../css/css.css" rel="stylesheet" type="text/css">
 <script language="JavaScript" src="../../js/common.js"></script>
+<script language="JavaScript" src="../../js/validations.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 	
 	function fillOpenerRow(){
 		var name = document.forms[0].name.value;
-		var value = document.forms[0].value.value;
 		if (window.opener && !window.opener.closed){
-			window.opener.addRow(name, value);
+			window.opener.addRow(name);
 		}
 		window.close();
 	}
@@ -34,15 +34,11 @@
 	<td width="250" align="left"><input type="text" name="name" size="50" /></td>
 </tr>
 <tr>
-	<td width="150" align="left">Valor</td>
-	<td width="250" align="left"><input type="text" name="value" /></td>
-</tr>
-<tr>
 	<td colspan="2">&nbsp;</td>
 </tr>
 <tr>
 	<td colspan="2" align="right">
-		<input type="button" name="" value="Aceptar" onClick="fillOpenerRow();"/>&nbsp;
+		<input type="button" name="" value="Aceptar" onClick="verifyText();"/>&nbsp;
 		<input type="button" name="" value="Cancelar" onClick="window.close();"/>&nbsp;
 	</td>
 </tr>

@@ -4,6 +4,7 @@
 <title>Nueva Pregunta</title>
 <link href="../../css/css.css" rel="stylesheet" type="text/css">
 <script language="JavaScript" src="../../js/common.js"></script>
+<script language="JavaScript" src="../../js/validations.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 	function fillOpenerRow(){
@@ -21,7 +22,6 @@ var currentRow = 0;
 function deleteRow(rowNum){
 	if(confirm('Seguro desea borrar la respuesta seleccionada?')){
 		document.getElementById("respuestas").deleteRow(rowNum);
-		removeQuotaInSessionSurvey(rowNum);
 		updateTableLinks(rowNum);
 	}
 }
@@ -31,22 +31,21 @@ function updateTableLinks(rowNum){
 	for(i=rowNum;i<table.rows.length;i++){	
 		var row = table.rows[i];
 		var editLink = "<a href='javascript:editRow(" + i + ");'>Editar</a>"; 
-		row.cells[2].innerHTML=editLink;
+		row.cells[1].innerHTML=editLink;
 		var deleteLink = "<a href='javascript:deleteRow(" + i + ");'>Borrar</a>";
-		row.cells[3].innerHTML=deleteLink;
+		row.cells[2].innerHTML=deleteLink;
 	}
 }
 
 function editRow(rowNum){
 	currentRow = rowNum;
-	popModal("answerUpdate01.jsp", "answerQuestionUpdater");
+	popModal('AnswerUpdate01.jsp','AnswerUpdate11',150,420,0);
 }
 
-function updateRow(name, value){
+function updateRow(name){
 	var table =	document.getElementById("respuestas");
 	var row = table.rows[currentRow];
 	row.cells[0].innerHTML=name;
-	row.cells[1].innerHTML=value;
 }
 
 function getCellValue(cellPos){
@@ -55,7 +54,7 @@ function getCellValue(cellPos){
 	return row.cells[cellPos].innerHTML;
 }
 
-function addRow(name, value){
+function addRow(name){
 
 var table = document.getElementById("respuestas");
 var lastRow = table.rows.length;
@@ -65,19 +64,15 @@ var row = table.insertRow(lastRow);
   var cellName = row.insertCell(0);
   cellName.innerHTML = name;
   
-  // select cell
-  var cellValue = row.insertCell(1);
-  cellValue.innerHTML = value;
-  
   // edit cell
   
-  var cellEdit = row.insertCell(2);
+  var cellEdit = row.insertCell(1);
   var editLink = "<a href='javascript:editRow(" + lastRow + ");'>Editar</a>"; 
   cellEdit.innerHTML = editLink;
   
   // delete cell
   
-	var cellDelete = row.insertCell(3);
+	var cellDelete = row.insertCell(2);
 	var deleteLink = "<a href='javascript:deleteRow(" + lastRow + ");'>Borrar</a>"; 
 	cellDelete.innerHTML = deleteLink ;
 	
@@ -99,7 +94,7 @@ var row = table.insertRow(lastRow);
 </tr>
 <tr>
 	<td width="150" align="left">Sección</td>
-	<td width="400" align="left">Sección 3</td>
+	<td width="400" align="left"><script type="text/javascript" language="JavaScript">document.write(opener.document.forms[0].sectionName.value);</script></td>
 </tr>
 <tr>
 	<td width="150" align="left">Tipo de Pregunta</td>
@@ -115,12 +110,12 @@ var row = table.insertRow(lastRow);
 </tr>
 <tr>
 	<td width="150" align="left">Pregunta</td>
-	<td width="400" align="left"><textarea cols="50" rows="5"></textarea></td>
+	<td width="400" align="left"><textarea cols="50" rows="5" name="question"></textarea></td>
 </tr>
 <tr>
 	<td width="150" align="left">Agregar Respuesta</td>
 	<td width="400" align="left">
-		<input type="button" name="" value=">>" onClick="popModal('AnswerNew01.jsp','AnswerNew11',250,420,0);"/>&nbsp;
+		<input type="button" name="" value=">>" onClick="popModal('AnswerNew01.jsp','AnswerNew11',150,420,0);"/>&nbsp;
 	</td>
 </tr>
 <tr>
@@ -134,7 +129,6 @@ var row = table.insertRow(lastRow);
 		<table width="450" border="1" cellpadding="2" cellspacing="0" id="respuestas">
 		<tr bgcolor="#CCCCCC">
 			<td width="240">Texto</td>
-			<td width="50">Valor</td>
 			<td width="60">&nbsp;</td>
 			<td width="60">&nbsp;</td>
 		</tr>
@@ -143,7 +137,7 @@ var row = table.insertRow(lastRow);
 </tr>
 <tr>
 	<td colspan="2" align="right">
-		<input type="button" name="" value="Aceptar" onClick="fillOpenerRow();"/>&nbsp;
+		<input type="button" name="" value="Aceptar" onClick="verifyUnique();"/>&nbsp;
 		<input type="button" name="" value="Cancelar" onClick="window.close();"/>&nbsp;
 	</td>
 </tr>
