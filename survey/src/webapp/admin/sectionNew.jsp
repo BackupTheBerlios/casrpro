@@ -35,8 +35,6 @@ function selectQuestion() {
 				break;
 	}
 
-	
-
 	popModal(url,"popQuestion",windowHeight,600,1);
 }
 
@@ -50,9 +48,15 @@ function editRow(rowNum){
 	currentRow = rowNum;
 	var table =	document.getElementById("preguntas");
 	var row = table.rows[rowNum];
-	var type = row.cells[2].innerHTML;
-	var url = "survey.do?method=popup&row=" + rowNum + "&type=" + type;
+	var url = "survey.do?method=getQuestionFromSection&row=" + rowNum;
 	popModal(url,"editRowQuestion");
+}
+
+function updateRow(name, type){
+	var table =	getElement("preguntas");
+	var row = table.rows[currentRow];
+	row.cells[1].innerHTML=name;
+	row.cells[2].innerHTML=type;
 }
 
 function addRow(name, type){
@@ -85,6 +89,23 @@ function addRow(name, type){
 	cellDelete.innerHTML = deleteLink ;
 	
 } 
+
+function removeQuestionInSessionSection(row){
+
+	var req = newXMLHttpRequest();
+    var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+    req.onreadystatechange = handlerFunction;
+  
+    var urlAjax = "survey.do?method=removeQuestionInSessionSection&row=" + row ;
+    req.open("GET", urlAjax, true);
+  
+    req.send("");
+    
+}
+
+function getCurrentRow(){
+	return currentRow;
+}
 
 --></script>
 		<table width="100%" border="0" cellpadding="2" cellspacing="0">

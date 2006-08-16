@@ -2,6 +2,7 @@ package ar.com.survey.web.component;
 
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,8 @@ import ar.com.survey.model.Question;
 import ar.com.survey.model.Quota;
 import ar.com.survey.model.Section;
 import ar.com.survey.model.Survey;
+import ar.com.survey.questions.single.StringQuestion;
+import ar.com.survey.questions.single.TextAreaQuestion;
 import ar.com.survey.util.Transformer;
 import ar.com.survey.web.struts.form.SurveyForm;
 
@@ -150,6 +153,85 @@ public class SurveyWebComponent {
 		session.setAttribute("currentSurvey", survey);
 	}
 	
+	public void addOpenQuestionToSection(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Section section = (Section) session.getAttribute("currentSection");
+		String name = request.getParameter("name");
+		String image = request.getParameter("image");
+		
+		// TODO Claudio: verificar que pasa con la imagen, donde se persiste...
+		
+		String questionText = request.getParameter("quesTxt");
+		String answerType = request.getParameter("txtType");
+		
+		// now parse different params depending on the type
+		Question question = null;
+		
+		if(answerType.equals("textArea"))
+			question = new TextAreaQuestion();
+		else
+			question = new StringQuestion();
+		
+		question.setDescription(questionText);
+		question.setSection(section);
+		question.setTitle(name);
+
+		List<Question> quests = section.getQuestions();
+		quests.add(question);
+		
+		section.setQuestions(quests);
+		
+		session.setAttribute("currentSection", section);
+	}
+	
+	public Question getQuestionFromSection(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Section section = (Section) session.getAttribute("currentSection");
+		int rowId = Integer.parseInt(request.getParameter("row"));
+		rowId--;
+		
+		Question question = null;
+		List<Question> quests = section.getQuestions();
+		question = quests.get(rowId);
+		
+		return question;
+	}
+	
+	public void updateOpenQuestionInSection(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Section section = (Section) session.getAttribute("currentSection");
+		String name = request.getParameter("name");
+		String image = request.getParameter("image");
+		
+		
+		// TODO Claudio: verificar que pasa con la imagen, donde se persiste...
+		
+		String questionText = request.getParameter("quesTxt");
+		String answerType = request.getParameter("txtType");
+		int rowId = Integer.parseInt(request.getParameter("row"));
+		rowId--;
+		
+		// now parse different params depending on the type
+		Question question = null;
+		
+		if(answerType.equals("textArea"))
+			question = new TextAreaQuestion();
+		else
+			question = new StringQuestion();
+		
+		question.setDescription(questionText);
+		question.setSection(section);
+		question.setTitle(name);
+
+		List<Question> quests = section.getQuestions();
+		quests.set(rowId, question);
+		
+		section.setQuestions(quests);
+		
+		session.setAttribute("currentSection", section);
+	}
+	
+	/*
 	public void addQuestionToSessionSection(HttpServletRequest request){
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
@@ -163,6 +245,6 @@ public class SurveyWebComponent {
 		// Question question = new Question(section);
 		
 		session.setAttribute("currentSection", section);
-	}
+	} */
 	
 }
