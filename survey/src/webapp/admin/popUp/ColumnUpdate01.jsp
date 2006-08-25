@@ -5,12 +5,16 @@
 <link href="../../css/css.css" rel="stylesheet" type="text/css">
 <script language="JavaScript" src="../../js/common.js"></script>
 <script language="JavaScript" src="../../js/validations.js"></script>
+<script language="JavaScript" src="../../js/simpleAjax.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 	
 	function fillOpenerCol(){
 		var name = document.forms[0].name.value;
+		var row;
 		if (window.opener && !window.opener.closed){
+			row = window.opener.getCurrentRow();
+			updateColumnInSession(row, name);
 			window.opener.updateCol(name);
 		}
 		window.close();
@@ -20,6 +24,23 @@
 		if (window.opener && !window.opener.closed){
 			document.forms[0].name.value = window.opener.getColCellValue(0);
 		}
+	}
+	
+	function updateColumnInSession(row, value){
+  
+	  var req = newXMLHttpRequest();
+  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+      req.onreadystatechange = handlerFunction;
+  	
+      // Third parameter specifies request is asynchronous.
+      req.open("POST", "../survey.do?method=updateColumnInSession", true);
+
+      // Specify that the body of the request contains form data
+      req.setRequestHeader("Content-Type", 
+                       "application/x-www-form-urlencoded");
+
+      req.send("row=" + row + "&column=" + value);
+      
 	}
 -->
 </script>

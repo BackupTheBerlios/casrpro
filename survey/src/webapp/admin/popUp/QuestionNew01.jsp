@@ -5,11 +5,16 @@
 <link href="../../css/css.css" rel="stylesheet" type="text/css">
 <script language="JavaScript" src="../../js/common.js"></script>
 <script language="JavaScript" src="../../js/validations.js"></script>
+<script language="JavaScript" type="text/javascript" src="../../js/functions.js"></script>
+<script language="JavaScript" src="../../js/simpleAjax.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 	function fillOpenerRow(){
 		var name = document.forms[0].name.value;
 		var type = "Única";
+		var image = document.forms[0].image.value;
+		var questionTxt = document.forms[0].question.value;
+		addStringListQuestionToSession(name, image, questionTxt);
 		if (window.opener && !window.opener.closed){
 			window.opener.addRow(name, type);
 		}
@@ -19,8 +24,13 @@
 
 var currentRow = 0;
 
+function getCurrentRow(){
+		return currentRow;
+	}
+	
 function deleteRow(rowNum){
 	if(confirm('Seguro desea borrar la respuesta seleccionada?')){
+		removeAnswerFromSession(rowNum);
 		document.getElementById("respuestas").deleteRow(rowNum);
 		updateTableLinks(rowNum);
 	}
@@ -77,6 +87,43 @@ var row = table.insertRow(lastRow);
 	cellDelete.innerHTML = deleteLink ;
 	
 }
+
+// AJAX Functions
+
+
+	function removeAnswerFromSession(value){
+  
+	  var req = newXMLHttpRequest();
+  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+      req.onreadystatechange = handlerFunction;
+  	
+      // Third parameter specifies request is asynchronous.
+      req.open("POST", "../survey.do?method=removeAnswerFromSession", true);
+
+      // Specify that the body of the request contains form data
+      req.setRequestHeader("Content-Type", 
+                       "application/x-www-form-urlencoded");
+
+      req.send("row=" + value);
+      
+	}
+	
+	function addStringListQuestionToSession(name, image, questionTxt){
+  
+	  var req = newXMLHttpRequest();
+  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+      req.onreadystatechange = handlerFunction;
+  	
+      // Third parameter specifies request is asynchronous.
+      req.open("POST", "../survey.do?method=addStringListQuestionToSection", true);
+
+      // Specify that the body of the request contains form data
+      req.setRequestHeader("Content-Type", 
+                       "application/x-www-form-urlencoded");
+
+      req.send("name=" + name + "&image=" + image + "&questionTxt=" + questionTxt);
+      
+	}
 
 -->
 </script>

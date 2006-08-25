@@ -11,7 +11,7 @@
 	}
 	
 	function popModal(url,title,h,w,s) {
-			var attrs = 'height=' + h + ',width=' + w + ',resizable=no,status=no,menubar=no';
+			var attrs = 'height=' + h + ',width=' + w + ',resizable=no,status=no,menubar=no,scrollbars='+s;
 			window.open(url,title, attrs);
 	}
 	

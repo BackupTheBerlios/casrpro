@@ -15,7 +15,7 @@ function fillOpenerRow(){
 		var image = document.forms[0].image.value;
 		var quesTxt = document.forms[0].question.value;
 		var questType;
-		if(document.forms[0].answerType.selectedIndex==0)
+		if(document.forms[0].answerType.selectedIndex==1)
 			questType = "textArea";
 		else
 			questType = "textBox";

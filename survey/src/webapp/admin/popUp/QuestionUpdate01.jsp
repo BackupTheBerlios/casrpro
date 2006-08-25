@@ -1,22 +1,25 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Nueva Pregunta</title>
-<link href="../../css/css.css" rel="stylesheet" type="text/css">
-<script language="JavaScript" src="../../js/common.js"></script>
-<script language="JavaScript" src="../../js/validations.js"></script>
-<script language="JavaScript" type="text/javascript" src="../../js/functions.js"></script>
-<script language="JavaScript" src="../../js/simpleAjax.js"></script>
+<link href="../css/css.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="../js/common.js"></script>
+<script language="JavaScript" src="../js/validations.js"></script>
+<script language="JavaScript" type="text/javascript" src="../js/functions.js"></script>
+<script language="JavaScript" src="../js/simpleAjax.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 	function fillOpenerRow(){
 		var name = document.forms[0].name.value;
-		var type = "Múltiple";
+		var type = "Única";
 		var image = document.forms[0].image.value;
 		var questionTxt = document.forms[0].question.value;
+		var row;
 		if (window.opener && !window.opener.closed){
-			addCheckBoxListQuestionToSession(name, image, questionTxt);
-			window.opener.addRow(name, type);
+			row = window.opener.getCurrentRow();
+			updateStringListQuestionInSession(name, image, questionTxt, row);
+			window.opener.updateRow(name, type);
 		}
 		window.close();
 	}
@@ -27,7 +30,7 @@ var currentRow = 0;
 function getCurrentRow(){
 		return currentRow;
 	}
-
+	
 function deleteRow(rowNum){
 	if(confirm('Seguro desea borrar la respuesta seleccionada?')){
 		removeAnswerFromSession(rowNum);
@@ -49,7 +52,7 @@ function updateTableLinks(rowNum){
 
 function editRow(rowNum){
 	currentRow = rowNum;
-	popModal('AnswerUpdate01.jsp','AnswerUpNew11',150,420,0)
+	popModal('popUp/AnswerUpdate01.jsp','AnswerUpdate11',150,420,0);
 }
 
 function updateRow(name){
@@ -98,7 +101,7 @@ var row = table.insertRow(lastRow);
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "../survey.do?method=removeAnswerFromSession", true);
+      req.open("POST", "survey.do?method=removeAnswerFromSession", true);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
@@ -108,20 +111,20 @@ var row = table.insertRow(lastRow);
       
 	}
 	
-	function addCheckBoxListQuestionToSession(name, image, questionTxt){
+	function updateStringListQuestionInSession(name, image, questionTxt, row){
   
 	  var req = newXMLHttpRequest();
   	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "../survey.do?method=addCheckBoxListQuestionToSection", true);
+      req.open("POST", "survey.do?method=updateStringListQuestionInSection", true);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
 
-      req.send("name=" + name + "&image=" + image + "&questionTxt=" + questionTxt);
+      req.send("name=" + name + "&image=" + image + "&questionTxt=" + questionTxt + "&row=" + row);
       
 	}
 
@@ -145,24 +148,24 @@ var row = table.insertRow(lastRow);
 </tr>
 <tr>
 	<td width="150" align="left">Tipo de Pregunta</td>
-	<td width="400" align="left">Múltiple</td>
+	<td width="400" align="left">Unica</td>
 </tr>
 <tr>
 	<td width="150" align="left">Nombre</td>
-	<td width="400" align="left"><input type="text" name="name" size="50" /></td>
+	<td width="400" align="left"><input type="text" name="name" size="50" value="${ Question.title }" /></td>
 </tr>
 <tr>
 	<td width="150" align="left">Imagen Asociada</td>
-	<td width="400" align="left"><input type="text" name="image" /></td>
+	<td width="400" align="left"><input type="text" name="image" value="${ Question.image }" /></td>
 </tr>
 <tr>
 	<td width="150" align="left">Pregunta</td>
-	<td width="400" align="left"><textarea cols="50" rows="5" name="question"></textarea></td>
+	<td width="400" align="left"><textarea cols="50" rows="5" name="question">${ Question.description }</textarea></td>
 </tr>
 <tr>
 	<td width="150" align="left">Agregar Respuesta</td>
 	<td width="400" align="left">
-		<input type="button" name="" value=">>" onClick="popModal('AnswerNew01.jsp','AnswerNew11',150,420,0);"/>&nbsp;
+		<input type="button" name="" value=">>" onClick="popModal('popUp/AnswerNew01.jsp','AnswerNew11',150,420,0);"/>&nbsp;
 	</td>
 </tr>
 <tr>
@@ -179,6 +182,13 @@ var row = table.insertRow(lastRow);
 			<td width="60">&nbsp;</td>
 			<td width="60">&nbsp;</td>
 		</tr>
+		<c:forEach items="${ sessionScope.answers }" var="answer" varStatus="status">
+		<tr>
+			<td>${ answer }</td>
+			<td><a href='javascript:editRow(${ status.index+1 });'>Editar</a></td>
+			<td><a href='javascript:deleteRow(${ status.index+1 });'>Borrar</a></td>
+		</tr>
+		</c:forEach>
 		</table>
 	</td>
 </tr>
