@@ -10,7 +10,7 @@ public class StringListQuestion extends ListQuestion {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private StringListQuestion() {
+	public StringListQuestion() {
 	}
 	
 	@Override

@@ -9,7 +9,7 @@ public class CheckBoxMatrixQuestion extends MatrixQuestion {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private CheckBoxMatrixQuestion() {
+	public CheckBoxMatrixQuestion() {
 	}
 
 

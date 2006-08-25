@@ -12,6 +12,7 @@ function submitForm(hiddenValue){
 function selectQuestion() {
 	var url;
 	var windowHeight = 500;
+	var scroll = "no";
 
 	switch (document.forms[0].questionType.selectedIndex) {
 		case 0: alert('Seleccione un tipo de pregunta'); 
@@ -21,6 +22,7 @@ function selectQuestion() {
 				break;
 		case 2: url = 'popUp/QuestionNew03.jsp'; 
 				windowHeight = 650;
+				scroll = "yes";
 				break;
 		case 3: url = 'popUp/QuestionNew06.jsp'; 
 				windowHeight = 600;
@@ -35,12 +37,14 @@ function selectQuestion() {
 				break;
 	}
 
-	popModal(url,"popQuestion",windowHeight,600,1);
+	popModal(url,"popQuestion",windowHeight,600,scroll);
 }
 
 function deleteRow(rowNum){
 	if(confirm('Seguro desea borrar la pregunta seleccionada?')){
+		removeQuestionInSection(rowNum);
 		document.getElementById("preguntas").deleteRow(rowNum);
+		updateTableLinks(rowNum);
 	}
 }
 
@@ -49,7 +53,14 @@ function editRow(rowNum){
 	var table =	document.getElementById("preguntas");
 	var row = table.rows[rowNum];
 	var url = "survey.do?method=getQuestionFromSection&row=" + rowNum;
-	popModal(url,"editRowQuestion");
+	var type = row.cells[2].innerHTML;
+	var windowHeight = 500;
+	var scroll = "no";
+	if(type=="Matriz"){ 
+		windowHeight = 650;
+		scroll = "yes";
+	}
+	popModal(url,"editRowQuestion",windowHeight,600,scroll);
 }
 
 function updateRow(name, type){
@@ -90,13 +101,26 @@ function addRow(name, type){
 	
 } 
 
-function removeQuestionInSessionSection(row){
+function updateTableLinks(rowNum){
+	var table =	getElement("preguntas");
+	for(i=rowNum;i<table.rows.length;i++){	
+		var row = table.rows[i];
+		row.cells[0].innerHTML = i;
+		var editLink = "<a href='javascript:editRow(" + i + ");'>Editar</a>"; 
+		row.cells[3].innerHTML=editLink;
+		var deleteLink = "<a href='javascript:deleteRow(" + i + ");'>Borrar</a>";
+		row.cells[4].innerHTML=deleteLink;
+	}
+}
+
+
+function removeQuestionInSection(row){
 
 	var req = newXMLHttpRequest();
     var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
     req.onreadystatechange = handlerFunction;
   
-    var urlAjax = "survey.do?method=removeQuestionInSessionSection&row=" + row ;
+    var urlAjax = "survey.do?method=removeQuestionInSection&row=" + row ;
     req.open("GET", urlAjax, true);
   
     req.send("");

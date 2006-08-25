@@ -1,0 +1,1 @@
+Survey removed from database!!!

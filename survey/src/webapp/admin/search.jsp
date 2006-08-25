@@ -42,6 +42,23 @@ a:active {
 
 <script language="JavaScript" type="text/javascript">
 <!--
+
+function delete(name){
+	var ret = confirm('Confirma la baja del cuestionario?');
+	if(confirm){
+		document.forms[1].name.value=name;
+		document.forms[1].method.value="removePersistedSurvey";
+		document.forms[1].submit();
+	}
+	else return false;
+}
+
+function edit(name){
+	document.forms[1].name.value=name;
+	document.forms[1].method.value="editPersistedSurvey";
+	document.forms[1].submit();
+}
+
 -->
 </script>
 </head>
@@ -110,8 +127,7 @@ a:active {
 		</table>
 	</html:form>
 	<c:if test="${ requestScope.surveys != null}">
-	<form method="post" name="formList">
-
+	<html:form action="/admin/survey">
 		<table width="100%" border="0" cellpadding="2" cellspacing="0">
 		<tr>
 			<td>
@@ -129,8 +145,8 @@ a:active {
 					<td align="left"><a href="#">${ survey.name }</a></td>
 					<td><%= new SimpleDateFormat("dd/mm/yyyy").format(survey.getCreationDate().getTime()) %></td>
 					<td><%= SurveyState.valueOf(survey.getStatus()).getDescription() %></td>
-					<td><a href="survey.do?name=<%= survey.getName() %>">Editar</a></td>
-					<td><a href="search.do?name=<%= survey.getName() %>" onclick="confirm('Confirma la baja del cuestionario?');">Borrar</a></td>
+					<td><a href="javascript:edit('<%= survey.getName() %>');">Editar</a></td>
+					<td><a href="javascript:delete('<%= survey.getName() %>');">Borrar</a></td>
 				</tr>
 				</c:forEach>
 				<tr>
@@ -144,6 +160,8 @@ a:active {
 			<td>&nbsp;</td>
 		</tr>
 		</table>
+		<html:hidden property="name" />
+		<html:hidden property="method" /> 
 	</form>
 	</c:if>
 	</td>

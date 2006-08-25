@@ -22,7 +22,10 @@
 	</bean>
 	
 	<bean id="searchFacade"
-		class="ar.com.survey.admin.DummySearchComponent" singleton="false">
+		class="ar.com.survey.admin.SearchComponent" singleton="false">
+		<property name="surveyDAO">
+			<ref bean="surveyDAO" />
+		</property>
 	</bean>
 
 </beans>
