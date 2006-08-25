@@ -1,9 +1,10 @@
-package ar.com.survey;
+package ar.com.survey.admin;
 
 import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 
+import ar.com.survey.model.Question;
 import ar.com.survey.model.Quota;
 import ar.com.survey.model.Section;
 import ar.com.survey.model.Survey;
@@ -40,6 +41,13 @@ public class DummySurveyComponent implements ISurveyComponent {
 			logger.info(section.getName());
 			logger.info(section.getFlowMgmtScript());
 			logger.info(section.getQuotaMgmtScript());
+			logger.info("preguntas: ");
+			Iterator questions = section.getQuestions().iterator();
+			while(questions.hasNext()){
+				Question quest = (Question) questions.next();
+				logger.info("question: " + quest.getTitle());
+				logger.info("type: " + quest.getClass().getName());
+			}
 		}
 	}
 }

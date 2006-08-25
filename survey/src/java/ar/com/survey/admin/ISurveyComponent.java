@@ -1,4 +1,4 @@
-package ar.com.survey;
+package ar.com.survey.admin;
 
 import ar.com.survey.model.Survey;
 
