@@ -9,5 +9,7 @@ public interface ISurveyComponent {
 	public void updateSurvey(Survey s);
 	
 	public void deleteSurvey(Survey s);
+	
+	public Survey getSurvey(String name);
 
 }

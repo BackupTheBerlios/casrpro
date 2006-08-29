@@ -26,4 +26,11 @@ public class SurveyComponent implements ISurveyComponent {
 			sDAO.delete(s);
 	}
 
+	public Survey getSurvey(String name) {
+		Survey surv = new Survey();
+		surv.setName(name);
+		surv = sDAO.findBySurrogateKey(surv);
+		return surv;
+	}
+
 }

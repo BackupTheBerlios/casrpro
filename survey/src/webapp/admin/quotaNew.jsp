@@ -3,17 +3,20 @@
 <head>
 <title>Nueva Cuota</title>
 <link href="../css/css.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" language="JavaScript" src="../js/validations.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 
 	function fillOpenerRow(){
-		var name = document.forms[0].name.value;
-		var count = document.forms[0].count.value;
-		if (window.opener && !window.opener.closed){
-			window.opener.addRow(name, count);
-			window.opener.addQuotaToSession(name, count);
+		if(verifyQuota()){
+			var name = document.forms[0].name.value;
+			var count = document.forms[0].count.value;
+			if (window.opener && !window.opener.closed){
+				window.opener.addRow(name, count);
+				window.opener.addQuotaToSession(name, count);
+			}
+			window.close();
 		}
-		window.close();
 	}
 
 -->

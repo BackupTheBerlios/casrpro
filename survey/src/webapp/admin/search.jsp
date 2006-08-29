@@ -43,18 +43,18 @@ a:active {
 <script language="JavaScript" type="text/javascript">
 <!--
 
-function delete(name){
+function deleteSurvey(surveyName){
 	var ret = confirm('Confirma la baja del cuestionario?');
-	if(confirm){
-		document.forms[1].name.value=name;
+	if(ret){
+		document.forms[1].name.value=surveyName;
 		document.forms[1].method.value="removePersistedSurvey";
 		document.forms[1].submit();
 	}
 	else return false;
 }
 
-function edit(name){
-	document.forms[1].name.value=name;
+function editSurvey(surveyName){
+	document.forms[1].name.value=surveyName;
 	document.forms[1].method.value="editPersistedSurvey";
 	document.forms[1].submit();
 }
@@ -103,16 +103,19 @@ function edit(name){
 					<td width="150" align="left">Fecha de Creación</td>
 
 					<td width="175" align="left"><html:text property="creationDate" size="10" maxlength="11" /></td>
-					<td width="25"><a href="#"><img src="img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
+					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
 				</tr>
 				<tr>
 					<td width="100" align="left">Status</td>
 					<td colspan="2" align="left">
 						<html:select property="status">
-							<html:option value="">Seleccione un Status</html:option>
-							<html:option value="open">Abierto</html:option>
-							<html:option value="closed">Cerrado</html:option>
-						</html:select>
+					 <html:option value="">Seleccione un estado
+					 </html:option>
+					 <html:option value="<%= SurveyState.OPEN.getCode() %>"><%= SurveyState.OPEN.getDescription() %>
+					 </html:option>
+					 <html:option value="<%= SurveyState.CLOSED.getCode() %>"><%= SurveyState.CLOSED.getDescription() %>
+					 </html:option>
+					</html:select>
 					</td>
 				</tr>
 				<tr>
@@ -126,7 +129,7 @@ function edit(name){
 		</tr>
 		</table>
 	</html:form>
-	<c:if test="${ requestScope.surveys != null}">
+	<c:if test="${ requestScope.surveys != null }">
 	<html:form action="/admin/survey">
 		<table width="100%" border="0" cellpadding="2" cellspacing="0">
 		<tr>
@@ -143,10 +146,10 @@ function edit(name){
 				<jsp:useBean id="survey" class="ar.com.survey.model.Survey" />
 				<tr>
 					<td align="left"><a href="#">${ survey.name }</a></td>
-					<td><%= new SimpleDateFormat("dd/mm/yyyy").format(survey.getCreationDate().getTime()) %></td>
+					<td><%= new SimpleDateFormat("dd/MM/yyyy").format(survey.getCreationDate().getTime()) %></td>
 					<td><%= SurveyState.valueOf(survey.getStatus()).getDescription() %></td>
-					<td><a href="javascript:edit('<%= survey.getName() %>');">Editar</a></td>
-					<td><a href="javascript:delete('<%= survey.getName() %>');">Borrar</a></td>
+					<td><a href="#" onclick="editSurvey('<%= survey.getName() %>');">Editar</a></td>
+					<td><a href="#" onclick="deleteSurvey('<%= survey.getName() %>');">Borrar</a></td>
 				</tr>
 				</c:forEach>
 				<tr>
@@ -162,7 +165,7 @@ function edit(name){
 		</table>
 		<html:hidden property="name" />
 		<html:hidden property="method" /> 
-	</form>
+	</html:form>
 	</c:if>
 	</td>
   </tr>

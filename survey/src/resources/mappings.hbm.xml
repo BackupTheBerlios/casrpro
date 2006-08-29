@@ -86,7 +86,7 @@
             <meta attribute="use-in-tostring">true</meta>
         </many-to-one>
 
-        <list name="questions" cascade="all-delete-orphan" inverse="false">
+        <list name="questions" cascade="all-delete-orphan" inverse="false" lazy="false">
             <key column="section_id" not-null="true" />
             <list-index column="position" base="0" />
             <one-to-many class="Question" />
@@ -145,6 +145,7 @@
             <meta attribute="scope-get"></meta>
         </version>
         <property name="title" type="string"></property>
+        <property name="image" type="string"></property>
         <property name="description" type="string"></property>
         <!--property name="columnCount" type="int"></property-->
         <!--property name="rowCount" type="int"></property-->
@@ -183,6 +184,10 @@
             <subclass name="ar.com.survey.questions.list.RadioButtonListQuestion" discriminator-value="RadioButtonListQuestion">
             </subclass>
             <subclass name="ar.com.survey.questions.list.NumberListQuestion" discriminator-value="NumberListQuestion">
+            <property name="min" type="int"></property>
+            <property name="max" type="int"></property>
+            <property name="total" type="int"></property>
+            <property name="validationType" type="string"></property>
             </subclass>
         </subclass>
         <subclass name="ar.com.survey.questions.matrix.MatrixQuestion" discriminator-value="MatrixQuestion">        

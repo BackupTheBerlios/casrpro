@@ -8,8 +8,9 @@ import org.apache.struts.action.ActionMessage;
 
 public class SurveyForm extends BaseForm {
 	
-	private String name, startDate, endDate;
+	private String name, startDate, endDate, state;
 	private String sectionName, quotaScript, flowScript, questionType;
+	private int row;
 	private static final long serialVersionUID = 1L;
 
 	public String getEndDate() {
@@ -18,6 +19,14 @@ public class SurveyForm extends BaseForm {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public String getName() {
@@ -66,6 +75,14 @@ public class SurveyForm extends BaseForm {
 
 	public void setSectionName(String sectionName) {
 		this.sectionName = sectionName;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
 	}
 
 	/**

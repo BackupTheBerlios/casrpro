@@ -19,6 +19,18 @@
         <put name="body"   value="/admin/surveyNew.jsp" />
     </definition>
     
+    <definition name=".editSurvey" extends=".adminLayout">
+        <put name="body"   value="/admin/surveyNew.jsp" />
+    </definition>
+    
+    <definition name=".editSection" extends=".adminLayout">
+        <put name="body"   value="/admin/sectionUpdate.jsp" />
+    </definition>
+    
+    <definition name=".adminError" extends=".adminLayout">
+        <put name="body"   value="/admin/adminError.jsp" />
+    </definition>
+    
     <definition name=".newSection" extends=".adminLayout">
         <put name="body"   value="/admin/sectionNew.jsp" />
     </definition>

@@ -14,6 +14,7 @@ import org.apache.struts.actions.DispatchAction;
 
 import ar.com.survey.exceptions.DuplicateEntityException;
 import ar.com.survey.model.Question;
+import ar.com.survey.model.Survey;
 import ar.com.survey.questions.EmptyQuestion;
 import ar.com.survey.questions.list.CheckBoxListQuestion;
 import ar.com.survey.questions.list.NumberListQuestion;
@@ -54,6 +55,24 @@ public class SurveyAction extends DispatchAction {
 		return mapping.findForward("newSection");
 	}
 	
+	public ActionForward updateSection(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		SurveyForm sform = (SurveyForm) form;
+		new SurveyWebComponent().updateSectionInSurvey(request, sform);
+		return mapping.findForward("newSurvey");
+	}
+	
+	public ActionForward editSection(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		SurveyForm sform = (SurveyForm) form;
+		new SurveyWebComponent().editSectionInSurvey(request, sform);
+		return mapping.findForward("editSection");
+	}
+	
 	public ActionForward persistSurvey(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -62,6 +81,20 @@ public class SurveyAction extends DispatchAction {
 		ActionForward forward = mapping.findForward("persistOk"); 
 		try{
 			new SurveyWebComponent().persistSessionSurvey(request, sform);
+		} catch(DuplicateEntityException dee){
+			forward = mapping.findForward("persistDuplicated");
+		}
+		return forward;
+	}
+	
+	public ActionForward updateSurvey(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		SurveyForm sform = (SurveyForm) form;
+		ActionForward forward = mapping.findForward("persistOk"); 
+		try{
+			new SurveyWebComponent().updatePersistedSurvey(request, sform);
 		} catch(DuplicateEntityException dee){
 			forward = mapping.findForward("persistDuplicated");
 		}
@@ -85,7 +118,21 @@ public class SurveyAction extends DispatchAction {
 		return mapping.findForward("popOpen");
 	}
 	
-	/* Quota management methods */
+	public ActionForward editPersistedSurvey(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+	throws IOException, ServletException {
+		ActionForward forward = mapping.findForward("adminError");
+		SurveyForm sform = (SurveyForm) form;
+		Survey surv = (new SurveyWebComponent()).getPersistedSurvey(sform);
+		if(surv!=null){
+			forward = mapping.findForward("editSurvey");
+			request.getSession().setAttribute("currentSurvey", surv);
+			request.getSession().setAttribute("surveyOp", "update");
+		}
+		return forward;
+	}
+	
+	/* Quota and section management methods */
 	
 	public ActionForward addQuotaToSessionSurvey(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
@@ -98,6 +145,13 @@ public class SurveyAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 			new SurveyWebComponent().updateQuotaInSessionSurvey(request);
+		return null;
+	}
+	
+	public ActionForward removeSectionInSessionSurvey(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+			new SurveyWebComponent().removeSectionInSessionSurvey(request);
 		return null;
 	}
 	

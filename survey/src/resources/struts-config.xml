@@ -17,6 +17,7 @@
 	</global-exceptions>
 
 	<global-forwards>
+		<forward name="adminError" path=".admiError"/>
 <!--        <forward name="global_dealerIdSelection" path="/dealerIdSelection.do" />                         -->
 	</global-forwards>
 
@@ -62,6 +63,8 @@
    		    <forward name="newSection" path=".newSection"/>
    		    <forward name="persistOk" path=".persistOk"/>
    		    <forward name="removeOk" path=".removeOk"/>
+   		    <forward name="editSurvey" path=".editSurvey"/>
+   		    <forward name="editSection" path=".editSection"/>
    		    <forward name="persistDuplicated" path=".persistDuplicated"/>
    		    <forward name="editOpenQuestion" path="/admin/popUp/QuestionUpdate04.jsp"/>
    		    <forward name="editEmptyQuestion" path="/admin/popUp/QuestionUpdate05.jsp"/>

@@ -46,6 +46,7 @@ public class SurveyWebComponent {
 		survey.setCreationDate(Calendar.getInstance());
 		survey.setStatus(SurveyState.OPEN.getCode());
 		session.setAttribute("currentSurvey", survey);
+		session.setAttribute("surveyOp", "new");
 	}
 	
 	/**
@@ -58,6 +59,16 @@ public class SurveyWebComponent {
 		Survey survey = new Survey();
 		survey.setName(form.getName()); 
 		surveyComponent.deleteSurvey(survey);
+	}
+	
+	/**
+	 * 
+	 * This method gets a persisted survey object 
+	 * 
+	 * @param form used to retrieve the persisted survey
+	 */
+	public Survey getPersistedSurvey(SurveyForm form){
+		return surveyComponent.getSurvey(form.getName());
 	}
 	
 	/**
@@ -90,10 +101,17 @@ public class SurveyWebComponent {
 	 * @param request
 	 * @param sform
 	 */
-	public void persistSessionSurvey(HttpServletRequest request, SurveyForm sform){
+	public void updatePersistedSurvey(HttpServletRequest request, SurveyForm sform){
+		Survey survey;
 		HttpSession session = request.getSession();
-		Survey survey = addSectionToSurvey(request, sform);
-		surveyComponent.createSurvey(survey);
+		if(sform.getSectionName()!=null && !sform.getSectionName().equals(""))
+			survey = addSectionToSurvey(request, sform);
+		else {
+			survey = (Survey) session.getAttribute("currentSurvey");
+			survey.setName(sform.getName());
+			// TODO: Claudio agregar fechas transformadas a Calendar
+		}
+		surveyComponent.updateSurvey(survey);
 		session.removeAttribute("currentSection");
 		session.removeAttribute("currentSurvey");
 	}
@@ -108,6 +126,34 @@ public class SurveyWebComponent {
 		section.setSurvey(survey);
 		survey.addSection(survey.getSections().size(), section);
 		return survey;
+	}
+	
+	public void persistSessionSurvey(HttpServletRequest request, SurveyForm sform){
+		HttpSession session = request.getSession();
+		Survey survey = addSectionToSurvey(request, sform);
+		String surveyOp = (String) session.getAttribute("surveyOp");
+		if(surveyOp.equals("new"))
+			surveyComponent.createSurvey(survey);
+		else
+			surveyComponent.updateSurvey(survey);
+		session.removeAttribute("currentSection");
+		session.removeAttribute("currentSurvey");
+	}
+	
+	public void updateSectionInSurvey(HttpServletRequest request, SurveyForm sform){
+		HttpSession session = request.getSession();
+		Survey survey = (Survey) session.getAttribute("currentSurvey");
+		Section section = (Section) session.getAttribute("currentSection");
+		section.setFlowMgmtScript(sform.getFlowScript());
+		section.setName(sform.getSectionName());
+		section.setQuotaMgmtScript(sform.getQuotaScript());
+		section.setSurvey(survey);
+		int row = sform.getRow();
+		List<Section> sections = survey.getSections();
+		sections.set(row, section);
+		survey.setSections(sections);
+		session.setAttribute("currentSection", section);
+		session.setAttribute("currentSurvey", survey);
 	}
 	
 	private Survey updateSessionSurveyValues(HttpServletRequest request, SurveyForm sform){
@@ -171,6 +217,33 @@ public class SurveyWebComponent {
 		}
 		survey.getQuotas().remove(quota);
 		session.setAttribute("currentSurvey", survey);
+	}
+	
+	public void removeSectionInSessionSurvey(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Survey survey = (Survey) session.getAttribute("currentSurvey");
+		int row = Integer.parseInt(request.getParameter("row")) - 1;
+		Iterator iter = survey.getSections().iterator();
+		int index = 0;
+		Section section = null;
+		while(iter.hasNext()){
+			section = (Section) iter.next();
+			if(index==row)
+				break;
+			else
+				index++;
+		}
+		survey.getSections().remove(section);
+		session.setAttribute("currentSurvey", survey);
+	}
+	
+	public void editSectionInSurvey(HttpServletRequest request, SurveyForm form){
+		HttpSession session = request.getSession();
+		Survey survey = (Survey) session.getAttribute("currentSurvey");
+		int row = form.getRow() - 1;
+		Section section = survey.getSections().get(row);
+		session.setAttribute("currentSection", section);
+		request.setAttribute("row", row);
 	}
 	
 	/* Question management methods */

@@ -152,3 +152,68 @@ function verifyTextCol(){
 	
 }
 
+function verifySurvey(){
+	var startDate = document.forms[0].startDate.value;
+	var finishDate = document.forms[0].endDate.value;
+	if(document.forms[0].name.value==""){
+		alert("Debe ingresar un nombre!");
+		return false;
+	} else if(!isValidStringDate(startDate)){
+		alert("Debe ingresar una fecha de inicio v?lida!");
+		return false;
+	} else if (!isValidStringDate(finishDate)){
+		alert("Debe ingresar una fecha de fin v?lida!");
+		return false;
+	}
+	return true;
+}
+
+function isValidStringDate(sDate){
+	if(sDate=="")
+		return false;
+	if(sDate.indexOf("/")==-1)
+		return false;
+	var dateArray = sDate.split("/");
+	var day = dateArray[0];
+	var month = dateArray[1];
+	var year = dateArray[2];
+	
+	if(parseInt(day,10)<1 || parseInt(day,10)>31)
+		return false;
+	else if(parseInt(month,10)<1 || parseInt(month,10)>12)
+		return false;
+	else if(parseInt(year,10)>3000 || parseInt(year,10)<2000)
+		return false;
+		
+	return true;
+}
+
+function isNumeric(sText){
+
+   var ValidChars = "0123456789.";
+   var IsNumber=true;
+   var Char;
+
+ 
+   for (i = 0; i < sText.length && IsNumber == true; i++) 
+      { 
+      Char = sText.charAt(i); 
+      if (ValidChars.indexOf(Char) == -1) 
+         {
+         IsNumber = false;
+         }
+      }
+   return IsNumber;
+   
+}
+
+function verifyQuota(){
+	if(document.forms[0].name.value==""){
+		alert("Debe ingresar una descripci?n v?lida!");
+		return false;
+	} else if(!isNumeric(document.forms[0].count.value) || (document.forms[0].count.value=="")) {
+		alert("Debe ingresar un valor num?rico!");
+		return false;
+	} else 
+		return true;
+}

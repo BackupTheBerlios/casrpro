@@ -3,18 +3,21 @@
 <head>
 <title>Editar Cuota</title>
 <link href="../css/css.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" language="JavaScript" src="../js/validations.js"></script>
 
 <script language="JavaScript" type="text/javascript">
 <!--
 
 	function updateOpenerRow(){
-		var name = document.forms[0].name.value;
-		var count = document.forms[0].count.value;
-		if (window.opener && !window.opener.closed){
-			window.opener.updateRow(name, count);
-			window.opener.updateQuotaInSession(name, count);
+		if(verifyQuota()){
+			var name = document.forms[0].name.value;
+			var count = document.forms[0].count.value;
+			if (window.opener && !window.opener.closed){
+				window.opener.updateRow(name, count);
+				window.opener.updateQuotaInSession(name, count);
+			}
+			window.close();
 		}
-		window.close();
 	}
 	
 	function fillValues(){

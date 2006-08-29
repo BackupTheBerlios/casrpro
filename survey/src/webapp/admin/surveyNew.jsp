@@ -1,13 +1,17 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="ar.com.survey.model.enums.SurveyState" %>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
+<script type="text/javascript" language="JavaScript" src="../js/validations.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 
  var currentRow = 0;
 
 function addNewCuota(){
- popModal('quotaNew.jsp','newQuota');
+ popModal("quotaNew.jsp","newQuota",200,500,"no");
 }
 
 function deleteRow(rowNum){
@@ -31,7 +35,7 @@ function updateTableLinks(rowNum){
 
 function editRow(rowNum){
 	currentRow = rowNum;
-	popModal("quotaUpdate.jsp", "quotaUpdater");
+	popModal("quotaUpdate.jsp","quotaUpdater",200,500,'no');
 }
 
 function updateRow(name, count){
@@ -75,6 +79,28 @@ var row = table.insertRow(lastRow);
 	
 }
 
+// Sections javascripts
+
+function deleteSection(rowNum){
+	if(confirm('Seguro desea borrar la cuota seleccionada?')){
+		getElement("secciones").deleteRow(rowNum);
+		removeSectionInSessionSurvey(rowNum);
+		updateSectionTableLinks(rowNum);
+	}
+}
+
+function updateSectionTableLinks(rowNum){
+	var table =	getElement("secciones");
+	for(i=rowNum;i<table.rows.length;i++){	
+		var row = table.rows[i];
+		row.cells[0].innerHTML=i;
+		var editLink = "<a href='javascript:editSection(" + i + ");'>Editar</a>"; 
+		row.cells[2].innerHTML=editLink;
+		var deleteLink = "<a href='javascript:deleteSection(" + i + ");'>Borrar</a>";
+		row.cells[3].innerHTML=deleteLink;
+	}
+}
+
 function addQuotaToSession(name, value){
 
   var req = newXMLHttpRequest();
@@ -115,9 +141,40 @@ function removeQuotaInSessionSurvey(row){
     
 }
 
+function removeSectionInSessionSurvey(row){
+
+	var req = newXMLHttpRequest();
+    var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+    req.onreadystatechange = handlerFunction;
+  
+    var urlAjax = "survey.do?method=removeSectionInSessionSurvey&row=" + row ;
+    req.open("GET", urlAjax, true);
+  
+    req.send("");
+    
+}
+
+function addNewSection(){
+	document.forms[0].method.value="sections";
+	document.forms[0].submit();
+}
+
+function updateSurvey(){
+	document.forms[0].method.value="updateSurvey";
+	document.forms[0].submit();
+}
+
+function editSection(rowNum){
+	document.forms[0].method.value="editSection";
+	document.forms[0].row.value=rowNum;
+	document.forms[0].submit();
+}
 
 -->
 </script>
+
+<c:choose>
+<c:when test="${ sessionScope.surveyOp == 'new' }">
 <table width="780" border="0" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
   <tr>
     <td width="780" height="420" align="center" valign="top">
@@ -136,7 +193,7 @@ function removeQuotaInSessionSurvey(row){
 		</tr>
 		<tr>
 			<td>
-				<html:form action="/admin/survey">
+				<html:form action="/admin/survey" onsubmit="return verifySurvey();">
 				<table width="700" border="1" cellpadding="2" cellspacing="0">
 				<tr bgcolor="#CCCCCC">
 					<td colspan="7">Main</td>
@@ -148,11 +205,11 @@ function removeQuotaInSessionSurvey(row){
 				<tr>
 					<td width="150" align="left">Fecha de Apertura</td>
 					<td width="160" align="left"><html:text property="startDate" maxlength="10" /></td>
-					<td width="25"><a href="#"><img src="img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
+					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
 					<td width="30" align="left">&nbsp;</td>
 					<td width="150" align="left">Fecha de Cierre</td>
 					<td width="160" align="left"><html:text property="endDate" maxlength="10" /></td>
-					<td width="25"><a href="#"><img src="img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
+					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
 				</tr>
 				<tr>
 					<td width="150" align="left">Agregar Cuota</td>
@@ -196,3 +253,148 @@ function removeQuotaInSessionSurvey(row){
 			<td>&nbsp;</td>
 		</tr>
 		</table>
+		</c:when>
+        <c:otherwise>
+        <c:set var="survey" value="${ currentSurvey }" />
+        <jsp:useBean id="survey" class="ar.com.survey.model.Survey" />
+        <table width="780" border="0" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
+  <tr>
+    <td width="780" height="420" align="center" valign="top">
+		<table width="100%" border="0" cellpadding="2" cellspacing="0">
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Editar Cuestionario</td>
+		</tr>
+		<tr>
+			<td>&nbsp;<logic:messagesPresent>
+			    <html:messages id="missingValues" /> 
+			    <bean:write name="missingValues" />
+			     </logic:messagesPresent></td>
+		</tr>
+		<tr>
+			<td>
+				<html:form action="/admin/survey" onsubmit="return verifySurvey();">
+				<table width="700" border="1" cellpadding="2" cellspacing="0">
+				<tr bgcolor="#CCCCCC">
+					<td colspan="7">Main</td>
+				</tr>
+				<tr>
+					<td width="150" align="left">Nombre</td>
+					<td colspan="6" align="left"><html:text property="name" size="50" value="${ currentSurvey.name }" /></td>
+				</tr>
+				<tr>
+					<td width="150" align="left">Estado</td>
+					<td colspan="6" align="left">
+					<html:select property="state">
+					 <html:option value="">Seleccione un estado
+					 </html:option>
+					 <html:option value="<%= SurveyState.OPEN.getCode() %>"><%= SurveyState.OPEN.getDescription() %>
+					 </html:option>
+					 <html:option value="<%= SurveyState.CLOSED.getCode() %>"><%= SurveyState.CLOSED.getDescription() %>
+					 </html:option>
+					</html:select>
+					<script type="text/javascript" language="JavaScript">
+					<% if(SurveyState.valueOf(survey.getStatus()).getDescription().equals(SurveyState.OPEN.getDescription())){ %>
+						document.forms[0].state.selectedIndex=1;
+					<% } else { %>
+						document.forms[0].state.selectedIndex=2;
+					<% } %>
+					</script>
+					</td>
+				</tr>
+				<tr>
+					<td width="150" align="left">Fecha de Apertura</td>
+					<td width="160" align="left"><html:text property="startDate" maxlength="10" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(survey.getCreationDate().getTime()) %>" /></td>
+					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
+					<td width="30" align="left">&nbsp;</td>
+					<td width="150" align="left">Fecha de Cierre</td>
+					<td width="160" align="left"><html:text property="endDate" maxlength="10" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(survey.getFinishDate().getTime()) %>" /></td>
+					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
+				</tr>
+				<tr>
+					<td width="150" align="left">Agregar Cuota</td>
+					<td colspan="6" align="left">
+						<input type="button" name="" value=">>" onClick="addNewCuota();"/>&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td colspan="7">&nbsp;</td>
+				</tr>
+				<tr bgcolor="#CCCCCC">
+					<td colspan="7">Cuotas</td>
+				</tr>
+				<tr>
+					<td colspan="7">
+						<table width="460" border="1" cellpadding="2" cellspacing="0" id="cuotas">
+						<tr bgcolor="#CCCCCC">
+							<td width="260">Nombre</td>
+							<td width="80">Cantidad</td>
+							<td width="60">&nbsp;</td>
+							<td width="60">&nbsp;</td>
+						</tr>
+						<c:forEach items="${ currentSurvey.quotas }" var="quota" varStatus="status">
+						<tr>
+							<td>${ quota.name }</td>
+							<td>${ quota.limit }</td>
+							<td><a href='javascript:editRow(${ status.index+1 });'>Editar</a></td>
+							<td><a href='javascript:deleteRow(${ status.index+1 });'>Borrar</a></td>
+						</tr>
+						</c:forEach>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td width="150" align="left">Agregar Sección</td>
+					<td colspan="6" align="left">
+						<input type="button" name="" value=">>" onclick="addNewSection();"/>&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td colspan="7">&nbsp;</td>
+				</tr>
+				<tr bgcolor="#CCCCCC">
+					<td colspan="7">Secciones</td>
+				</tr>
+				<tr>
+					<td colspan="7">
+						<table width="460" border="1" cellpadding="2" cellspacing="0" id="secciones">
+						<tr bgcolor="#CCCCCC">
+							<td width="80">Orden</td>
+							<td width="260">Nombre</td>
+							<td width="60">&nbsp;</td>
+							<td width="60">&nbsp;</td>
+						</tr>
+						<c:forEach items="${ currentSurvey.sections }" var="section" varStatus="sstatus">
+						<tr>
+							<td>${ sstatus.index+1 }</td>
+							<td>${ section.name }</td>
+							<td><a href='javascript:editSection(${ sstatus.index+1 });'>Editar</a></td>
+							<td><a href='javascript:deleteSection(${ sstatus.index+1 });'>Borrar</a></td>
+						</tr>
+						</c:forEach>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="7">&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan="7" align="right">
+						<input type="button" value="Actualizar" onclick="updateSurvey();" />&nbsp;
+						<input type="button" value="Cancelar" onclick="location.href='index.html';"/>&nbsp;
+					</td>
+				</tr>
+				</table>
+				<html:hidden property="method" />
+				<html:hidden property="row" />
+				</html:form>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		</table>
+        </c:otherwise>
+</c:choose>

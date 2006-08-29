@@ -8,7 +8,7 @@ public class RadioButtonListQuestion extends ListQuestion {
 
 	private static final long serialVersionUID = 1L;
 
-	private RadioButtonListQuestion() {
+	public RadioButtonListQuestion() {
 	}
 	
 	@Override
