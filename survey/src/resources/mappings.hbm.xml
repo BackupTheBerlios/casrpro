@@ -189,12 +189,14 @@
             <property name="total" type="int"></property>
             <property name="validationType" type="string"></property>
             </subclass>
-        </subclass>
+        </subclass> 
         <subclass name="ar.com.survey.questions.matrix.MatrixQuestion" discriminator-value="MatrixQuestion">        
             <subclass name="ar.com.survey.questions.matrix.RadioMatrixQuestion" discriminator-value="RadioMatrixQuestion">
             </subclass>
             <subclass name="ar.com.survey.questions.matrix.CheckBoxMatrixQuestion" discriminator-value="CheckBoxMatrixQuestion">
             </subclass> 
+        </subclass>
+        <subclass name="ar.com.survey.questions.EmptyQuestion" discriminator-value="EmptyQuestion">        
         </subclass>
     </class>
     <class name="ar.com.survey.questions.fields.Field" discriminator-value="Field">

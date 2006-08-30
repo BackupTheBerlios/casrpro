@@ -7,6 +7,9 @@ public class RadioMatrixQuestion extends MatrixQuestion {
 
 	private static final long serialVersionUID = 1L;
 
+	public RadioMatrixQuestion() {
+	}
+	
 	public RadioMatrixQuestion(int x, int y) {
 	}
 
