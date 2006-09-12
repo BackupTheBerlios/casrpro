@@ -1,15 +1,15 @@
 package ar.com.survey.admin;
 
+import ar.com.survey.admin.db.CustomSurveyDAO;
 import ar.com.survey.model.Survey;
-import ar.com.survey.model.SurveyDAO;
 
 public class SurveyComponent implements ISurveyComponent {
 	
-	private SurveyDAO sDAO;
+	private CustomSurveyDAO sDAO;
 	
 	public SurveyComponent() {
 		super();
-		sDAO = new SurveyDAO();
+		sDAO = new CustomSurveyDAO();
 	}
 	
 	public void createSurvey(Survey s) {
@@ -21,9 +21,7 @@ public class SurveyComponent implements ISurveyComponent {
 	}
 	
 	public void deleteSurvey(Survey s) {
-		Survey surv = sDAO.findBySurrogateKey(s);
-		if(surv!=null)
-			sDAO.delete(s);
+			sDAO.deleteBySurrogate(s);
 	}
 
 	public Survey getSurvey(String name) {
