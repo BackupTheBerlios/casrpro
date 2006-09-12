@@ -2,6 +2,6 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean id="surveyDAO" class="ar.com.survey.model.SurveyDAO">
+	<bean id="surveyDAO" class="ar.com.survey.admin.db.CustomSurveyDAO">
 	</bean>
 </beans>

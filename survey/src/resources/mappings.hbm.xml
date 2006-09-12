@@ -149,14 +149,14 @@
         <property name="description" type="string"></property>
         <!--property name="columnCount" type="int"></property-->
         <!--property name="rowCount" type="int"></property-->
-        <list name="columnTitles" cascade="all-delete-orphan" inverse="false" table="columnTitles">
+        <list name="columnTitles" cascade="all-delete-orphan" inverse="false" table="columnTitles" lazy="false">
             <meta attribute="scope-set">protected final</meta>
             <meta attribute="scope-get">protected final</meta>
             <key column="question_id" not-null="true" />
             <list-index column="position" base="0" />
             <element type="string" column="title"/>
         </list>
-        <list name="rowTitles" cascade="all-delete-orphan" inverse="false" table="rowTitles">
+        <list name="rowTitles" cascade="all-delete-orphan" inverse="false" table="rowTitles" lazy="false">
             <meta attribute="scope-set">protected final</meta>
             <meta attribute="scope-get">protected final</meta>
             <key column="question_id" not-null="true" />
