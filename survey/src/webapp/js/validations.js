@@ -217,3 +217,23 @@ function verifyQuota(){
 	} else 
 		return true;
 }
+
+function validateSection(){
+
+	var sectionName1 = document.forms[0].sectionName;
+	var tableAnswers = document.getElementById("preguntas");
+	var lastRowFound = tableAnswers.rows.length;
+	
+	if(sectionName1=="" || sectionName1==" "){
+		alert("Debe ingresar un nombre para la secci?n!");
+		return false;
+	}
+	
+	if(lastRowFound<2){
+		alert("Debe ingresar al menos una pregunta!");
+		return false;
+	}
+	
+	return true;
+
+}
