@@ -43,7 +43,8 @@ public class SurveyWebComponent {
 	public void createSessionSurvey(HttpServletRequest request){
 		HttpSession session = request.getSession(true);
 		Survey survey = new Survey();
-		survey.setCreationDate(Calendar.getInstance());
+		Calendar creationDate = Calendar.getInstance();
+		survey.setCreationDate(creationDate);
 		survey.setStatus(SurveyState.OPEN.getCode());
 		session.setAttribute("currentSurvey", survey);
 		session.setAttribute("surveyOp", "new");
@@ -109,7 +110,9 @@ public class SurveyWebComponent {
 		else {
 			survey = (Survey) session.getAttribute("currentSurvey");
 			survey.setName(sform.getName());
-			// TODO: Claudio agregar fechas transformadas a Calendar
+			survey.setStartDate(Transformer.getCalendarFromString(sform.getStartDate()));
+			survey.setFinishDate(Transformer.getCalendarFromString(sform.getEndDate()));
+			survey.setStatus(sform.getState());
 		}
 		surveyComponent.updateSurvey(survey);
 		session.removeAttribute("currentSection");
