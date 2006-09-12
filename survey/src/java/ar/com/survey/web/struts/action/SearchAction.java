@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -17,8 +16,6 @@ import ar.com.survey.admin.ISearchComponent;
 import ar.com.survey.web.struts.form.SearchForm;
 
 public class SearchAction extends DispatchAction {
-
-	private static Logger logger = Logger.getLogger(SearchAction.class);
 
 	private ISearchComponent searchFacade;
 

@@ -132,6 +132,12 @@ public class SurveyAction extends DispatchAction {
 		return forward;
 	}
 	
+	public ActionForward editCurrentSurvey(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+	throws IOException, ServletException {
+			return mapping.findForward("editSurvey");
+	}
+	
 	/* Quota and section management methods */
 	
 	public ActionForward addQuotaToSessionSurvey(ActionMapping mapping, ActionForm form,
