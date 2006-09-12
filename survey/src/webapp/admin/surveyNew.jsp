@@ -306,7 +306,7 @@ function editSection(rowNum){
 				</tr>
 				<tr>
 					<td width="150" align="left">Fecha de Apertura</td>
-					<td width="160" align="left"><html:text property="startDate" maxlength="10" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(survey.getCreationDate().getTime()) %>" /></td>
+					<td width="160" align="left"><html:text property="startDate" maxlength="10" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(survey.getStartDate().getTime()) %>" /></td>
 					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
 					<td width="30" align="left">&nbsp;</td>
 					<td width="150" align="left">Fecha de Cierre</td>

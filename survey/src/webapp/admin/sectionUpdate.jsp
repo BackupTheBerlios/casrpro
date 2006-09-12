@@ -2,11 +2,18 @@
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
+<script type="text/javascript" language="JavaScript" src="../js/validations.js"></script>
 <script language="JavaScript" type="text/javascript"><!--
 
 
 function submitForm(hiddenValue){
 	document.forms[0].method.value=hiddenValue;
+	if(validateSection())
+		document.forms[0].submit();
+}
+
+function cancelForm(){
+	document.forms[0].method.value="editCurrentSurvey";
 	document.forms[0].submit();
 }
 
@@ -57,7 +64,7 @@ function editRow(rowNum){
 	var type = row.cells[2].innerHTML;
 	var windowHeight = 500;
 	var scroll = "no";
-	if(type=="Matriz"){ 
+	if(type=="Matriz" || type=="Matriz "){ 
 		windowHeight = 650;
 		scroll = "yes";
 	}
@@ -145,7 +152,7 @@ function getCurrentRow(){
 		</tr>
 		<tr>
 			<td>
-				<html:form action="/admin/survey">
+				<html:form action="/admin/survey" onsubmit="return validateSection();">
 				<table width="700" border="1" cellpadding="2" cellspacing="0">
 				<tr bgcolor="#CCCCCC">
 					<td colspan="2">Main</td>
@@ -235,7 +242,7 @@ function getCurrentRow(){
 				<tr>
 					<td colspan="2" align="right">
 						<input type="button" value="Actualizar" onclick="submitForm('updateSection');" />&nbsp;
-						<input type="button" name="" value="Cancelar" onClick="location.href='survey.do';"/>&nbsp;
+						<input type="button" name="" value="Cancelar" onClick="cancelForm();"/>&nbsp;
 					</td>
 				</tr>
 				</table>
