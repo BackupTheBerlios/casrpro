@@ -5,6 +5,8 @@
        "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 
 <tiles-definitions>
+
+<!--  Main defs  -->
     <definition name=".adminLayout" path="/admin/common/layouts/adminLayout.jsp">
         <put name="header" value="/admin/common/header.jsp" />
         <put name="menu" value="/admin/common/menu.jsp" />
@@ -12,6 +14,12 @@
         <put name="footer" value="/admin/common/footer.jsp" />
     </definition>
 
+	<definition name=".clientLayout" path="/client/common/layouts/clientLayout.jsp">
+        <put name="header" value="/client/common/header.jsp" />
+        <put name="menu" value="/client/common/menu.jsp" />
+        <put name="body" value="/client/index.jsp" />
+        <put name="footer" value="/client/common/footer.jsp" />
+    </definition>
 
 <!-- Start of Survey definitions -->
 
@@ -53,4 +61,11 @@
 
 <!-- End of Survey definitions -->
 
+<!-- Start of client definitions -->
+
+	<definition name=".answers" extends=".clientLayout">
+        <put name="body" value="/client/answers.jsp" />
+    </definition>
+
+<!-- End of client definitions -->
 </tiles-definitions>

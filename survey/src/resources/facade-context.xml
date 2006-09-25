@@ -27,5 +27,9 @@
 			<ref bean="surveyDAO" />
 		</property>
 	</bean>
+	
+	<bean id="flowManager"
+		class="ar.com.survey.client.FlowManagerDummyFacade" singleton="false">
+	</bean>
 
 </beans>

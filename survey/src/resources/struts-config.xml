@@ -7,6 +7,7 @@
 		<form-bean name="registerForm" type="ar.com.survey.web.struts.form.RegisterForm" />
 		<form-bean name="searchForm" type="ar.com.survey.web.struts.form.SearchForm" />
 		<form-bean name="surveyForm" type="ar.com.survey.web.struts.form.SurveyForm" />
+		<form-bean name="fillForm" type="ar.com.survey.web.struts.form.FillForm" />
 	</form-beans>
 
 	<global-exceptions>
@@ -78,6 +79,18 @@
 			path="/admin/login"
 		    type="ar.com.survey.web.struts.action.LoginAction">
    		    <forward name="index" path=".login"/>
+		</action>
+		
+		<action
+			path="/client/fill"
+		    type="org.springframework.web.struts.DelegatingActionProxy"
+		    parameter="method"
+		    name="fillForm"
+		    validate="true"
+		    input="/client/answers.jsp"
+		    scope="request">
+   		    <forward name="answers" path="/client/answers.jsp"/>
+   		    <forward name="surveyError" path="/client/surveyError.jsp"/>
 		</action>
 		
 	</action-mappings>

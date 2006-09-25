@@ -19,4 +19,11 @@
 		class="ar.com.survey.web.struts.action.SurveyAction">
 	</bean>		
 	
+	<bean name="/client/fill"
+		class="ar.com.survey.web.struts.action.FillAction">
+		<property name="flowManager">
+				<ref bean="flowManager" />
+			</property>
+	</bean>		
+	
 </beans>
