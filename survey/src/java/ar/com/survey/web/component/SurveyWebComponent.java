@@ -2,12 +2,15 @@ package ar.com.survey.web.component;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.hibernate.collection.PersistentList;
 
 import ar.com.survey.admin.ISurveyComponent;
 import ar.com.survey.admin.SurveyComponent;
@@ -82,7 +85,8 @@ public class SurveyWebComponent {
 		
 		Survey survey = null;
 		HttpSession session = request.getSession();
-		if(sform.getFlowScript()!=null && sform.getFlowScript().length()>0){
+		// if(sform.getFlowScript()!=null && sform.getFlowScript().length()>0){
+		if(sform.getMethod().equals("addSection")){
 			// add a new section
 			survey = addSectionToSurvey(request, sform);
 		}
@@ -375,7 +379,16 @@ public class SurveyWebComponent {
 		
 		String questionText = request.getParameter("questionTxt");
 		
-		ArrayList<String> answers = (ArrayList<String>) session.getAttribute("answers");
+		Object obj = session.getAttribute("answers");
+		ArrayList<String> answers = null;
+		if(obj instanceof PersistentList){
+			Iterator iter = ((PersistentList) obj).iterator();
+			answers = new ArrayList<String>();
+			while(iter.hasNext()){
+				answers.add((String) iter.next());
+			}
+		} else 
+			answers = (ArrayList<String>) session.getAttribute("answers");
 		
 		// now parse different params depending on the type
 		NumberListQuestion question = new NumberListQuestion(answers.size());
@@ -392,6 +405,7 @@ public class SurveyWebComponent {
 			question.setTotal(Integer.parseInt(total));
 		}
 		question.setImage(image);
+		question.setValidationType(validationType);
 
 
 		List<Question> quests = section.getQuestions();
@@ -417,7 +431,17 @@ public class SurveyWebComponent {
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
 		
-		ArrayList<String> answers = (ArrayList<String>) session.getAttribute("answers");
+		
+		Object obj = session.getAttribute("answers");
+		ArrayList<String> answers = null;
+		if(obj instanceof PersistentList){
+			Iterator iter = ((PersistentList) obj).iterator();
+			answers = new ArrayList<String>();
+			while(iter.hasNext()){
+				answers.add((String) iter.next());
+			}
+		} else 
+			answers = (ArrayList<String>) session.getAttribute("answers");
 		
 		// now parse different params depending on the type
 		NumberListQuestion question = new NumberListQuestion(answers.size());
@@ -433,6 +457,7 @@ public class SurveyWebComponent {
 			question.setTotal(Integer.parseInt(total));
 		}
 		question.setImage(image);
+		question.setValidationType(validationType);
 
 
 		List<Question> quests = section.getQuestions();
@@ -451,7 +476,17 @@ public class SurveyWebComponent {
 		String image = request.getParameter("image");
 		
 		String questionText = request.getParameter("questionTxt");
-		ArrayList<String> answers = (ArrayList<String>) session.getAttribute("answers");
+		
+		Object obj = session.getAttribute("answers");
+		ArrayList<String> answers = null;
+		if(obj instanceof PersistentList){
+			Iterator iter = ((PersistentList) obj).iterator();
+			answers = new ArrayList<String>();
+			while(iter.hasNext()){
+				answers.add((String) iter.next());
+			}
+		} else 
+			answers = (ArrayList<String>) session.getAttribute("answers");
 		
 		// now parse different params depending on the type
 		StringListQuestion question = new StringListQuestion();
@@ -481,7 +516,20 @@ public class SurveyWebComponent {
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
 		
-		ArrayList<String> answers = (ArrayList<String>) session.getAttribute("answers");
+		ArrayList<String> answers;
+		
+		Object obj = session.getAttribute("answers");
+		PersistentList persist = null;
+		if(obj instanceof PersistentList){
+			persist = (PersistentList) obj;
+			answers = new ArrayList<String>();
+			Iterator iter = persist.iterator();
+			while(iter.hasNext()){
+				answers.add((String) iter.next());
+			}
+		}
+		else
+			answers = (ArrayList<String>) obj;
 		
 		// now parse different params depending on the type
 		StringListQuestion question = new StringListQuestion();
@@ -507,8 +555,18 @@ public class SurveyWebComponent {
 		String image = request.getParameter("image");
 		
 		String questionText = request.getParameter("questionTxt");
+
 		
-		ArrayList<String> answers = (ArrayList<String>) session.getAttribute("answers");
+		Object obj = session.getAttribute("answers");
+		ArrayList<String> answers = null;
+		if(obj instanceof PersistentList){
+			Iterator iter = ((PersistentList) obj).iterator();
+			answers = new ArrayList<String>();
+			while(iter.hasNext()){
+				answers.add((String) iter.next());
+			}
+		} else 
+			answers = (ArrayList<String>) session.getAttribute("answers");
 		
 		// now parse different params depending on the type
 		CheckBoxListQuestion question = new CheckBoxListQuestion();
@@ -537,7 +595,16 @@ public class SurveyWebComponent {
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
 		
-		ArrayList<String> answers = (ArrayList<String>) session.getAttribute("answers");
+		Object obj = session.getAttribute("answers");
+		ArrayList<String> answers = null;
+		if(obj instanceof PersistentList){
+			Iterator iter = ((PersistentList) obj).iterator();
+			answers = new ArrayList<String>();
+			while(iter.hasNext()){
+				answers.add((String) iter.next());
+			}
+		} else 
+			answers = (ArrayList<String>) session.getAttribute("answers");
 		
 		// now parse different params depending on the type
 		CheckBoxListQuestion question = new CheckBoxListQuestion();
@@ -565,8 +632,27 @@ public class SurveyWebComponent {
 		
 		String questionText = request.getParameter("questionTxt");
 		
-		ArrayList<String> answers = (ArrayList<String>) session.getAttribute("answers");
-		ArrayList<String> columns = (ArrayList<String>) session.getAttribute("columns");
+		Object obj = session.getAttribute("answers");
+		ArrayList<String> answers = null;
+		if(obj instanceof PersistentList){
+			Iterator iter = ((PersistentList) obj).iterator();
+			answers = new ArrayList<String>();
+			while(iter.hasNext()){
+				answers.add((String) iter.next());
+			}
+		} else 
+			answers = (ArrayList<String>) session.getAttribute("answers");
+		
+		obj = session.getAttribute("columns");
+		ArrayList<String> columns = null;
+		if(obj instanceof PersistentList){
+			Iterator iter = ((PersistentList) obj).iterator();
+			columns = new ArrayList<String>();
+			while(iter.hasNext()){
+				columns.add((String) iter.next());
+			}
+		} else 
+			columns = (ArrayList<String>) session.getAttribute("columns");
 		
 		// now parse different params depending on the type
 		RadioMatrixQuestion question = new RadioMatrixQuestion(columns.size(), answers.size());
@@ -598,8 +684,27 @@ public class SurveyWebComponent {
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
 		
-		ArrayList<String> answers = (ArrayList<String>) session.getAttribute("answers");
-		ArrayList<String> columns = (ArrayList<String>) session.getAttribute("columns");
+		Object obj = session.getAttribute("answers");
+		ArrayList<String> answers = null;
+		if(obj instanceof PersistentList){
+			Iterator iter = ((PersistentList) obj).iterator();
+			answers = new ArrayList<String>();
+			while(iter.hasNext()){
+				answers.add((String) iter.next());
+			}
+		} else 
+			answers = (ArrayList<String>) session.getAttribute("answers");
+		
+		obj = session.getAttribute("columns");
+		ArrayList<String> columns = null;
+		if(obj instanceof PersistentList){
+			Iterator iter = ((PersistentList) obj).iterator();
+			columns = new ArrayList<String>();
+			while(iter.hasNext()){
+				columns.add((String) iter.next());
+			}
+		} else 
+			columns = (ArrayList<String>) session.getAttribute("columns");
 		
 		// now parse different params depending on the type
 		RadioMatrixQuestion question = new RadioMatrixQuestion(columns.size(), answers.size());
@@ -654,11 +759,16 @@ public class SurveyWebComponent {
 	public void addAnswerToSession(HttpServletRequest request){
 		HttpSession session = request.getSession();
 		String answer = request.getParameter("answer");
-		ArrayList<String> answers;
+		Collection answers;
 		if(session.getAttribute("answers")==null)
 			 answers = new ArrayList<String>();
-		else
-			 answers = (ArrayList<String>) session.getAttribute("answers");
+		else {
+			 Object obj = session.getAttribute("answers");
+			 if(obj instanceof PersistentList)
+				 answers = (PersistentList) obj;
+			 else
+				 answers = (ArrayList<String>) obj;
+		}
 		answers.add(answer);
 		session.setAttribute("answers", answers);
 	}
@@ -667,7 +777,7 @@ public class SurveyWebComponent {
 		HttpSession session = request.getSession();
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
-		ArrayList<String> answers = (ArrayList<String>) session.getAttribute("answers");
+		Collection answers = (Collection) session.getAttribute("answers");
 		answers.remove(rowId);
 		session.setAttribute("answers", answers);
 	}
@@ -677,7 +787,16 @@ public class SurveyWebComponent {
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		String answer = request.getParameter("answer");
 		rowId--;
-		ArrayList<String> answers = (ArrayList<String>) session.getAttribute("answers");
+		ArrayList<String> answers = null;
+		Object obj = session.getAttribute("answers");
+		if(obj instanceof PersistentList){
+			Iterator iter = ((PersistentList) obj).iterator();
+			answers = new ArrayList<String>();
+			while(iter.hasNext()){
+				answers.add((String)iter.next());
+			}
+		} else
+			answers = (ArrayList<String>) session.getAttribute("answers");
 		answers.set(rowId, answer);
 		session.setAttribute("answers", answers);
 	}
@@ -688,8 +807,20 @@ public class SurveyWebComponent {
 		ArrayList<String> columns;
 		if(session.getAttribute("columns")==null)
 			columns = new ArrayList<String>();
-		else
-			columns = (ArrayList<String>) session.getAttribute("columns");
+		else {
+			Object obj = session.getAttribute("columns");
+			if(obj instanceof PersistentList){
+				PersistentList pe = (PersistentList) obj;
+				Iterator iter = pe.iterator();
+				columns = new ArrayList<String>();
+				while(iter.hasNext()){
+					columns.add((String) iter.next());
+				}
+			}
+			else
+				columns = (ArrayList<String>) session.getAttribute("columns");
+		}
+			
 		columns.add(column);
 		session.setAttribute("columns", columns);
 	}
@@ -698,7 +829,16 @@ public class SurveyWebComponent {
 		HttpSession session = request.getSession();
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
-		ArrayList<String> columns = (ArrayList<String>) session.getAttribute("columns");
+		ArrayList<String> columns = null;
+		Object obj = session.getAttribute("columns");
+		if(obj instanceof PersistentList){
+			Iterator iter = ((PersistentList) obj).iterator();
+			columns = new ArrayList<String>();
+			while(iter.hasNext()){
+				columns.add((String)iter.next());
+			}
+		} else
+			columns = (ArrayList<String>) session.getAttribute("columns");
 		columns.remove(rowId);
 		session.setAttribute("columns", columns);
 	}
@@ -708,7 +848,16 @@ public class SurveyWebComponent {
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		String column = request.getParameter("column");
 		rowId--;
-		ArrayList<String> columns = (ArrayList<String>) session.getAttribute("columns");
+		ArrayList<String> columns = null;
+		Object obj = session.getAttribute("columns");
+		if(obj instanceof PersistentList){
+			Iterator iter = ((PersistentList) obj).iterator();
+			columns = new ArrayList<String>();
+			while(iter.hasNext()){
+				columns.add((String)iter.next());
+			}
+		} else
+			columns = (ArrayList<String>) session.getAttribute("columns");
 		columns.set(rowId, column);
 		session.setAttribute("columns", columns);
 	}

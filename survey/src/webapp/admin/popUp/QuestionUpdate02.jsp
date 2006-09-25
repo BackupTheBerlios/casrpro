@@ -205,8 +205,8 @@ var row = table.insertRow(lastRow);
         <c:otherwise>
             document.forms[0].validationType.selectedIndex = 2;
         </c:otherwise>
-        selectTipo(document.forms[0].validationType);
     </c:choose>
+    selectTipo(document.forms[0].validationType);
     </script>
 	<td width="320" align="left">
 		<div id="divNone">

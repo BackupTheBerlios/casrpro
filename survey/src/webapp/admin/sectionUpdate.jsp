@@ -64,7 +64,7 @@ function editRow(rowNum){
 	var type = row.cells[2].innerHTML;
 	var windowHeight = 500;
 	var scroll = "no";
-	if(type=="Matriz" || type=="Matriz "){ 
+	if(type=="Matriz" || type=="Matriz " || type.indexOf("Matriz")!=-1){ 
 		windowHeight = 650;
 		scroll = "yes";
 	}
