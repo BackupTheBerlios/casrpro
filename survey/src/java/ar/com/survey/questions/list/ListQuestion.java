@@ -5,15 +5,15 @@ import java.util.List;
 import ar.com.survey.model.Question;
 import ar.com.survey.questions.fields.Field;
 
-abstract class ListQuestion extends Question {
+public abstract class ListQuestion extends Question {
 
 	protected ListQuestion() {
 	}
 	
-	final public List<String> getItems() {
+	public List<String> getItems() {
 		return super.getRowTitles();
 	}
-	final public void setItems(List<String> s) {
+	public void setItems(List<String> s) {
 		super.setRowTitles(s);
 	}
 

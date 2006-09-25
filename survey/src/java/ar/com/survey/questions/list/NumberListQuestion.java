@@ -12,6 +12,9 @@ public class NumberListQuestion extends ListQuestion {
 
 	public NumberListQuestion(int totalItems) {
 	}
+	
+	public NumberListQuestion() {
+	}
 
 	@Override
 	public NumberField getField(int y) {
