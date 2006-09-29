@@ -154,7 +154,7 @@ var row = table.insertRow(lastCol);
 function removeAnswerFromSession(value){
   
 	  var req = newXMLHttpRequest();
-  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
@@ -171,34 +171,34 @@ function removeAnswerFromSession(value){
 	function removeColumnFromSession(value){
   
 	  var req = newXMLHttpRequest();
-  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "../survey.do?method=removeColumnFromSession", true);
+      req.open("POST", "../survey.do", true);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
 
-      req.send("row=" + value);
+      req.send("method=removeColumnFromSession&row=" + value);
       
 	}
 	
 	function addMatrixQuestionToSession(name, image, questionTxt, validationType, min, max, total){
   
 	  var req = newXMLHttpRequest();
-  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "../survey.do?method=addMatrixQuestionToSection", true);
+      req.open("POST", "../survey.do", true);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
 
-      req.send("name=" + name + "&image=" + image + "&questionTxt=" + questionTxt);
+      req.send("method=addMatrixQuestionToSection&name=" + name + "&image=" + image + "&questionTxt=" + questionTxt);
       
 	}
 

@@ -94,7 +94,7 @@ var row = table.insertRow(lastRow);
 	function removeAnswerFromSession(value){
   
 	  var req = newXMLHttpRequest();
-  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
@@ -111,7 +111,7 @@ var row = table.insertRow(lastRow);
 	function addStringListQuestionToSession(name, image, questionTxt){
   
 	  var req = newXMLHttpRequest();
-  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.

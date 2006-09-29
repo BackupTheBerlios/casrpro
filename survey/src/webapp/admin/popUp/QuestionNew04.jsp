@@ -32,7 +32,7 @@ function fillOpenerRow(){
 function addOpenQuestionToSection(name, image, quesTxt, txtType){
   
   var req = newXMLHttpRequest();
-  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
   req.onreadystatechange = handlerFunction;
   	
   // Third parameter specifies request is asynchronous.

@@ -117,7 +117,7 @@ var row = table.insertRow(lastRow);
 	function removeAnswerFromSession(value){
   
 	  var req = newXMLHttpRequest();
-  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
@@ -134,7 +134,7 @@ var row = table.insertRow(lastRow);
 	function addNumericQuestionToSession(name, image, questionTxt, validationType, min, max, total){
   
 	  var req = newXMLHttpRequest();
-  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.

@@ -27,7 +27,7 @@ function fillOpenerRow(){
 function updateEmptyQuestionInSection(name, image, quesTxt, row){
   
   var req = newXMLHttpRequest();
-  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
   req.onreadystatechange = handlerFunction;
   	
   // Third parameter specifies request is asynchronous.
