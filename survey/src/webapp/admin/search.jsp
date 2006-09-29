@@ -115,6 +115,8 @@ function editSurvey(surveyName){
 					 </html:option>
 					 <html:option value="<%= SurveyState.CLOSED.getCode() %>"><%= SurveyState.CLOSED.getDescription() %>
 					 </html:option>
+					 <html:option value="<%= SurveyState.DESIGN.getCode() %>"><%= SurveyState.DESIGN.getDescription() %>
+					 </html:option>
 					</html:select>
 					</td>
 				</tr>

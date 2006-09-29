@@ -125,13 +125,13 @@ function updateTableLinks(rowNum){
 function removeQuestionInSection(row){
 
 	var req = newXMLHttpRequest();
-    var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+    var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
     req.onreadystatechange = handlerFunction;
   
     var urlAjax = "survey.do?method=removeQuestionInSection&row=" + row ;
     req.open("GET", urlAjax, true);
   
-    req.send("");
+    req.send(null);
     
 }
 

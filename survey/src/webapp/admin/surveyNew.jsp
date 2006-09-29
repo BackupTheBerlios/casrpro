@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="ar.com.survey.model.enums.SurveyState" %>
+<%@ page import="ar.com.survey.model.enums.RestrictionType" %>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
@@ -104,53 +105,53 @@ function updateSectionTableLinks(rowNum){
 function addQuotaToSession(name, value){
 
   var req = newXMLHttpRequest();
-  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
   req.onreadystatechange = handlerFunction;
   
   var urlAjax = "survey.do?method=addQuotaToSessionSurvey&name=" + name + "&value=" + value ;
   req.open("GET", urlAjax, true);
   
-  req.send("");
+  req.send(null);
 
 } 
 
 function updateQuotaInSession(name, value){
   
   var req = newXMLHttpRequest();
-  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
   req.onreadystatechange = handlerFunction;
   
   var urlAjax = "survey.do?method=updateQuotaInSessionSurvey&name=" 
   	+ name + "&value=" + value + "&row=" + currentRow ;
   req.open("GET", urlAjax, true);
   
-  req.send("");
+  req.send(null);
 
 }
 
 function removeQuotaInSessionSurvey(row){
 
 	var req = newXMLHttpRequest();
-    var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+    var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
     req.onreadystatechange = handlerFunction;
   
     var urlAjax = "survey.do?method=removeQuotaInSessionSurvey&row=" + row ;
     req.open("GET", urlAjax, true);
   
-    req.send("");
+    req.send(null);
     
 }
 
 function removeSectionInSessionSurvey(row){
 
 	var req = newXMLHttpRequest();
-    var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+    var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
     req.onreadystatechange = handlerFunction;
   
     var urlAjax = "survey.do?method=removeSectionInSessionSurvey&row=" + row ;
     req.open("GET", urlAjax, true);
   
-    req.send("");
+    req.send(null);
     
 }
 
@@ -167,6 +168,11 @@ function updateSurvey(){
 function editSection(rowNum){
 	document.forms[0].method.value="editSection";
 	document.forms[0].row.value=rowNum;
+	document.forms[0].submit();
+}
+
+function submitForm(hiddenValue){
+	document.forms[0].method.value=hiddenValue;
 	document.forms[0].submit();
 }
 
@@ -204,13 +210,29 @@ function editSection(rowNum){
 				</tr>
 				<tr>
 					<td width="150" align="left">Fecha de Apertura</td>
-					<td width="160" align="left"><html:text property="startDate" maxlength="10" /></td>
+					<td width="160" align="left"><html:text property="startDate" maxlength="10" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date()) %>" /></td>
 					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
 					<td width="30" align="left">&nbsp;</td>
 					<td width="150" align="left">Fecha de Cierre</td>
 					<td width="160" align="left"><html:text property="endDate" maxlength="10" /></td>
 					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
 				</tr>
+				<tr>
+					<td width="150" align="left">Uso de token</td>
+					<td colspan="6" align="left">
+					<html:select property="restrictionType">
+					 <html:option value="<%= RestrictionType.OPEN.getCode() %>"><%= RestrictionType.OPEN.getDescription() %>
+					 </html:option>
+					 <html:option value="<%= RestrictionType.RESTRICTED.getCode() %>"><%= RestrictionType.RESTRICTED.getDescription() %>
+					 </html:option>
+					</html:select>
+					</td>
+				</tr>
+				<tr>
+					<td width="150" align="left">Descripción</td>
+					<td colspan="6" align="left"><html:text property="description" size="50" maxlength="255" /></td>
+				</tr>
+				
 				<tr>
 					<td width="150" align="left">Agregar Cuota</td>
 					<td colspan="6" align="left">
@@ -241,6 +263,7 @@ function editSection(rowNum){
 				<tr>
 					<td colspan="7" align="right">
 						<html:submit value="Agregar Secciones" />&nbsp;
+						<input type="button" value="Finalizar" onClick="submitForm('persistSurveyOnly');"/>&nbsp;
 						<input type="button" value="Cancelar" onClick="location.href='index.html';"/>&nbsp;
 					</td>
 				</tr>
@@ -294,15 +317,41 @@ function editSection(rowNum){
 					 </html:option>
 					 <html:option value="<%= SurveyState.CLOSED.getCode() %>"><%= SurveyState.CLOSED.getDescription() %>
 					 </html:option>
+					 <html:option value="<%= SurveyState.DESIGN.getCode() %>"><%= SurveyState.DESIGN.getDescription() %>
+					 </html:option>
 					</html:select>
 					<script type="text/javascript" language="JavaScript">
 					<% if(SurveyState.valueOf(survey.getStatus()).getDescription().equals(SurveyState.OPEN.getDescription())){ %>
 						document.forms[0].state.selectedIndex=1;
-					<% } else { %>
+					<% } else if(SurveyState.valueOf(survey.getStatus()).getDescription().equals(SurveyState.CLOSED.getDescription())){ %>
 						document.forms[0].state.selectedIndex=2;
+					<% } else {%>
+						document.forms[0].state.selectedIndex=3;
 					<% } %>
 					</script>
 					</td>
+				</tr>
+				<tr>
+					<td width="150" align="left">Uso de token</td>
+					<td colspan="6" align="left">
+					<html:select property="restrictionType">
+					 <html:option value="<%= RestrictionType.OPEN.getCode() %>"><%= RestrictionType.OPEN.getDescription() %>
+					 </html:option>
+					 <html:option value="<%= RestrictionType.RESTRICTED.getCode() %>"><%= RestrictionType.RESTRICTED.getDescription() %>
+					 </html:option>
+					</html:select>
+					<script type="text/javascript" language="JavaScript">
+					<% if(RestrictionType.valueOf(survey.getRestrictionType()).getDescription().equals(RestrictionType.OPEN.getDescription())){ %>
+						document.forms[0].restrictionType.selectedIndex=0;
+					<% } else { %>
+						document.forms[0].restrictionType.selectedIndex=1;
+					<% } %>
+					</script>
+					</td>
+				</tr>
+				<tr>
+					<td width="150" align="left">Descripción</td>
+					<td colspan="6" align="left"><html:text property="description" size="50" maxlength="255" value="${ currentSurvey.description }" /></td>
 				</tr>
 				<tr>
 					<td width="150" align="left">Fecha de Apertura</td>
@@ -382,7 +431,7 @@ function editSection(rowNum){
 				</tr>
 				<tr>
 					<td colspan="7" align="right">
-						<input type="button" value="Actualizar" onclick="updateSurvey();" />&nbsp;
+						<input type="button" value="Finalizar" onClick="updateSurvey();"/>&nbsp;
 						<input type="button" value="Cancelar" onclick="location.href='index.html';"/>&nbsp;
 					</td>
 				</tr>

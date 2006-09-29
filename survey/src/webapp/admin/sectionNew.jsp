@@ -11,6 +11,11 @@ function submitForm(hiddenValue){
 		document.forms[0].submit();
 }
 
+function cancelForm(){
+	document.forms[0].method.value="editCurrentSurvey";
+	document.forms[0].submit();
+}
+
 function selectQuestion() {
 	var url;
 	var windowHeight = 500;
@@ -119,13 +124,13 @@ function updateTableLinks(rowNum){
 function removeQuestionInSection(row){
 
 	var req = newXMLHttpRequest();
-    var handlerFunction = getReadyStateHandler(req, ajaxDoNothing());
+    var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
     req.onreadystatechange = handlerFunction;
   
     var urlAjax = "survey.do?method=removeQuestionInSection&row=" + row ;
     req.open("GET", urlAjax, true);
   
-    req.send("");
+    req.send(null);
     
 }
 
@@ -204,7 +209,16 @@ function getCurrentRow(){
 					<td colspan="2" align="right">
 						<input type="button" value="Siguiente Sección" onclick="submitForm('addSection');" />&nbsp;
 						<input type="button" value="Finalizar" onClick="submitForm('persistSurvey');"/>&nbsp;
-						<input type="button" name="" value="Cancelar" onClick="location.href='index.html';"/>&nbsp;
+						<% String surveyOp = (String) session.getAttribute("surveyOp");
+						if (surveyOp.equals("new")){ %>
+						<input type="button" name="" value="Cancelar" onClick="location.href='login.do';"/>&nbsp;
+						<%
+						}
+						else {  %>
+						<input type="button" name="" value="Cancelar" onClick="cancelForm();"/>&nbsp;
+						<%
+						}	
+						%>
 					</td>
 				</tr>
 				</table>
