@@ -1,8 +1,8 @@
 package ar.com.survey.model.enums;
 
-
-public final class SurveyState extends EnumType{
-	public SurveyState(String code, String desc) {
+public class RestrictionType extends EnumType {
+	
+	public RestrictionType(String code, String desc) {
 		super(code, desc);
 	}
 	//TODO: ideal: esto podemos mejorarlo bastante si es necesario:
@@ -11,11 +11,10 @@ public final class SurveyState extends EnumType{
 	//3) Elevar la clase a bean persistente (tablas codificadoras)
 	//creo q 3 es lo mejor, es lo más claro, más clásico y lo que mejor evoluciona
 	public static final SurveyState OPEN = new SurveyState("OPEN","Abierto");
-	public static final SurveyState CLOSED = new SurveyState("CLOSED","Cerrado");
-	public static final SurveyState DESIGN = new SurveyState("DESIGN","Diseño");
-	private static SurveyState[] types = { OPEN, CLOSED, DESIGN };
+	public static final SurveyState RESTRICTED = new SurveyState("RESTRICTED","Restringido");
+	private static SurveyState[] types = { OPEN, RESTRICTED };
 	public static SurveyState valueOf(String code) {
 		return (SurveyState) EnumType.find(types, code);		
 	}
-	
+
 }
