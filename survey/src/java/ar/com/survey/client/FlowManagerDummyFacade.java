@@ -10,8 +10,8 @@ public class FlowManagerDummyFacade implements IFlowManager {
 
 	private static final String NEXT = "Siguiente";
 	private static final String FINISH = "Finalizar";
-	private static final String SUBMIT = "isValidForm();";
-	private static final String CLOSE = "window.close();";
+	private static final String SUBMIT = "isValidForm(true);";
+	private static final String CLOSE = "isValidForm(false);window.close();";
 	
 	public FlowManageDTO getNextStep(FillForm fillForm, HttpSession session) {
 		
