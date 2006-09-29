@@ -8,7 +8,7 @@
 <script language="JavaScript" type="text/javascript" src="../js/common.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
-
+javascript:window.history.forward(1);
 -->
 </script>
 </head>

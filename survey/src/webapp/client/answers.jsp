@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html" %>
+
 <script type="text/javascript" language="JavaScript" src="../js/ClientValidations.js"></script>
 
 <html:form action="/client/fill">
@@ -72,35 +73,28 @@
       </c:forEach>
    </c:when>
     
-    <c:when test="${question.class.name == 'ar.com.survey.questions.matrix.RadioMatrixQuestion' }">
-      <c:set var="maxSize" value="-1" />
-      <table border="1" cellspacing="1" cellpadding="1">
-       <tr>
+    <c:when test="${question.class.name == 'ar.com.survey.questions.matrix.CheckBoxMatrixQuestion' }">
+      <% int maxSize = 0; %>
+      <table border="0" cellspacing="1" cellpadding="1">
+       <tr><td>&nbsp;</td>
 	   <c:forEach items="${ question.columnsTitles }" var="title">
    		<td>${ title }
    		</td>
-   		<c:set var="maxSize" value="${ maxSize + 1 }" />
+   		<% maxSize++; %>
       </c:forEach>
         </tr>
-        <tr>
-        <c:set var="myIndex" value="0" />
-        <c:set var="indexName" value="${ status.index + 1 }" />
+        <c:set var="indexName" value="1" />
         <c:set var="subIndexName" value="1" />
        <c:forEach items="${ question.items }" var="item">
-       	<td><html:radio property="matrix${ indexName }(value${ subIndexName })" value="${ item }">${ item }</html:radio></td>
-       	<c:choose>
-       	<c:when test="${myIndex < maxSize }">
-       		<c:set var="myIndex" value="${ myIndex + 1 }" />
-       	</c:when>
-       	<c:otherwise>
-       	</tr>
-       	<tr>
-       	<c:set var="myIndex" value="0" />
+        <tr>
+        <td>${ item }</td>
+        <% for(int i=0;i<maxSize;i++){ %>
+       	<td><html:checkbox property="matrix${ status.index + 1 }(value${ indexName }${ subIndexName })" /></td>
        	<c:set var="subIndexName" value="${ subIndexName + 1 }" />
-       	</c:otherwise>
-       	</c:choose>
+       	<% } %>
+       	</tr>
+       	<c:set var="indexName" value="${ indexName + 1 }" />
        </c:forEach>
-        </tr>
       </table>
    </c:when>
    <c:otherwise></c:otherwise>

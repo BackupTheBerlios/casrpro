@@ -5,19 +5,19 @@
 <title>Panel de Opiniones</title>
 <script language="JavaScript" type="text/javascript">
 <!--
-
+javascript:window.history.forward(1);
 -->
 </script>
 </head>
 
 <body>
-<table width="780" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
-  <tr>
+<table width="780" border="0" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
+ <!--  <tr>
     <td width="780" height="60" align="center"><tiles:insert attribute='header' /></td>
   </tr>
   <tr>
     <td width="780" height="20" align="center"><tiles:insert attribute='menu' /></td>
-  </tr>
+  </tr> -->
   <tr>
     <td width="780" height="420" align="center" valign="top">
 		<table width="100%" border="0" cellpadding="2" cellspacing="0">
@@ -29,10 +29,10 @@
 		</tr>
 		</table>
 	</td>
-  </tr>
+  </tr><!-- 
   <tr>
     <td width="780" height="20" align="center"><tiles:insert attribute='footer'/></td>
-  </tr>
+  </tr> -->
 </table>
 </body>
 </html>
