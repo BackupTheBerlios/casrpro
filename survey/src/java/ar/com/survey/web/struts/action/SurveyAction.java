@@ -19,7 +19,7 @@ import ar.com.survey.questions.EmptyQuestion;
 import ar.com.survey.questions.list.CheckBoxListQuestion;
 import ar.com.survey.questions.list.NumberListQuestion;
 import ar.com.survey.questions.list.StringListQuestion;
-import ar.com.survey.questions.matrix.RadioMatrixQuestion;
+import ar.com.survey.questions.matrix.CheckBoxMatrixQuestion;
 import ar.com.survey.questions.single.StringQuestion;
 import ar.com.survey.questions.single.TextAreaQuestion;
 import ar.com.survey.web.component.SurveyWebComponent;
@@ -81,6 +81,20 @@ public class SurveyAction extends DispatchAction {
 		ActionForward forward = mapping.findForward("persistOk"); 
 		try{
 			new SurveyWebComponent().persistSessionSurvey(request, sform);
+		} catch(DuplicateEntityException dee){
+			forward = mapping.findForward("persistDuplicated");
+		}
+		return forward;
+	}
+	
+	public ActionForward persistSurveyOnly(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+		SurveyForm sform = (SurveyForm) form;
+		ActionForward forward = mapping.findForward("persistOk"); 
+		try{
+			new SurveyWebComponent().persistSessionSurveyOnly(request, sform);
 		} catch(DuplicateEntityException dee){
 			forward = mapping.findForward("persistDuplicated");
 		}
@@ -291,7 +305,7 @@ public class SurveyAction extends DispatchAction {
 				forward = mapping.findForward("editCheckBoxListQuestion");
 			} else {
 				// defaults to matrix
-				RadioMatrixQuestion quest = (RadioMatrixQuestion) question;
+				CheckBoxMatrixQuestion quest = (CheckBoxMatrixQuestion) question;
 				request.setAttribute("Question", quest);
 				session.setAttribute("answers", quest.getItems());
 				session.setAttribute("columns", quest.getColumnsTitles());

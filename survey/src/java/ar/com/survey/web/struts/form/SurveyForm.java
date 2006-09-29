@@ -8,7 +8,7 @@ import org.apache.struts.action.ActionMessage;
 
 public class SurveyForm extends BaseForm {
 	
-	private String name, startDate, endDate, state;
+	private String name, startDate, endDate, state, restrictionType, description;
 	private String sectionName, quotaScript, flowScript, questionType;
 	private int row;
 	private static final long serialVersionUID = 1L;
@@ -83,6 +83,22 @@ public class SurveyForm extends BaseForm {
 
 	public void setRow(int row) {
 		this.row = row;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getRestrictionType() {
+		return restrictionType;
+	}
+
+	public void setRestrictionType(String restrictionType) {
+		this.restrictionType = restrictionType;
 	}
 
 	/**
