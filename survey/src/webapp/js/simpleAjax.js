@@ -80,6 +80,7 @@ function getReadyStateHandler(req, responseXmlHandler) {
 *
 */
 
-function ajaxDoNothing(){
-
+function ajaxDoNothing(responseXML){
+	//alert("resultado: " + responseXML);
+	new Date();
 }

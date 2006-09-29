@@ -24,7 +24,7 @@ function isNumeric(sText){
    
 }
 
-function isValidForm(){
+function isValidForm(isSubmit){
 
 	var retValue = true;
 	var elements = document.forms[0].elements;
@@ -90,11 +90,22 @@ function isValidForm(){
 		} else if(elem.type=="checkbox"){
 			var tname = elem.name;
 			var tret = false;
-			while(tname==elem.name && index<elements.length){
-				if(elem.checked)
-					tret=true;
-				index++;
-				elem = elements[index];
+			if(elem.name.indexOf("matrix")==-1){
+				while(tname==elem.name && index<elements.length){
+					if(elem.checked)
+						tret=true;
+					index++;
+					elem = elements[index];
+				}
+			}
+			else {
+				tname = elem.name.substr(0,14);
+				while(tname==elem.name.substr(0,14) && index<elements.length){
+					if(elem.checked)
+						tret=true;
+					index++;
+					elem = elements[index];
+				}
 			}
 			if(!tret){
 				alert("Debe seleccionar al menos una opcion de checkbox!");
@@ -106,7 +117,8 @@ function isValidForm(){
 		}
 	}
 	
-	document.forms[0].submit();
+	if(isSubmit)
+		document.forms[0].submit();
 
 }
 
