@@ -66,6 +66,10 @@
 	<definition name=".answers" extends=".clientLayout">
         <put name="body" value="/client/answers.jsp" />
     </definition>
+    
+    <definition name=".clientError" extends=".clientLayout">
+            <put name="body" value="/client/surveyError.jsp" />
+    </definition>
 
 <!-- End of client definitions -->
 </tiles-definitions>

@@ -89,8 +89,8 @@
 		    validate="true"
 		    input="/client/answers.jsp"
 		    scope="request">
-   		    <forward name="answers" path="/client/answers.jsp"/>
-   		    <forward name="surveyError" path="/client/surveyError.jsp"/>
+   		    <forward name="answers" path=".answers"/>
+   		    <forward name="surveyError" path=".clientError"/>
 		</action>
 		
 	</action-mappings>

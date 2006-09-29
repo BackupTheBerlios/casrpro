@@ -32,9 +32,11 @@
         <property name="finishDate" type="calendar" unique="false">
         </property>
         <property name="status" type="string" unique="false">
+         </property>
+        <property name="restrictionType" type="string" unique="false">
         </property>
-
-
+        <property name="description" type="string" unique="false">
+        </property>
         <set name="quotas" cascade="all,delete-orphan" inverse="false">
             <key column="survey_id" not-null="true" />
             <one-to-many class="Quota" />
