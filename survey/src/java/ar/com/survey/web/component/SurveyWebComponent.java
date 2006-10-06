@@ -124,8 +124,8 @@ public class SurveyWebComponent {
 			survey.setFinishDate(Transformer.getCalendarFromString(sform
 					.getEndDate()));
 			survey.setStatus(sform.getState());
-			survey.setRestrictionType(sform.getRestrictionType());
-			survey.setDescription(sform.getDescription());
+			//survey.setRestrictionType(sform.getRestrictionType());
+			//survey.setDescription(sform.getDescription());
 		}
 		surveyComponent.updateSurvey(survey);
 		session.removeAttribute("currentSection");

@@ -12,8 +12,8 @@ public interface ISurveyComponent {
 	 * Con esto comienza la interacción.
 	 * Luego de que la capa Struts obtiene este objeto, hay que procesar la primer sección del Survey
 	 * y mostrarlo en pantalla, para que el cliente lo conteste.
-	 * El objeto FillingSurveyStatus mantiene el estado y debe guardarse en la sección.
-	 * El usuario NO puede completar distintos cuestionarios en simultáneo.
+	 * El objeto FillingSurveyStatus mantiene el estado y debe guardarse en la sesión..
+	 * El usuario NO puede completar distintos cuestionarios en simultáneo (ba, si lo tiene que hacer, se puede...)
 	 * Para evitar esto desde frontend, cada vez que el usuario quiere comenzar a contestar un cuestionario, se
 	 * puede comprobar la existencia de este objeto en la sesión, si es así, dar la opción
 	 * de cancelar el survey (llamar a cancelSurvey) o de continuarlo (mostrar en pantalla las preguntas
