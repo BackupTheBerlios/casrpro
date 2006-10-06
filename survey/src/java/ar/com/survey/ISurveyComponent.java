@@ -36,7 +36,7 @@ public interface ISurveyComponent {
 	 * El frontend crea un objeto Field del tipo correspondiente (String, Boolean, etc.) por cada respuesta recibida en el request.
 	 * El momento de crearlo, le asocia la Question que corresponde.
 	 * Por ejemplo, supongamos que 
-	 * a) hay un Question Q=3 que corresponde a la sección Survey.getSection(fss.getCurrentSection())
+	 * a) hay un Question que corresponde a la sección Survey.getSection(fss.getCurrentSection())
 	 * b) La Question es una Lista de 5 checkboxs, los cuales hay 3 verdaderos (los tres primeros).
 	 * Esto implica que habrá que crear:
 	 * Question q = (question actual)
@@ -46,13 +46,13 @@ public interface ISurveyComponent {
 	 * BooleanField boolean3 = new BooleanField(); boolean1.setValue(true); boolean1.setX(2); boolean1.setQuestion(q); fields.add(boolean3);
 	 * BooleanField boolean4 = new BooleanField(); boolean1.setValue(false); boolean1.setX(3); boolean1.setQuestion(q); fields.add(boolean4);
 	 * BooleanField boolean5 = new BooleanField(); boolean1.setValue(false); boolean1.setX(4); boolean1.setQuestion(q); fields.add(boolean5);
-	 * 
-	 * .. y repetir por cada Question en la sección.
+	 *  
+	 * .. y repetir por cada Question en la sección (agregando todos los field al mismo array)
 	 * 
 	 * Nota: 
 	 * - si fuera un question con una sola respuesta, entonces x=0, y=0 (valores default)
-	 * - si fuera un question tipo List (N respuestas, sean String, Option, etc.), utilizar x=(posición en la lista)
-	 * - si fuera un question tipo Matrix (NxM respuestas, sean String, Option, etc.), utilizar x=(posición X), y=(posición y).
+	 * - si fuera un question tipo List (N respuestas, sean String, Options, etc.), utilizar x=(posición en la lista)
+	 * - si fuera un question tipo Matrix (NxM respuestas, sean String, Options, etc.), utilizar x=(posición X), y=(posición y).
 	 * 
 	 * O sea, si estamos en presencia de un section con: 
 	 *    - 3 respuestas simples,
@@ -66,7 +66,8 @@ public interface ISurveyComponent {
 	 *    no guardar simplemente la verdadera, si sabemos que las otras son falsas? Respuesta: cuando haya que calcular estadísticas o extraer
 	 *    datos con sentencias SQL, se va todo al demonio si no está cargado también lo negativo (las sentencias se pueden volver muy complejas).   
 	 *      
-	 * Una vez que se entienda esto, se pueden utilzar los Factory Methods en FieldFactory para que el código quede más simple. Quedarí así:
+	 * Una vez que se entienda esto, se pueden utilzar los Factory Methods en FieldFactory para que el código de más arriba quede más simple. 
+	 * Quedaría así:
 	 * 
 	 * 
 	 * BooleanField boolean1 = FieldFactory.booleanField(true,q,0);
@@ -75,6 +76,7 @@ public interface ISurveyComponent {
 	 * BooleanField boolean4 = FieldFactory.booleanField(false,q,3);
 	 * BooleanField boolean5 = FieldFactory.booleanField(false,q,4);
 	 * 
+	 * (agregar luego os 5 fields al array...)
 	 * 
 	 * 
 	 * 
