@@ -21,6 +21,14 @@ function selectQuestion() {
 	var windowHeight = 500;
 	var scroll = "no";
 
+	var pregs = document.getElementById("preguntas");
+	var lastRowFound = pregs.rows.length;
+	
+	if(lastRowFound>5){
+		alert("Se permiten hasta 5 preguntas por sección");
+		return false;
+	}
+
 	switch (document.forms[0].questionType.selectedIndex) {
 		case 0: alert('Seleccione un tipo de pregunta'); 
 				return false; 

@@ -22,6 +22,14 @@ function selectQuestion() {
 	var windowHeight = 500;
 	var scroll = "no";
 
+	var pregs = document.getElementById("preguntas");
+	var lastRowFound = pregs.rows.length;
+	
+	if(lastRowFound>5){
+		alert("Se permiten hasta 5 preguntas por sección");
+		return false;
+	}
+
 	switch (document.forms[0].questionType.selectedIndex) {
 		case 0: alert('Seleccione un tipo de pregunta'); 
 				return false; 
@@ -203,7 +211,7 @@ function getCurrentRow(){
 						<c:forEach items="${ currentSection.questions }" var="question" varStatus="sstatus">
 						<tr>
 							<td>${ sstatus.index+1 }</td>
-							<td>${ question.description }</td>
+							<td>${ question.title }</td>
 							<td>
 							<c:choose>
 					    	    <c:when test="${question.class.name == 'ar.com.survey.questions.single.StringQuestion' }">
