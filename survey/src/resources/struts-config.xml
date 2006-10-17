@@ -91,6 +91,11 @@
 		    scope="request">
    		    <forward name="answers" path=".answers"/>
    		    <forward name="surveyError" path=".clientError"/>
+   		    <forward name="closedSurvey" path=".clientError"/>
+   		    <forward name="incorrectToken" path=".clientError"/>
+   		    <forward name="clientVoted" path=".clientError"/>
+   		    <forward name="invalidSession" path=".clientError"/>
+   		    <forward name="finish" path=".clientClose"/>
 		</action>
 		
 	</action-mappings>

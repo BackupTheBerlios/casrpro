@@ -70,6 +70,10 @@
     <definition name=".clientError" extends=".clientLayout">
             <put name="body" value="/client/surveyError.jsp" />
     </definition>
+    
+     <definition name=".clientClose" extends=".clientLayout">
+            <put name="body" value="/client/surveyFinish.jsp" />
+    </definition>
 
 <!-- End of client definitions -->
 </tiles-definitions>

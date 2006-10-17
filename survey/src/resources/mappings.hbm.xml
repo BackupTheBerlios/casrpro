@@ -274,10 +274,10 @@
         <property name="registrationConfirmedDate" type="calendar"/>         
         <property name="registrationDate" type="calendar"/>
         <property name="token" type="string"/>
-        <!-- bag name="filledSurveys" cascade="all,delete-orphan" inverse="false">
+        <bag name="filledSurveys" cascade="all,delete-orphan" inverse="false">
             <key column="person_id" not-null="true" />
             <one-to-many class="FilledSurvey" />
-        </bag-->
+        </bag>
         <set name="roles" cascade="all-delete-orphan" inverse="false" table="roles">
             <key column="person_id" not-null="true" />
             <element type="string" column="role"/>
