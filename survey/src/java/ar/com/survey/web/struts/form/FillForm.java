@@ -237,6 +237,48 @@ public class FillForm extends BaseForm {
 		this.nextPos = nextPos;
 	}
 
+	public Map getMatrix1() {
+		return matrix1;
+	}
+
+	public Map getMatrix2() {
+		return matrix2;
+	}
+
+	public Map getMatrix3() {
+		return matrix3;
+	}
+
+	public Map getMatrix4() {
+		return matrix4;
+	}
+
+	public Map getMatrix5() {
+		return matrix5;
+	}
+	
+	
+
+	public void setMatrix1(Map matrix1) {
+		this.matrix1 = matrix1;
+	}
+
+	public void setMatrix2(Map matrix2) {
+		this.matrix2 = matrix2;
+	}
+
+	public void setMatrix3(Map matrix3) {
+		this.matrix3 = matrix3;
+	}
+
+	public void setMatrix4(Map matrix4) {
+		this.matrix4 = matrix4;
+	}
+
+	public void setMatrix5(Map matrix5) {
+		this.matrix5 = matrix5;
+	}
+
 	public void reset(ActionMapping arg0, HttpServletRequest arg1) {
 		super.reset(arg0, arg1);
 		txtAnswer = null;
