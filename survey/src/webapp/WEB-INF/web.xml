@@ -7,6 +7,10 @@
 	version="2.4" id="survey">
 	<display-name>survey</display-name>
 
+    <listener>
+        <listener-class>ar.com.survey.persistence.util.StartUpContextListener</listener-class>
+    </listener>
+
 	<filter>
 		<filter-name>Hibernate Filter</filter-name>
 		<filter-class>
