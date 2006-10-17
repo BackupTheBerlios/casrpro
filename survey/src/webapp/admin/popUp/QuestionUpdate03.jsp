@@ -160,13 +160,13 @@ function removeAnswerFromSession(value){
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "survey.do?method=removeAnswerFromSession", true);
+      req.open("POST", "survey.do", true);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
 
-      req.send("row=" + value);
+      req.send("method=removeAnswerFromSession&row=" + value);
       
 	}
 	
@@ -177,13 +177,13 @@ function removeAnswerFromSession(value){
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "survey.do?method=removeColumnFromSession", true);
+      req.open("POST", "survey.do", true);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
 
-      req.send("row=" + value);
+      req.send("method=removeColumnFromSession&row=" + value);
       
 	}
 	
@@ -194,13 +194,13 @@ function removeAnswerFromSession(value){
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "survey.do?method=updateMatrixQuestionInSection", true);
+      req.open("POST", "survey.do", true);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
 
-      req.send("name=" + name + "&image=" + image + "&questionTxt=" + questionTxt + "&row=" + row);
+      req.send("method=updateMatrixQuestionInSection&name=" + name + "&image=" + image + "&questionTxt=" + questionTxt + "&row=" + row);
       
 	}
 
