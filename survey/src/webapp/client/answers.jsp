@@ -1,35 +1,35 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html" %>
-
-<script type="text/javascript" language="JavaScript" src="../js/ClientValidations.js"></script>
-
+<table width="700" border="2" cellpadding="2" cellspacing="2">
+ <tr>
+  <td width="700" valign="top" class="surveyspace">
 <html:form action="/client/fill">
-<table border="0" cellspacing="2" cellpadding="2" width="700">
+<table border="0" cellspacing="2" cellpadding="2" width="100%">
  <c:forEach items="${ sessionScope.CurrentSection.questions }" var="question" varStatus="status">
-  <!-- <tr>
-   <td>${ question.title }</td>
-  </tr> -->
   <tr>
-   <td>${ question.description }</td>
+	<td colspan="2"><hr size="3" width="675" color="#4B4E51" noshade></td>
+  </tr>
+  <tr>
+   <td class="question" colspan="2">${ question.description }</td>
   </tr>
   <c:choose>
    <c:when test="${question.class.name == 'ar.com.survey.questions.single.StringQuestion' }">
   <tr>
-   <td>
-   <html:text property="txtAnswer" size="25"  />       
+   <td class="answer" colspan="2">
+   <html:text property="txtAnswer" size="25" styleClass="field" />       
    </td>
   </tr>
    </c:when>
    <c:when test="${question.class.name == 'ar.com.survey.questions.single.TextAreaQuestion' }">
   <tr>
-   <td>
-   <html:textarea property="txtAnswer" cols="30" rows="12"></html:textarea>
+   <td class="answer" colspan="2">
+   <html:textarea property="txtAnswer" cols="50" rows="6" styleClass="field"></html:textarea>
    </td>
   </tr>
    </c:when>
    <c:when test="${question.class.name == 'ar.com.survey.questions.EmptyQuestion' }">
   <tr>
-   <td>        
+   <td class="answer" colspan="2">        
    </td>
   </tr>
    </c:when>
@@ -50,35 +50,35 @@
   		</c:choose>
 	   <c:forEach items="${ question.items }" var="item">
   <tr>
-   <td>${ item } &nbsp; <html:text property="number${status.index+1}" />
+   <td class="answer" colspan="2">${ item } &nbsp; <html:text property="number${status.index+1}" size="10" styleClass="field" />
    </td>
   </tr>
-  		
       </c:forEach>
    </c:when>
    <c:when test="${question.class.name == 'ar.com.survey.questions.list.StringListQuestion' }">
 	   <c:forEach items="${ question.items }" var="item">
   <tr>
-   <td><html:radio property="unique${status.index+1}" value="${ item }">${ item }</html:radio>
-   </td>
+   <td class="answer" width="25"><html:radio property="unique${status.index+1}" value="${ item }" /></td>
+   <td class="answer" width="675">${ item }</td>
   </tr>
       </c:forEach>
    </c:when>
    <c:when test="${question.class.name == 'ar.com.survey.questions.list.CheckBoxListQuestion' }">
 	   <c:forEach items="${ question.items }" var="item">
   <tr>
-   <td><html:checkbox property="check${ status.index +1 }" value="${ item }">${ item }</html:checkbox>
-   </td>
+   <td class="answer" width="25"><html:checkbox property="check${ status.index +1 }" value="${ item }" /></td>
+   <td class="answer" width="675">${ item }</td>
   </tr>
       </c:forEach>
    </c:when>
-    
     <c:when test="${question.class.name == 'ar.com.survey.questions.matrix.CheckBoxMatrixQuestion' }">
+    <tr>
+     <td colspan="2" class="answer">
       <% int maxSize = 0; %>
       <table border="0" cellspacing="1" cellpadding="1">
-       <tr><td>&nbsp;</td>
+       <tr><td class="answer">&nbsp;</td>
 	   <c:forEach items="${ question.columnsTitles }" var="title">
-   		<td>${ title }
+   		<td class="answer">${ title }
    		</td>
    		<% maxSize++; %>
       </c:forEach>
@@ -87,23 +87,31 @@
         <c:set var="subIndexName" value="1" />
        <c:forEach items="${ question.items }" var="item">
         <tr>
-        <td>${ item }</td>
+        <td class="answer">${ item }</td>
         <% for(int i=0;i<maxSize;i++){ %>
-       	<td><html:checkbox property="matrix${ status.index + 1 }(value${ indexName }${ subIndexName })" /></td>
+       	<td class="answer"><html:checkbox property="matrix${ status.index + 1 }(value${ indexName }${ subIndexName })" /></td>
        	<c:set var="subIndexName" value="${ subIndexName + 1 }" />
        	<% } %>
        	</tr>
        	<c:set var="indexName" value="${ indexName + 1 }" />
        </c:forEach>
       </table>
+      </td>
+     </tr>
    </c:when>
    <c:otherwise></c:otherwise>
   </c:choose>
+  <tr>
+	<td colspan="2"><hr size="3" width="675" color="#4B4E51" noshade></td>
+  </tr>
  </c:forEach>
   <tr><td>&nbsp;</td></tr>
- <tr><td align="right"><input type="button" value="${ flowDTO.description }" onclick="${ flowDTO.action }"></td>
+ <tr><td align="center" colspan="2"><input type="button" class="button" value="${ flowDTO.description }" onclick="${ flowDTO.action }"></td>
  </tr>
 </table>
 <html:hidden property="method" value="fillNext"/>
 <html:hidden property="nextPos" value="${ flowDTO.section }"/>
 </html:form>
+</td>
+</tr>
+</table>
