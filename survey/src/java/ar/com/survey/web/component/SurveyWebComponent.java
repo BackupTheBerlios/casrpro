@@ -124,8 +124,10 @@ public class SurveyWebComponent {
 			survey.setFinishDate(Transformer.getCalendarFromString(sform
 					.getEndDate()));
 			survey.setStatus(sform.getState());
-			//survey.setRestrictionType(sform.getRestrictionType());
-			//survey.setDescription(sform.getDescription());
+			if(sform.getRestrictionType()!=null && !sform.getRestrictionType().equals("")){
+				survey.setRestrictionType(sform.getRestrictionType());
+				survey.setDescription(sform.getDescription());
+			}
 		}
 		surveyComponent.updateSurvey(survey);
 		session.removeAttribute("currentSection");
@@ -299,6 +301,8 @@ public class SurveyWebComponent {
 		String image = request.getParameter("image");
 
 		String questionText = request.getParameter("quesTxt");
+		if(questionText.charAt(0)=='Â')
+			questionText = questionText.substring(1);
 		String answerType = request.getParameter("txtType");
 
 		// now parse different params depending on the type
@@ -329,6 +333,8 @@ public class SurveyWebComponent {
 		String image = request.getParameter("image");
 
 		String questionText = request.getParameter("quesTxt");
+		if(questionText.charAt(0)=='Â')
+			questionText = questionText.substring(1);
 		String answerType = request.getParameter("txtType");
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
@@ -361,6 +367,8 @@ public class SurveyWebComponent {
 		String image = request.getParameter("image");
 
 		String questionText = request.getParameter("quesTxt");
+		if(questionText.charAt(0)=='Â')
+			questionText = questionText.substring(1);
 
 		// now parse different params depending on the type
 		Question question = new EmptyQuestion();
@@ -385,6 +393,8 @@ public class SurveyWebComponent {
 		String image = request.getParameter("image");
 
 		String questionText = request.getParameter("quesTxt");
+		if(questionText.charAt(0)=='Â')
+			questionText = questionText.substring(1);
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
 
@@ -415,6 +425,8 @@ public class SurveyWebComponent {
 		String total = request.getParameter("total");
 
 		String questionText = request.getParameter("questionTxt");
+		if(questionText.charAt(0)=='Â')
+			questionText = questionText.substring(1);
 
 		Object obj = session.getAttribute("answers");
 		ArrayList<String> answers = null;
@@ -464,6 +476,8 @@ public class SurveyWebComponent {
 		String total = request.getParameter("total");
 
 		String questionText = request.getParameter("questionTxt");
+		if(questionText.charAt(0)=='Â')
+			questionText = questionText.substring(1);
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
 
@@ -510,6 +524,8 @@ public class SurveyWebComponent {
 		String image = request.getParameter("image");
 
 		String questionText = request.getParameter("questionTxt");
+		if(questionText.charAt(0)=='Â')
+			questionText = questionText.substring(1);
 
 		Object obj = session.getAttribute("answers");
 		ArrayList<String> answers = null;
@@ -547,6 +563,8 @@ public class SurveyWebComponent {
 		String image = request.getParameter("image");
 
 		String questionText = request.getParameter("questionTxt");
+		if(questionText.charAt(0)=='Â')
+			questionText = questionText.substring(1);
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
 
@@ -588,6 +606,8 @@ public class SurveyWebComponent {
 		String image = request.getParameter("image");
 
 		String questionText = request.getParameter("questionTxt");
+		if(questionText.charAt(0)=='Â')
+			questionText = questionText.substring(1);
 
 		Object obj = session.getAttribute("answers");
 		ArrayList<String> answers = null;
@@ -624,6 +644,8 @@ public class SurveyWebComponent {
 		String image = request.getParameter("image");
 
 		String questionText = request.getParameter("questionTxt");
+		if(questionText.charAt(0)=='Â')
+			questionText = questionText.substring(1);
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
 
@@ -662,6 +684,8 @@ public class SurveyWebComponent {
 		String image = request.getParameter("image");
 
 		String questionText = request.getParameter("questionTxt");
+		if(questionText.charAt(0)=='Â')
+			questionText = questionText.substring(1);
 
 		Object obj = session.getAttribute("answers");
 		ArrayList<String> answers = null;
@@ -702,6 +726,8 @@ public class SurveyWebComponent {
 		session.setAttribute("currentSection", section);
 		session.removeAttribute("answers");
 		session.removeAttribute("columns");
+		session.setAttribute("answers", null);
+		session.setAttribute("columns", null);
 	}
 
 	public void updateMatrixQuestionInSection(HttpServletRequest request) {
@@ -711,6 +737,8 @@ public class SurveyWebComponent {
 		String image = request.getParameter("image");
 
 		String questionText = request.getParameter("questionTxt");
+		if(questionText.charAt(0)=='Â')
+			questionText = questionText.substring(1);
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
 
