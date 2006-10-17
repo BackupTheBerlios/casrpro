@@ -3,6 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Panel de Opiniones</title>
+<link href="../css/Style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" language="JavaScript" src="../js/ClientValidations.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 javascript:window.history.forward(1);
@@ -11,28 +13,19 @@ javascript:window.history.forward(1);
 </head>
 
 <body>
-<table width="780" border="0" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
- <!--  <tr>
-    <td width="780" height="60" align="center"><tiles:insert attribute='header' /></td>
-  </tr>
-  <tr>
-    <td width="780" height="20" align="center"><tiles:insert attribute='menu' /></td>
-  </tr> -->
-  <tr>
-    <td width="780" height="420" align="center" valign="top">
-		<table width="100%" border="0" cellpadding="2" cellspacing="0">
-		<tr>
-			<td>&nbsp;</td>
-		</tr>
-		<tr>
-			<td><tiles:insert attribute='body' /></td>
-		</tr>
-		</table>
+<table width="700" border="0" cellpadding="2" cellspacing="0">
+<tr>
+    <td width="700" height="65" class="logoHeader"></td>
+
+</tr>
+<tr>
+    <td width="700">
+		<tiles:insert attribute='body' />
 	</td>
-  </tr><!-- 
-  <tr>
-    <td width="780" height="20" align="center"><tiles:insert attribute='footer'/></td>
-  </tr> -->
+</tr>
+<tr>
+    <td width="700" height="20" class="copyright">Copyright &copy; 2006 Great Insights SRL. All rights reserved. Great Insights &#174; is a registered trademark</td>
+</tr>
 </table>
 </body>
 </html>

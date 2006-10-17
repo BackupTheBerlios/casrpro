@@ -1,0 +1,57 @@
+body,td {
+	color: #000000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+body {
+	background-color: #FFFFFF;
+	/*background-image: url();*/
+}
+
+a {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #666666;
+}
+a:link {text-decoration: none;}
+a:visited {text-decoration: none;}
+a:hover {text-decoration: underline;}
+a:active {text-decoration: none;}
+
+.logoHeader {
+	background-image: url(http://www.paneldeopiniones.com/pages/Images/logo_2.jpg);
+	background-repeat: no-repeat;
+	height: 65px;
+	width: 170px;
+}
+
+.surveyspace {
+	background-color: #E2E2E2;
+}
+
+.question {
+	color: #40406F;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.answer { 
+	color: #40406F; 
+	font-size: 12px;
+}
+
+.field {
+	border: 1px solid steelblue;
+	color: #324E8C;
+}
+
+.button {
+	background-color: lightsteelblue;
+	border: 1px solid steelblue;
+	color: #324E8C;
+	font-weight: bold;
+}
+
+.copyright {
+	font-size: 9px;
+	text-align: center;
+}

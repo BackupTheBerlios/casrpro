@@ -119,6 +119,8 @@ function isValidForm(isSubmit){
 	
 	if(isSubmit)
 		document.forms[0].submit();
-
+	else {
+		document.forms[0].method.value="finish";
+		document.forms[0].submit();
+	}
 }
-
