@@ -17,6 +17,7 @@ public class DbPropsImpl implements IDbProps {
 		props.setProperty("EmailFrom", "info@paneldeopiniones.com");
 		props.setProperty("EmailSubject", "Envío de confirmación");
 		props.setProperty("Url", "http://www.paneldeopiniones.com/survey/registerAction.do?method=confirmReg");
+		props.setProperty("AnonymousEmail", "anonymous@paneldeopiniones.com");
 	}
 	
 	public String getValue(String key) {
