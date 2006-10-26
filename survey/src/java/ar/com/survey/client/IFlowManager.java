@@ -19,5 +19,10 @@ public interface IFlowManager {
 	 * @return
 	 */
 	public FlowManageDTO getNextStep(FillForm fillForm, HttpSession session);
+	
+	public static final String NEXT = "Siguiente";
+	public static final String FINISH = "Finalizar";
+	public static final String SUBMIT = "isValidForm(true);";
+	public static final String CLOSE = "isValidForm(false);";
 
 }

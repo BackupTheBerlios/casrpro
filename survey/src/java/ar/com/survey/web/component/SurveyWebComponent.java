@@ -124,7 +124,8 @@ public class SurveyWebComponent {
 			survey.setFinishDate(Transformer.getCalendarFromString(sform
 					.getEndDate()));
 			survey.setStatus(sform.getState());
-			if(sform.getRestrictionType()!=null && !sform.getRestrictionType().equals("")){
+			if (sform.getRestrictionType() != null
+					&& !sform.getRestrictionType().equals("")) {
 				survey.setRestrictionType(sform.getRestrictionType());
 				survey.setDescription(sform.getDescription());
 			}
@@ -218,7 +219,8 @@ public class SurveyWebComponent {
 	public void addQuotaToSessionSurvey(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Survey survey = (Survey) session.getAttribute("currentSurvey");
-		String name = request.getParameter("name");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
 		int limit = Integer.parseInt(request.getParameter("value"));
 		Quota quota = new Quota(name, survey, limit, 0);
 		Set<Quota> quotas = survey.getQuotas();
@@ -230,8 +232,10 @@ public class SurveyWebComponent {
 	public void updateQuotaInSessionSurvey(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Survey survey = (Survey) session.getAttribute("currentSurvey");
-		String name = request.getParameter("name");
-		int limit = Integer.parseInt(request.getParameter("value"));
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		int limit = Integer.parseInt(Transformer
+				.htmlEspecialCharsConverter(request.getParameter("value")));
 		int row = Integer.parseInt(request.getParameter("row")) - 1;
 		Iterator iter = survey.getQuotas().iterator();
 		int index = 0;
@@ -297,11 +301,14 @@ public class SurveyWebComponent {
 	public void addOpenQuestionToSection(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
-		String name = request.getParameter("name");
-		String image = request.getParameter("image");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		String image = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("image"));
 
-		String questionText = request.getParameter("quesTxt");
-		if(questionText.charAt(0)=='Â')
+		String questionText = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("quesTxt"));
+		if (questionText.charAt(0) == 'Â')
 			questionText = questionText.substring(1);
 		String answerType = request.getParameter("txtType");
 
@@ -329,11 +336,14 @@ public class SurveyWebComponent {
 	public void updateOpenQuestionInSection(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
-		String name = request.getParameter("name");
-		String image = request.getParameter("image");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		String image = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("image"));
 
-		String questionText = request.getParameter("quesTxt");
-		if(questionText.charAt(0)=='Â')
+		String questionText = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("quesTxt"));
+		if (questionText.charAt(0) == 'Â')
 			questionText = questionText.substring(1);
 		String answerType = request.getParameter("txtType");
 		int rowId = Integer.parseInt(request.getParameter("row"));
@@ -363,11 +373,14 @@ public class SurveyWebComponent {
 	public void addEmptyQuestionToSection(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
-		String name = request.getParameter("name");
-		String image = request.getParameter("image");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		String image = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("image"));
 
-		String questionText = request.getParameter("quesTxt");
-		if(questionText.charAt(0)=='Â')
+		String questionText = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("quesTxt"));
+		if (questionText.charAt(0) == 'Â')
 			questionText = questionText.substring(1);
 
 		// now parse different params depending on the type
@@ -389,11 +402,14 @@ public class SurveyWebComponent {
 	public void updateEmptyQuestionInSection(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
-		String name = request.getParameter("name");
-		String image = request.getParameter("image");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		String image = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("image"));
 
-		String questionText = request.getParameter("quesTxt");
-		if(questionText.charAt(0)=='Â')
+		String questionText = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("quesTxt"));
+		if (questionText.charAt(0) == 'Â')
 			questionText = questionText.substring(1);
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
@@ -417,15 +433,22 @@ public class SurveyWebComponent {
 	public void addNumericQuestionToSection(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
-		String name = request.getParameter("name");
-		String image = request.getParameter("image");
-		String validationType = request.getParameter("validationType");
-		String min = request.getParameter("min");
-		String max = request.getParameter("max");
-		String total = request.getParameter("total");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		String image = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("image"));
+		String validationType = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("validationType"));
+		String min = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("min"));
+		String max = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("max"));
+		String total = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("total"));
 
-		String questionText = request.getParameter("questionTxt");
-		if(questionText.charAt(0)=='Â')
+		String questionText = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("questionTxt"));
+		if (questionText.charAt(0) == 'Â')
 			questionText = questionText.substring(1);
 
 		Object obj = session.getAttribute("answers");
@@ -468,15 +491,22 @@ public class SurveyWebComponent {
 	public void updateNumericQuestionInSection(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
-		String name = request.getParameter("name");
-		String image = request.getParameter("image");
-		String validationType = request.getParameter("validationType");
-		String min = request.getParameter("min");
-		String max = request.getParameter("max");
-		String total = request.getParameter("total");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		String image = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("image"));
+		String validationType = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("validationType"));
+		String min = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("min"));
+		String max = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("max"));
+		String total = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("total"));
 
-		String questionText = request.getParameter("questionTxt");
-		if(questionText.charAt(0)=='Â')
+		String questionText = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("questionTxt"));
+		if (questionText.charAt(0) == 'Â')
 			questionText = questionText.substring(1);
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
@@ -520,11 +550,14 @@ public class SurveyWebComponent {
 	public void addStringListQuestionToSection(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
-		String name = request.getParameter("name");
-		String image = request.getParameter("image");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		String image = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("image"));
 
-		String questionText = request.getParameter("questionTxt");
-		if(questionText.charAt(0)=='Â')
+		String questionText = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("questionTxt"));
+		if (questionText.charAt(0) == 'Â')
 			questionText = questionText.substring(1);
 
 		Object obj = session.getAttribute("answers");
@@ -559,11 +592,14 @@ public class SurveyWebComponent {
 	public void updateStringListQuestionInSection(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
-		String name = request.getParameter("name");
-		String image = request.getParameter("image");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		String image = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("image"));
 
-		String questionText = request.getParameter("questionTxt");
-		if(questionText.charAt(0)=='Â')
+		String questionText = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("questionTxt"));
+		if (questionText.charAt(0) == 'Â')
 			questionText = questionText.substring(1);
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
@@ -602,11 +638,14 @@ public class SurveyWebComponent {
 	public void addCheckBoxQuestionToSection(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
-		String name = request.getParameter("name");
-		String image = request.getParameter("image");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		String image = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("image"));
 
-		String questionText = request.getParameter("questionTxt");
-		if(questionText.charAt(0)=='Â')
+		String questionText = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("questionTxt"));
+		if (questionText.charAt(0) == 'Â')
 			questionText = questionText.substring(1);
 
 		Object obj = session.getAttribute("answers");
@@ -640,11 +679,14 @@ public class SurveyWebComponent {
 	public void updateCheckBoxQuestionInSection(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
-		String name = request.getParameter("name");
-		String image = request.getParameter("image");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		String image = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("image"));
 
-		String questionText = request.getParameter("questionTxt");
-		if(questionText.charAt(0)=='Â')
+		String questionText = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("questionTxt"));
+		if (questionText.charAt(0) == 'Â')
 			questionText = questionText.substring(1);
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
@@ -680,11 +722,14 @@ public class SurveyWebComponent {
 	public void addMatrixQuestionToSection(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
-		String name = request.getParameter("name");
-		String image = request.getParameter("image");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		String image = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("image"));
 
-		String questionText = request.getParameter("questionTxt");
-		if(questionText.charAt(0)=='Â')
+		String questionText = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("questionTxt"));
+		if (questionText.charAt(0) == 'Â')
 			questionText = questionText.substring(1);
 
 		Object obj = session.getAttribute("answers");
@@ -710,7 +755,7 @@ public class SurveyWebComponent {
 			columns = (ArrayList<String>) session.getAttribute("columns");
 
 		CheckBoxMatrixQuestion question = new CheckBoxMatrixQuestion();
-		
+
 		question.setDescription(questionText);
 		question.setSection(section);
 		question.setTitle(name);
@@ -733,11 +778,14 @@ public class SurveyWebComponent {
 	public void updateMatrixQuestionInSection(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Section section = (Section) session.getAttribute("currentSection");
-		String name = request.getParameter("name");
-		String image = request.getParameter("image");
+		String name = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("name"));
+		String image = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("image"));
 
-		String questionText = request.getParameter("questionTxt");
-		if(questionText.charAt(0)=='Â')
+		String questionText = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("questionTxt"));
+		if (questionText.charAt(0) == 'Â')
 			questionText = questionText.substring(1);
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
@@ -814,7 +862,8 @@ public class SurveyWebComponent {
 
 	public void addAnswerToSession(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String answer = request.getParameter("answer");
+		String answer = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("answer"));
 		Collection answers;
 		if (session.getAttribute("answers") == null)
 			answers = new ArrayList<String>();
@@ -834,23 +883,23 @@ public class SurveyWebComponent {
 		int rowId = Integer.parseInt(request.getParameter("row"));
 		rowId--;
 		Object obj = session.getAttribute("answers");
-		if (obj instanceof PersistentList){
+		if (obj instanceof PersistentList) {
 			PersistentList answers = (PersistentList) obj;
 			answers.remove(rowId);
 			session.setAttribute("answers", answers);
-		}
-		else {
+		} else {
 			ArrayList<String> answers = (ArrayList<String>) obj;
 			answers.remove(rowId);
 			session.setAttribute("answers", answers);
 		}
-		
+
 	}
 
 	public void updateAnswerInSession(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int rowId = Integer.parseInt(request.getParameter("row"));
-		String answer = request.getParameter("answer");
+		String answer = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("answer"));
 		rowId--;
 		ArrayList<String> answers = null;
 		Object obj = session.getAttribute("answers");
@@ -868,7 +917,8 @@ public class SurveyWebComponent {
 
 	public void addColumnToSession(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String column = request.getParameter("column");
+		String column = Transformer.htmlEspecialCharsConverter(request
+				.getParameter("column"));
 		ArrayList<String> columns;
 		if (session.getAttribute("columns") == null)
 			columns = new ArrayList<String>();

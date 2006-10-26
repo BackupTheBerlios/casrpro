@@ -245,9 +245,6 @@ public class FillAction extends DispatchAction {
 			index++;
 		}
 
-		// add results to session
-		fform.reset(mapping, request);
-
 		// Get Next step to display
 
 		FlowManageDTO flowDTO = flowManager.getNextStep(fform, request
@@ -255,12 +252,18 @@ public class FillAction extends DispatchAction {
 		ClientWebComponent cwp = new ClientWebComponent();
 		cwp.getNextSurveySection(request.getSession(), flowDTO.getSection());
 		request.setAttribute("flowDTO", flowDTO);
+		
+		// add results to session
+		fform.reset(mapping, request);
+		
 		return mapping.findForward("answers");
 	}
 	
 	public ActionForward finish(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		
+		// TODO: Claudio Update quotas in db because of session quotas updates
 		
 		FillForm fform = (FillForm) form;
 		HttpSession session = request.getSession();

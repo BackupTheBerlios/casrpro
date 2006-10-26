@@ -17,6 +17,7 @@ import ar.com.survey.admin.db.CustomSurveyDAO;
 import ar.com.survey.model.FilledSurvey;
 import ar.com.survey.model.Person;
 import ar.com.survey.model.PersonDAO;
+import ar.com.survey.model.Quota;
 import ar.com.survey.model.Survey;
 import ar.com.survey.model.SurveyDAO;
 import ar.com.survey.model.enums.FilledSurveyStatus;
@@ -39,33 +40,6 @@ public class ClientWebComponent {
 		sDAO = new CustomSurveyDAO();
 		pDAO = new PersonDAO();
 		fDAO = new CustomFilledSurveyDAO();
-	}
-
-	/**
-	 * This method checks if survey is open and if so registers the survey in
-	 * session and returns true, else returns false
-	 * 
-	 * @return boolean true or false
-	 * @param sname
-	 *            String indicating survey name
-	 * @param token
-	 *            client id
-	 * @param session
-	 * 
-	 */
-	public boolean isSurveyOpen(String sname, String token, HttpSession session) {
-		Survey survey = new Survey();
-		survey.setName(sname);
-		survey = sDAO.findBySurrogateKey(survey);
-		if (survey == null)
-			return false;
-		else if (!survey.getStatus().equals(SurveyState.OPEN.getCode()))
-			return false;
-		else {
-			session.setAttribute("CurrentSurvey", survey);
-			session.setAttribute("CurrentSection", survey.getSection(0));
-		}
-		return true;
 	}
 
 	public ActionForward getSurveyPage(String name, String token,
@@ -177,14 +151,63 @@ public class ClientWebComponent {
 		// new SurveyDAO().createOrUpdate(survey);
 		new CustomFilledSurveyDAO().createNew(fs);
 		
-		// TODO: Claudio remove commented code
+		// udpdate quotas in session
+		
+		if (session.getAttribute("quotaUpdates") != null) {
+			ArrayList<String> quotas = (ArrayList<String>) session
+					.getAttribute("quotaUpdates");
+			Iterator qiter = quotas.iterator();
+			while(qiter.hasNext()){
+				String quota = (String) qiter.next();
+				if(quota.indexOf("--")!=-1){
+					int pos = quota.indexOf("--");
+					int qpos = Integer.parseInt(quota.substring(1,pos))-1;
+					
+					Survey s = (Survey) session
+							.getAttribute("CurrentSurvey");
+					s = new CustomSurveyDAO().findBySurrogateKey(s);
+					Iterator<Quota> qIter = s.getQuotas().iterator();
+					int index = 0;
+					while (qIter.hasNext()) {
+						Quota q = qIter.next();
+						if (qpos == index) {
+							q.setCompleted(q.getCompleted()-1);
+							break;
+						}
+						index++;
+					}
+					
+				}
+				else {
+					int pos = quota.indexOf("++");
+					int qpos = Integer.parseInt(quota.substring(1,pos))-1;
+					
+					Survey s = (Survey) session
+							.getAttribute("CurrentSurvey");
+					s = new CustomSurveyDAO().findBySurrogateKey(s);
+					Iterator<Quota> qIter = s.getQuotas().iterator();
+					int index = 0;
+					while (qIter.hasNext()) {
+						Quota q = qIter.next();
+						if (qpos == index) {
+							q.setCompleted(q.getCompleted()+1);
+							break;
+						}
+						index++;
+					}
+				}
+			}
+			
+			session.removeAttribute("quotaUpdates");
+			
+		}
 		
 		// remove attrs and invalidate session
-//		session.removeAttribute("CurrentSurvey");
-//		session.removeAttribute("answers");
-//		session.removeAttribute("Person");
-//		session.removeAttribute("CurrentSection");
-//		session.invalidate();
+		session.removeAttribute("CurrentSurvey");
+		session.removeAttribute("answers");
+		session.removeAttribute("Person");
+		session.removeAttribute("CurrentSection");
+		session.invalidate();
 	}
 
 }
