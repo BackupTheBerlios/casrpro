@@ -29,7 +29,7 @@
 	</bean>
 	
 	<bean id="flowManager"
-		class="ar.com.survey.client.FlowManagerDummyFacade" singleton="false">
+		class="ar.com.survey.client.FlowManagerFacadeImpl" singleton="false">
 	</bean>
 
 </beans>
