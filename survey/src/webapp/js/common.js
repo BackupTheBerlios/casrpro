@@ -19,3 +19,64 @@
      return (document.getElementById) ? document.getElementById(aID)
                                       : document.all[aID];
    } 
+   
+   function replaceHtmlCodes(originalTxt){
+   
+   	var result = "";
+	for(i=0;i<originalTxt.length;i++){
+		var ix = originalTxt.charCodeAt(i);
+		switch(ix){
+		  case 225:
+			result += "#aacute;";
+			break;
+		  case 233:
+			result += "#eacute;";
+			break;
+		  case 237:
+			result += "#iacute;";
+			break;
+		  case 243:
+			result += "#oacute;";
+			break;
+		  case 250:
+			result += "#uacute;";
+			break;
+		  case 193:
+			result += "#Aacute;";
+			break;
+		  case 201:
+			result += "#Eacute;";
+			break;
+		  case 205:
+			result += "#Iacute;";
+			break;
+		  case 211:
+			result += "#Oacute;";
+			break;
+		  case 218:
+			result += "#Uacute;";
+			break;
+		  case 241:
+			result += "#ntilde;";
+			break;
+		  case 209:
+			result += "#Ntilde;";
+			break;
+		  case 252:
+			result += "#uuml;";
+			break;
+		  case 220:
+			result += "#Uuml;";
+			break;
+		  case 191:
+			result += "##191;";
+			break;
+		  case 161:
+			result += "##161;";
+			break;
+		  default:
+			result += originalTxt.charAt(i);
+		}	
+	}
+	return result;
+   }
