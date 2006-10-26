@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html; charset=ISO-8859-1" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="ar.com.survey.model.enums.SurveyState" %>
 <%@ page import="ar.com.survey.model.enums.RestrictionType" %>

@@ -44,6 +44,12 @@ function updateOpenQuestionInSection(name, image, quesTxt, txtType, row){
   req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
 
+  name = replaceHtmlCodes(name);
+  image = replaceHtmlCodes(image);
+  quesTxt = replaceHtmlCodes(quesTxt);
+  txtType = replaceHtmlCodes(txtType);
+  row = replaceHtmlCodes(row);
+
    req.send("name=" + name + "&image=" + image +
    	 "&quesTxt=" + quesTxt + "&txtType=" + txtType + "&row=" + row);	
 }

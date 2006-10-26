@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=ISO-8859-1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -32,7 +33,12 @@ function addEmptyQuestionToSection(name, image, quesTxt){
 
   // Specify that the body of the request contains form data
   req.setRequestHeader("Content-Type", 
-                       "application/x-www-form-urlencoded");
+                       "application/x-www-form-urlencoded; charset=ISO-8829-1");
+                       
+
+  name = replaceHtmlCodes(name);
+  image = replaceHtmlCodes(image);
+  quesTxt = replaceHtmlCodes(quesTxt);
 
    req.send("name=" + name + "&image=" + image +
    	 "&quesTxt=" + quesTxt);	

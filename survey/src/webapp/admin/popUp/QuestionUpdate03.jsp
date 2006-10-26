@@ -199,6 +199,11 @@ function removeAnswerFromSession(value){
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
+                       
+      name = replaceHtmlCodes(name);
+      image = replaceHtmlCodes(image);
+      questionTxt = replaceHtmlCodes(questionTxt);
+      row = replaceHtmlCodes(row);
 
       req.send("method=updateMatrixQuestionInSection&name=" + name + "&image=" + image + "&questionTxt=" + questionTxt + "&row=" + row);
       

@@ -39,6 +39,8 @@
       req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
 
+      value = replaceHtmlCodes(value);
+
       req.send("row=" + row + "&answer=" + value);
       
 	}

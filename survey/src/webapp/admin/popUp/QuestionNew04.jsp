@@ -42,6 +42,10 @@ function addOpenQuestionToSection(name, image, quesTxt, txtType){
   req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
 
+  name = replaceHtmlCodes(name);
+  image = replaceHtmlCodes(image);
+  quesTxt = replaceHtmlCodes(quesTxt);
+  txtType = replaceHtmlCodes(txtType);
    req.send("name=" + name + "&image=" + image +
    	 "&quesTxt=" + quesTxt + "&txtType=" + txtType);	
 }

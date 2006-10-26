@@ -143,6 +143,14 @@ var row = table.insertRow(lastRow);
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
+ 
+      name = replaceHtmlCodes(name);
+      image = replaceHtmlCodes(image);
+      questionTxt = replaceHtmlCodes(questionTxt);
+      validationType = replaceHtmlCodes(validationType);
+      min = replaceHtmlCodes(min);
+      max = replaceHtmlCodes(max);
+      total = replaceHtmlCodes(total);
 
       req.send("name=" + name + "&image=" + image + "&questionTxt=" + questionTxt
       	+ "&validationType=" + validationType + "&min=" + min + "&max=" + max + "&total=" + total);

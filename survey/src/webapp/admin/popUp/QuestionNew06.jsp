@@ -102,7 +102,7 @@ var row = table.insertRow(lastRow);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
-                       "application/x-www-form-urlencoded");
+                       "application/x-www-form-urlencoded; charset=ISO-8859-1");
 
       req.send("row=" + value);
       
@@ -119,8 +119,12 @@ var row = table.insertRow(lastRow);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
-                       "application/x-www-form-urlencoded");
+                       "application/x-www-form-urlencoded; charset=ISO-8859-1");
 
+      name = replaceHtmlCodes(name);
+      image = replaceHtmlCodes(image);
+      questionTxt = replaceHtmlCodes(questionTxt);
+      
       req.send("name=" + name + "&image=" + image + "&questionTxt=" + questionTxt);
       
 	}

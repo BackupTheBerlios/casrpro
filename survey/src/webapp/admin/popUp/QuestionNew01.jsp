@@ -1,6 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Nueva Pregunta</title>
 <link href="../../css/css.css" rel="stylesheet" type="text/css">
 <script language="JavaScript" src="../../js/common.js"></script>
@@ -102,7 +102,7 @@ var row = table.insertRow(lastRow);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
-                       "application/x-www-form-urlencoded");
+                       "application/x-www-form-urlencoded; charset=ISO-8859-1");
 
       req.send("row=" + value);
       
@@ -113,13 +113,17 @@ var row = table.insertRow(lastRow);
 	  var req = newXMLHttpRequest();
   	  var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
       req.onreadystatechange = handlerFunction;
-  	
+      
       // Third parameter specifies request is asynchronous.
       req.open("POST", "../survey.do?method=addStringListQuestionToSection", true);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
-                       "application/x-www-form-urlencoded");
+                       "application/x-www-form-urlencoded; charset=ISO-8859-1");
+
+      name = replaceHtmlCodes(name);
+      image = replaceHtmlCodes(image);
+      questionTxt = replaceHtmlCodes(questionTxt);
 
       req.send("name=" + name + "&image=" + image + "&questionTxt=" + questionTxt);
       

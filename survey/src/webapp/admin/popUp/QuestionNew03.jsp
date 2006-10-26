@@ -198,6 +198,10 @@ function removeAnswerFromSession(value){
       req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
 
+      name = replaceHtmlCodes(name);
+      image = replaceHtmlCodes(image);
+      questionTxt = replaceHtmlCodes(questionTxt);
+      
       req.send("method=addMatrixQuestionToSection&name=" + name + "&image=" + image + "&questionTxt=" + questionTxt);
       
 	}

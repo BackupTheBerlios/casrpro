@@ -37,6 +37,11 @@ function updateEmptyQuestionInSection(name, image, quesTxt, row){
   req.setRequestHeader("Content-Type", 
                        "application/x-www-form-urlencoded");
 
+
+  name = replaceHtmlCodes(name);
+  image = replaceHtmlCodes(image);
+  quesTxt = replaceHtmlCodes(quesTxt);
+  row = replaceHtmlCodes(row);
    req.send("name=" + name + "&image=" + image +
    	 "&quesTxt=" + quesTxt + "&row=" + row);	
 }
