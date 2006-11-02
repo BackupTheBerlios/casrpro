@@ -203,11 +203,11 @@ public class ClientWebComponent {
 		}
 		
 		// remove attrs and invalidate session
-		session.removeAttribute("CurrentSurvey");
+		// session.removeAttribute("CurrentSurvey");
 		session.removeAttribute("answers");
 		session.removeAttribute("Person");
 		session.removeAttribute("CurrentSection");
-		session.invalidate();
+		// session.invalidate();
 	}
 
 }

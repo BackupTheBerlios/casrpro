@@ -121,6 +121,13 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 					break;
 				}
 
+				// Before parsing check if its a jump condition
+				
+				if(condition.equals("Jump")){
+					nextPos = operation;
+					break;
+				}
+				
 				// parse condition to see if it's a q or a p
 				// a condition should be some like p1==asdajds 11
 
@@ -274,10 +281,14 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 					}
 
 				}
+				
+				
 
 			} catch (Exception e) {
 				logger.info("Error on line of script, ignoring it");
 			}
+			
+			
 
 		}
 
