@@ -366,4 +366,5 @@ public class SurveyAction extends DispatchAction {
 		new SurveyWebComponent().removeColumnFromSession(request);
 		return null;
 	}
+	
 }

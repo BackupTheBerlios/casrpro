@@ -263,8 +263,6 @@ public class FillAction extends DispatchAction {
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		
-		// TODO: Claudio Update quotas in db because of session quotas updates
-		
 		FillForm fform = (FillForm) form;
 		HttpSession session = request.getSession();
 
@@ -416,10 +414,12 @@ public class FillAction extends DispatchAction {
 					break;
 				}
 				Collection<Field> col = new ArrayList<Field>();
+				StringBuffer key = new StringBuffer();
 				for (int z = 0; z < items; z++) {
-					String key = "value" + (z + 1);
+					 key = new StringBuffer("value");
+					 key.append(Integer.toString(z + 1));
 					for (int y = 0; y < cols; y++) {
-						String tkey = key + (y + 1);
+						String tkey = key.toString() + Integer.toString(y + 1);
 						if (matrix.get(tkey) != null) {
 							BooleanField bfield = ((String) matrix.get(tkey))
 									.equals("") ? FieldFactory.booleanField(
