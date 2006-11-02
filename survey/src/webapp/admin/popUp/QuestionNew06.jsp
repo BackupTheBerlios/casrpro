@@ -98,7 +98,7 @@ var row = table.insertRow(lastRow);
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "../survey.do?method=removeAnswerFromSession", true);
+      req.open("POST", "../survey.do?method=removeAnswerFromSession", false);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
@@ -115,7 +115,7 @@ var row = table.insertRow(lastRow);
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "../survey.do?method=addCheckBoxListQuestionToSection", true);
+      req.open("POST", "../survey.do?method=addCheckBoxListQuestionToSection", false);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 

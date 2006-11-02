@@ -31,7 +31,7 @@ function updateEmptyQuestionInSection(name, image, quesTxt, row){
   req.onreadystatechange = handlerFunction;
   	
   // Third parameter specifies request is asynchronous.
-  req.open("POST", "survey.do?method=updateEmptyQuestionInSection", true);
+  req.open("POST", "survey.do?method=updateEmptyQuestionInSection", false);
 
   // Specify that the body of the request contains form data
   req.setRequestHeader("Content-Type", 

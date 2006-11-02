@@ -36,7 +36,7 @@ function addOpenQuestionToSection(name, image, quesTxt, txtType){
   req.onreadystatechange = handlerFunction;
   	
   // Third parameter specifies request is asynchronous.
-  req.open("POST", "../survey.do?method=addOpenQuestionToSection", true);
+  req.open("POST", "../survey.do?method=addOpenQuestionToSection", false);
 
   // Specify that the body of the request contains form data
   req.setRequestHeader("Content-Type", 

@@ -25,7 +25,7 @@
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "../survey.do?method=addAnswerToSession", true);
+      req.open("POST", "../survey.do?method=addAnswerToSession", false);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 

@@ -160,7 +160,7 @@ function removeAnswerFromSession(value){
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "survey.do", true);
+      req.open("POST", "survey.do", false);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
@@ -177,7 +177,7 @@ function removeAnswerFromSession(value){
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "survey.do", true);
+      req.open("POST", "survey.do", false);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
@@ -194,7 +194,7 @@ function removeAnswerFromSession(value){
       req.onreadystatechange = handlerFunction;
   	
       // Third parameter specifies request is asynchronous.
-      req.open("POST", "survey.do", true);
+      req.open("POST", "survey.do", false);
 
       // Specify that the body of the request contains form data
       req.setRequestHeader("Content-Type", 
@@ -203,7 +203,7 @@ function removeAnswerFromSession(value){
       name = replaceHtmlCodes(name);
       image = replaceHtmlCodes(image);
       questionTxt = replaceHtmlCodes(questionTxt);
-      row = replaceHtmlCodes(row);
+      // row = replaceHtmlCodes(row);
 
       req.send("method=updateMatrixQuestionInSection&name=" + name + "&image=" + image + "&questionTxt=" + questionTxt + "&row=" + row);
       
