@@ -103,18 +103,18 @@ function updateSectionTableLinks(rowNum){
 	}
 }
 
-function addQuotaToSession(name, value){
+function addQuotaToSession(name, value, popUp){
 
   var req = newXMLHttpRequest();
   var handlerFunction = getReadyStateHandler(req, ajaxDoNothing);
   req.onreadystatechange = handlerFunction;
   
   var urlAjax = "survey.do?method=addQuotaToSessionSurvey&name=" + name + "&value=" + value ;
-  req.open("GET", urlAjax, true);
+  req.open("GET", urlAjax, false);
   
   req.send(null);
-
-} 
+  
+}
 
 function updateQuotaInSession(name, value){
   
@@ -124,7 +124,7 @@ function updateQuotaInSession(name, value){
   
   var urlAjax = "survey.do?method=updateQuotaInSessionSurvey&name=" 
   	+ name + "&value=" + value + "&row=" + currentRow ;
-  req.open("GET", urlAjax, true);
+  req.open("GET", urlAjax, false);
   
   req.send(null);
 
@@ -137,7 +137,7 @@ function removeQuotaInSessionSurvey(row){
     req.onreadystatechange = handlerFunction;
   
     var urlAjax = "survey.do?method=removeQuotaInSessionSurvey&row=" + row ;
-    req.open("GET", urlAjax, true);
+    req.open("GET", urlAjax, false);
   
     req.send(null);
     
@@ -150,7 +150,7 @@ function removeSectionInSessionSurvey(row){
     req.onreadystatechange = handlerFunction;
   
     var urlAjax = "survey.do?method=removeSectionInSessionSurvey&row=" + row ;
-    req.open("GET", urlAjax, true);
+    req.open("GET", urlAjax, false);
   
     req.send(null);
     

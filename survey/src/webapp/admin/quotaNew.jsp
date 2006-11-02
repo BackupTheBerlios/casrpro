@@ -13,7 +13,7 @@
 			var count = document.forms[0].count.value;
 			if (window.opener && !window.opener.closed){
 				window.opener.addRow(name, count);
-				window.opener.addQuotaToSession(name, count);
+				window.opener.addQuotaToSession(name, count, self);
 			}
 			window.close();
 		}
