@@ -73,12 +73,12 @@
    </c:when>
     <c:when test="${question.class.name == 'ar.com.survey.questions.matrix.CheckBoxMatrixQuestion' }">
     <tr>
-     <td colspan="2" class="answer">
+     <td colspan="2" class="answer" align="left">
       <% int maxSize = 0; %>
-      <table border="0" cellspacing="1" cellpadding="1">
-       <tr><td class="answer">&nbsp;</td>
+      <table border="0" cellspacing="2" cellpadding="2">
+       <tr><td class="answer" width="100">&nbsp;</td>
 	   <c:forEach items="${ question.columnsTitles }" var="title">
-   		<td class="answer">${ title }
+   		<td class="answer" align="center" width="100">${ title }
    		</td>
    		<% maxSize++; %>
       </c:forEach>
@@ -87,13 +87,14 @@
         <c:set var="subIndexName" value="1" />
        <c:forEach items="${ question.items }" var="item">
         <tr>
-        <td class="answer">${ item }</td>
+        <td class="answer" width="100">${ item }</td>
         <% for(int i=0;i<maxSize;i++){ %>
-       	<td class="answer"><html:checkbox property="matrix${ status.index + 1 }(value${ indexName }${ subIndexName })" /></td>
+       	<td class="answer" width="100" align="center"><html:checkbox property="matrix${ status.index + 1 }(value${ indexName }${ subIndexName })" /></td>
        	<c:set var="subIndexName" value="${ subIndexName + 1 }" />
        	<% } %>
        	</tr>
        	<c:set var="indexName" value="${ indexName + 1 }" />
+       	<c:set var="subIndexName" value="1" />
        </c:forEach>
       </table>
       </td>
@@ -101,13 +102,13 @@
    </c:when>
    <c:otherwise></c:otherwise>
   </c:choose>
-  <tr>
-	<td colspan="2"><hr size="3" width="675" color="#4B4E51" noshade></td>
-  </tr>
  </c:forEach>
   <tr><td>&nbsp;</td></tr>
  <tr><td align="center" colspan="2"><input type="button" class="button" value="${ flowDTO.description }" onclick="${ flowDTO.action }"></td>
  </tr>
+   <tr>
+	<td colspan="2"><hr size="3" width="675" color="#4B4E51" noshade></td>
+  </tr>
 </table>
 <html:hidden property="method" value="fillNext"/>
 <html:hidden property="nextPos" value="${ flowDTO.section }"/>
