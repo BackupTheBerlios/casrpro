@@ -5,7 +5,7 @@
   <td width="700" valign="top" class="surveyspace">
 <html:form action="/client/fill">
 <table border="0" cellspacing="2" cellpadding="2" width="100%">
- <c:forEach items="${ sessionScope.CurrentSection.questions }" var="question" varStatus="status">
+ <c:forEach items="${ sessionScope.CurrentClientSection.questions }" var="question" varStatus="status">
   <tr>
 	<td colspan="2"><hr size="3" width="675" color="#4B4E51" noshade></td>
   </tr>
@@ -89,7 +89,7 @@
         <tr>
         <td class="answer" width="100">${ item }</td>
         <% for(int i=0;i<maxSize;i++){ %>
-       	<td class="answer" width="100" align="center"><html:checkbox property="matrix${ status.index + 1 }(value${ indexName }${ subIndexName })" /></td>
+       	<td class="answer" width="100" align="center"><html:radio value="value${ indexName }${ subIndexName }" property="matrix${ status.index + 1 }(value${ indexName }1)" /></td>
        	<c:set var="subIndexName" value="${ subIndexName + 1 }" />
        	<% } %>
        	</tr>
