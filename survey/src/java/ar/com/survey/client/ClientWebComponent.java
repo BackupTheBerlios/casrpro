@@ -91,8 +91,8 @@ public class ClientWebComponent {
 					} else
 						return mapping.findForward("incorrectToken");
 				}
-				session.setAttribute("CurrentSurvey", survey);
-				session.setAttribute("CurrentSection", survey.getSection(0));
+				session.setAttribute("CurrentClientSurvey", survey);
+				session.setAttribute("CurrentClientSection", survey.getSection(0));
 				return mapping.findForward("answers");
 			}
 
@@ -104,17 +104,17 @@ public class ClientWebComponent {
 			anonymous.setEmail(db.getValue("AnonymousEmail"));
 			anonymous = pDAO.findBySurrogateKey(anonymous);
 			session.setAttribute("Person", anonymous);
-			session.setAttribute("CurrentSurvey", survey);
-			session.setAttribute("CurrentSection", survey.getSection(0));
+			session.setAttribute("CurrentClientSurvey", survey);
+			session.setAttribute("CurrentClientSection", survey.getSection(0));
 			return mapping.findForward("answers");
 		}
 	}
 
 	public boolean getNextSurveySection(HttpSession session, int sectionId) {
 		boolean retVal = true;
-		Survey surv = (Survey) session.getAttribute("CurrentSurvey");
+		Survey surv = (Survey) session.getAttribute("CurrentClientSurvey");
 		if (surv.getSections().size() >= sectionId)
-			session.setAttribute("CurrentSection", surv
+			session.setAttribute("CurrentClientSection", surv
 					.getSection(sectionId - 1));
 		else
 			retVal = false;
@@ -123,7 +123,7 @@ public class ClientWebComponent {
 
 	public void persistAnswers(HttpSession session) {
 		Person person = (Person) session.getAttribute("Person");
-		Survey survey = (Survey) session.getAttribute("CurrentSurvey");
+		Survey survey = (Survey) session.getAttribute("CurrentClientSurvey");
 		ArrayList answers = (ArrayList) session.getAttribute("answers");
 		Collection<Field> col = new ArrayList<Field>();
 		Iterator iter = answers.iterator();
@@ -164,7 +164,7 @@ public class ClientWebComponent {
 					int qpos = Integer.parseInt(quota.substring(1,pos))-1;
 					
 					Survey s = (Survey) session
-							.getAttribute("CurrentSurvey");
+							.getAttribute("CurrentClientSurvey");
 					s = new CustomSurveyDAO().findBySurrogateKey(s);
 					Iterator<Quota> qIter = s.getQuotas().iterator();
 					int index = 0;
@@ -183,7 +183,7 @@ public class ClientWebComponent {
 					int qpos = Integer.parseInt(quota.substring(1,pos))-1;
 					
 					Survey s = (Survey) session
-							.getAttribute("CurrentSurvey");
+							.getAttribute("CurrentClientSurvey");
 					s = new CustomSurveyDAO().findBySurrogateKey(s);
 					Iterator<Quota> qIter = s.getQuotas().iterator();
 					int index = 0;
@@ -203,10 +203,10 @@ public class ClientWebComponent {
 		}
 		
 		// remove attrs and invalidate session
-		// session.removeAttribute("CurrentSurvey");
+		session.removeAttribute("CurrentClientSurvey");
 		session.removeAttribute("answers");
 		session.removeAttribute("Person");
-		session.removeAttribute("CurrentSection");
+		session.removeAttribute("CurrentClientSection");
 		// session.invalidate();
 	}
 

@@ -28,6 +28,7 @@ import ar.com.survey.questions.fields.BooleanField;
 import ar.com.survey.questions.fields.Field;
 import ar.com.survey.questions.fields.FieldFactory;
 import ar.com.survey.questions.fields.NumberField;
+import ar.com.survey.questions.fields.StringField;
 import ar.com.survey.questions.list.CheckBoxListQuestion;
 import ar.com.survey.questions.list.NumberListQuestion;
 import ar.com.survey.questions.list.StringListQuestion;
@@ -83,7 +84,7 @@ public class FillAction extends DispatchAction {
 		
 		// iterate the questions and fill fields as required
 
-		Section section = (Section) session.getAttribute("CurrentSection");
+		Section section = (Section) session.getAttribute("CurrentClientSection");
 		Iterator iter = section.getQuestions().iterator();
 		int index = 1;
 		while (iter.hasNext()) {
@@ -97,8 +98,10 @@ public class FillAction extends DispatchAction {
 				answers.add(col);
 			} else if (question instanceof StringQuestion) {
 				StringQuestion qs = (StringQuestion) question;
+				String[] values = fform.getTxtAnswer();
+				int tempIndex = index - 2;
 				Field field = FieldFactory.stringField(
-						fform.getTxtAnswer()[index - 1], question);
+						values[tempIndex], question);
 				Collection<Field> col = new ArrayList<Field>(1);
 				col.add(field);
 				answers.add(col);
@@ -225,20 +228,22 @@ public class FillAction extends DispatchAction {
 				}
 				Collection<Field> col = new ArrayList<Field>();
 				for (int z = 0; z < items; z++) {
-					String key = "value" + (z + 1);
-					for (int y = 0; y < cols; y++) {
-						String tkey = key + (y + 1);
-						if (matrix.get(tkey) != null) {
-							BooleanField bfield = ((String) matrix.get(tkey))
-									.equals("") ? FieldFactory.booleanField(
-									false, question, y, z) : FieldFactory.booleanField(
-									true, question, y, z);
-							col.add(bfield);
-						}
-						else {
-							col.add(FieldFactory.booleanField(false, question, y, z));
-						}
-					}
+					String key = "value" + (z + 1) + "1";
+//					for (int y = 0; y < cols; y++) {
+//						String tkey = key + (y + 1);
+//						if (matrix.get(tkey) != null) {
+//							BooleanField bfield = ((String) matrix.get(tkey))
+//									.equals("") ? FieldFactory.booleanField(
+//									false, question, y, z) : FieldFactory.booleanField(
+//									true, question, y, z);
+//							col.add(bfield);
+//						}
+//						else {
+//							col.add(FieldFactory.booleanField(false, question, y, z));
+//						}
+//					}
+					StringField sf = FieldFactory.stringField((String) matrix.get(key), question);
+					col.add(sf);
 				}
 				answers.add(col);
 			}
@@ -273,7 +278,7 @@ public class FillAction extends DispatchAction {
 		
 		// iterate the questions and fill fields as required
 
-		Section section = (Section) session.getAttribute("CurrentSection");
+		Section section = (Section) session.getAttribute("CurrentClientSection");
 		Iterator iter = section.getQuestions().iterator();
 		int index = 1;
 		while (iter.hasNext()) {
@@ -288,7 +293,7 @@ public class FillAction extends DispatchAction {
 			} else if (question instanceof StringQuestion) {
 				StringQuestion qs = (StringQuestion) question;
 				Field field = FieldFactory.stringField(
-						fform.getTxtAnswer()[index - 1], question);
+						fform.getTxtAnswer()[index - 2], question);
 				Collection<Field> col = new ArrayList<Field>(1);
 				col.add(field);
 				answers.add(col);
@@ -414,23 +419,23 @@ public class FillAction extends DispatchAction {
 					break;
 				}
 				Collection<Field> col = new ArrayList<Field>();
-				StringBuffer key = new StringBuffer();
 				for (int z = 0; z < items; z++) {
-					 key = new StringBuffer("value");
-					 key.append(Integer.toString(z + 1));
-					for (int y = 0; y < cols; y++) {
-						String tkey = key.toString() + Integer.toString(y + 1);
-						if (matrix.get(tkey) != null) {
-							BooleanField bfield = ((String) matrix.get(tkey))
-									.equals("") ? FieldFactory.booleanField(
-									false, question, y, z) : FieldFactory.booleanField(
-									true, question, y, z);
-							col.add(bfield);
-						}
-						else {
-							col.add(FieldFactory.booleanField(false, question, y, z));
-						}
-					}
+					String key = "value" + (z + 1) + "1";
+//					for (int y = 0; y < cols; y++) {
+//						String tkey = key + (y + 1);
+//						if (matrix.get(tkey) != null) {
+//							BooleanField bfield = ((String) matrix.get(tkey))
+//									.equals("") ? FieldFactory.booleanField(
+//									false, question, y, z) : FieldFactory.booleanField(
+//									true, question, y, z);
+//							col.add(bfield);
+//						}
+//						else {
+//							col.add(FieldFactory.booleanField(false, question, y, z));
+//						}
+//					}
+					StringField sf = FieldFactory.stringField((String) matrix.get(key), question);
+					col.add(sf);
 				}
 				answers.add(col);
 			}
