@@ -18,10 +18,14 @@ function fillOpenerRow(){
 		var quesTxt = document.forms[0].question.value;
 		
 		var questType;
-		if(document.forms[0].answerType.selectedIndex==1)
-			questType = "textArea";
-		else
-			questType = "textBox";
+		<c:choose>
+        <c:when test="${Question.class.name == 'ar.com.survey.questions.single.StringQuestion' }">
+            questType = "textBox";
+        </c:when>
+        <c:otherwise>
+            questType="textArea";
+        </c:otherwise>
+        </c:choose>
 		if (window.opener && !window.opener.closed){
 			var row = window.opener.getCurrentRow();
 			updateOpenQuestionInSection(name, image, quesTxt, questType, row);
@@ -48,7 +52,6 @@ function updateOpenQuestionInSection(name, image, quesTxt, txtType, row){
   image = replaceHtmlCodes(image);
   quesTxt = replaceHtmlCodes(quesTxt);
   txtType = replaceHtmlCodes(txtType);
-  row = replaceHtmlCodes(row);
 
    req.send("name=" + name + "&image=" + image +
    	 "&quesTxt=" + quesTxt + "&txtType=" + txtType + "&row=" + row);	
@@ -90,22 +93,15 @@ function updateOpenQuestionInSection(name, image, quesTxt, txtType, row){
 </tr>
 <tr>
 	<td width="150" align="left">Tipo de Respuesta</td>
-	<td width="400" align="left">
-		<select name="answerType">
-			<option value="">Seleccione un Tipo de Respuesta</option>
-			<option value="textArea">Textarea</option>
-			<option value="textBox">Textbox</option>
-		</select>
-		<script language="JavaScript" type="text/javascript">
+	<td width="400" align="left">		
 		<c:choose>
         <c:when test="${Question.class.name == 'ar.com.survey.questions.single.StringQuestion' }">
-            document.forms[0].answerType.selectedIndex=2;
+            TextBox
         </c:when>
         <c:otherwise>
-            document.forms[0].answerType.selectedIndex=1;
+            TextArea
         </c:otherwise>
     </c:choose>
-        </script>
 	</td>
 </tr>
 <tr>
@@ -113,7 +109,7 @@ function updateOpenQuestionInSection(name, image, quesTxt, txtType, row){
 </tr>
 <tr>
 	<td colspan="2" align="right">
-		<input type="button" name="" value="Aceptar" onClick="verifySimple();"/>&nbsp;
+		<input type="button" name="" value="Aceptar" onClick="verifySimpleUpdate();"/>&nbsp;
 		<input type="button" name="" value="Cancelar" onClick="window.close();"/>&nbsp;
 	</td>
 </tr>

@@ -41,7 +41,6 @@ function updateEmptyQuestionInSection(name, image, quesTxt, row){
   name = replaceHtmlCodes(name);
   image = replaceHtmlCodes(image);
   quesTxt = replaceHtmlCodes(quesTxt);
-  row = replaceHtmlCodes(row);
    req.send("name=" + name + "&image=" + image +
    	 "&quesTxt=" + quesTxt + "&row=" + row);	
 }

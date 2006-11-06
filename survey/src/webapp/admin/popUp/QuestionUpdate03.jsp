@@ -203,7 +203,6 @@ function removeAnswerFromSession(value){
       name = replaceHtmlCodes(name);
       image = replaceHtmlCodes(image);
       questionTxt = replaceHtmlCodes(questionTxt);
-      // row = replaceHtmlCodes(row);
 
       req.send("method=updateMatrixQuestionInSection&name=" + name + "&image=" + image + "&questionTxt=" + questionTxt + "&row=" + row);
       

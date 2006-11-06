@@ -127,7 +127,6 @@ var row = table.insertRow(lastRow);
       name = replaceHtmlCodes(name);
       image = replaceHtmlCodes(image);
       questionTxt = replaceHtmlCodes(questionTxt);
-      row = replaceHtmlCodes(row);
       req.send("name=" + name + "&image=" + image + "&questionTxt=" + questionTxt + "&row=" + row);
       
 	}
