@@ -13,6 +13,7 @@ import ar.com.survey.client.dto.FlowManageDTO;
 import ar.com.survey.model.Quota;
 import ar.com.survey.model.Section;
 import ar.com.survey.model.Survey;
+import ar.com.survey.util.LineParser;
 import ar.com.survey.web.struts.form.FillForm;
 
 public class FlowManagerFacadeImpl implements IFlowManager {
@@ -23,9 +24,9 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 	public FlowManageDTO getNextStep(FillForm fillForm, HttpSession session) {
 
 		FlowManageDTO flowDTO = null;
-		Survey survey = (Survey) session.getAttribute("CurrentSurvey");
+		Survey survey = (Survey) session.getAttribute("CurrentClientSurvey");
 
-		Section section = (Section) session.getAttribute("CurrentSection");
+		Section section = (Section) session.getAttribute("CurrentClientSection");
 		String quotaScript = section.getQuotaMgmtScript();
 		String flowScript = section.getFlowMgmtScript();
 		String nextSection = null;
@@ -96,7 +97,8 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 		String nextPos = null;
 		Iterator iter = commands.iterator();
 		while (iter.hasNext() && nextPos == null) {
-			StringTokenizer st = new StringTokenizer((String) iter.next(), " ");
+			// StringTokenizer st = new StringTokenizer((String) iter.next(), " ");
+			LineParser st = new LineParser((String) iter.next(), ' ');
 			try {
 				int questionIndex = 0;
 				if (st.countTokens() == 3)
@@ -159,7 +161,7 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 
 						int qIndex = Integer.parseInt(operator.substring(1)) - 1;
 						Survey s = (Survey) session
-								.getAttribute("CurrentSurvey");
+								.getAttribute("CurrentClientSurvey");
 						s = new CustomSurveyDAO().findBySurrogateKey(s);
 						Iterator<Quota> qIter = s.getQuotas().iterator();
 						int index = 0;
@@ -209,7 +211,7 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 
 						int qIndex = Integer.parseInt(operator.substring(1)) - 1;
 						Survey s = (Survey) session
-								.getAttribute("CurrentSurvey");
+								.getAttribute("CurrentClientSurvey");
 						s = new CustomSurveyDAO().findBySurrogateKey(s);
 						Iterator<Quota> qIter = s.getQuotas().iterator();
 						int index = 0;
@@ -230,7 +232,7 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 						}
 					}
 
-				} else {
+				} else if (condition.indexOf("<=") != -1) {
 
 					int internalPos = condition.indexOf("<=");
 					operator = condition.substring(0, internalPos);
@@ -259,7 +261,7 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 
 						int qIndex = Integer.parseInt(operator.substring(1)) - 1;
 						Survey s = (Survey) session
-								.getAttribute("CurrentSurvey");
+								.getAttribute("CurrentClientSurvey");
 						s = new CustomSurveyDAO().findBySurrogateKey(s);
 						Iterator<Quota> qIter = s.getQuotas().iterator();
 						int index = 0;
@@ -280,6 +282,53 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 						}
 					}
 
+				} else if (condition.indexOf("!=") != -1) {
+
+					int internalPos = condition.indexOf("!=");
+					operator = condition.substring(0, internalPos);
+
+					if (operator.charAt(0) == 'p') {
+						if (!answer.equals(condition.substring(internalPos + 2))) {
+							try {
+								Integer.parseInt(operation);
+								nextPos = operation;
+							} catch (NumberFormatException nfe) {
+								ArrayList<String> quotas = null;
+								if (session.getAttribute("quotaUpdates") != null) {
+									quotas = (ArrayList<String>) session
+											.getAttribute("quotaUpdates");
+								} else {
+									quotas = new ArrayList<String>();
+								}
+								if (!quotas.contains(operation))
+									quotas.add(operation);
+								session.setAttribute("quotaUpdates", quotas);
+							}
+						}
+					} else if (operator.charAt(0) == 'q') {
+
+						int qIndex = Integer.parseInt(operator.substring(1)) - 1;
+						Survey s = (Survey) session
+								.getAttribute("CurrentClientSurvey");
+						s = new CustomSurveyDAO().findBySurrogateKey(s);
+						Iterator<Quota> qIter = s.getQuotas().iterator();
+						int index = 0;
+						while (qIter.hasNext()) {
+							Quota q = qIter.next();
+							if (qIndex == index) {
+								if (q.getCompleted() == Integer
+										.parseInt(condition
+												.substring(internalPos + 2))) {
+									// operation should be a string
+									// representation of an int index of a
+									// section
+									nextPos = operation;
+								}
+								break;
+							}
+							index++;
+						}
+					}
 				}
 				
 				
