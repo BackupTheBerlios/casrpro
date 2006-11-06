@@ -27,6 +27,22 @@ function verifySimple(){
 	
 }
 
+function verifySimpleUpdate(){
+
+	if(document.forms[0].name.value==""){
+		alert("Debe ingresar un nombre!");
+		return false;
+	}
+	
+	if(document.forms[0].question.value==""){
+		alert("Debe ingresar una pregunta!");
+		return false;
+	}
+
+	fillOpenerRow();
+	
+}
+
 function verifyNoAnswer(){
 
 	if(document.forms[0].name.value==""){
