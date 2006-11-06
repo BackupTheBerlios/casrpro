@@ -351,19 +351,17 @@ public class SurveyWebComponent {
 
 		// now parse different params depending on the type
 		Question question = null;
+		List<Question> quests = section.getQuestions();
 
 		if (answerType.equals("textArea"))
-			question = new TextAreaQuestion();
+			question = (TextAreaQuestion) quests.get(rowId);
 		else
-			question = new StringQuestion();
+			question = (StringQuestion) quests.get(rowId);
 
 		question.setDescription(questionText);
 		question.setSection(section);
 		question.setTitle(name);
 		question.setImage(image);
-
-		List<Question> quests = section.getQuestions();
-		quests.set(rowId, question);
 
 		section.setQuestions(quests);
 
@@ -415,15 +413,13 @@ public class SurveyWebComponent {
 		rowId--;
 
 		// now parse different params depending on the type
-		Question question = new EmptyQuestion();
+		List<Question> quests = section.getQuestions();
+		Question question = (EmptyQuestion) quests.get(rowId);
 
 		question.setDescription(questionText);
 		question.setSection(section);
 		question.setTitle(name);
 		question.setImage(image);
-
-		List<Question> quests = section.getQuestions();
-		quests.set(rowId, question);
 
 		section.setQuestions(quests);
 
@@ -523,7 +519,8 @@ public class SurveyWebComponent {
 			answers = (ArrayList<String>) session.getAttribute("answers");
 
 		// now parse different params depending on the type
-		NumberListQuestion question = new NumberListQuestion(answers.size());
+		List<Question> quests = section.getQuestions();
+		NumberListQuestion question = (NumberListQuestion) quests.get(rowId);
 
 		question.setDescription(questionText);
 		question.setSection(section);
@@ -537,9 +534,6 @@ public class SurveyWebComponent {
 		}
 		question.setImage(image);
 		question.setValidationType(validationType);
-
-		List<Question> quests = section.getQuestions();
-		quests.set(rowId, question);
 
 		section.setQuestions(quests);
 
@@ -619,16 +613,15 @@ public class SurveyWebComponent {
 			answers = (ArrayList<String>) obj;
 
 		// now parse different params depending on the type
-		StringListQuestion question = new StringListQuestion();
+		List<Question> quests = section.getQuestions();
+		
+		StringListQuestion question = (StringListQuestion) quests.get(rowId);
 
 		question.setDescription(questionText);
 		question.setSection(section);
 		question.setTitle(name);
 		question.setItems(answers);
 		question.setImage(image);
-
-		List<Question> quests = section.getQuestions();
-		quests.set(rowId, question);
 
 		section.setQuestions(quests);
 		session.setAttribute("currentSection", section);
@@ -703,16 +696,14 @@ public class SurveyWebComponent {
 			answers = (ArrayList<String>) session.getAttribute("answers");
 
 		// now parse different params depending on the type
-		CheckBoxListQuestion question = new CheckBoxListQuestion();
+		List<Question> quests = section.getQuestions();
+		CheckBoxListQuestion question = (CheckBoxListQuestion) quests.get(rowId);
 
 		question.setDescription(questionText);
 		question.setSection(section);
 		question.setTitle(name);
 		question.setItems(answers);
 		question.setImage(image);
-
-		List<Question> quests = section.getQuestions();
-		quests.set(rowId, question);
 
 		section.setQuestions(quests);
 		session.setAttribute("currentSection", section);
@@ -813,7 +804,8 @@ public class SurveyWebComponent {
 			columns = (ArrayList<String>) session.getAttribute("columns");
 
 		// now parse different params depending on the type
-		CheckBoxMatrixQuestion question = new CheckBoxMatrixQuestion();
+		List<Question> quests = section.getQuestions();
+		CheckBoxMatrixQuestion question = (CheckBoxMatrixQuestion) quests.get(rowId);
 
 		question.setDescription(questionText);
 		question.setSection(section);
@@ -821,9 +813,6 @@ public class SurveyWebComponent {
 		question.setItems(answers);
 		question.setColumnsTitles(columns);
 		question.setImage(image);
-
-		List<Question> quests = section.getQuestions();
-		quests.set(rowId, question);
 
 		section.setQuestions(quests);
 
