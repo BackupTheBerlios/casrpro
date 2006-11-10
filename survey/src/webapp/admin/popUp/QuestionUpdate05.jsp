@@ -1,14 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Nueva Pregunta</title>
-<link href="../../css/css.css" rel="stylesheet" type="text/css">
+<title>Actualizar Pregunta</title>
+<link href="../css/css.css" rel="stylesheet" type="text/css">
 <script language="JavaScript" src="../js/common.js"></script>
 <script language="JavaScript" src="../js/validations.js"></script>
 <script language="JavaScript" src="../js/simpleAjax.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
-function fillOpenerRow(){
+
+	function focusText(){
+		document.forms[0].name.focus();
+	}
+	
+	function fillOpenerRow(){
 		var name = document.forms[0].name.value;
 		var type = "Sin Respuesta";
 		var image = document.forms[0].image.value;
@@ -48,7 +53,7 @@ function updateEmptyQuestionInSection(name, image, quesTxt, row){
 </script>
 </head>
 
-<body style="background-color: #FFFFFF;">
+<body style="background-color: #FFFFFF;" onload="focusText();">
 <br>
 <table width="550" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
 <form method="POST" name="formMain">

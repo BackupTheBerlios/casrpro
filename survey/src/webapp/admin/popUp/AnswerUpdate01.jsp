@@ -1,13 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Nueva Respuesta</title>
+<title>Actualizar Respuesta</title>
 <link href="../../css/css.css" rel="stylesheet" type="text/css">
 <script language="JavaScript" src="../../js/common.js"></script>
 <script language="JavaScript" src="../../js/validations.js"></script>
 <script language="JavaScript" src="../../js/simpleAjax.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
+	
+	function focusText(){
+		document.forms[0].name.focus();
+	}
 	
 	function fillOpenerRow(){
 		var name = document.forms[0].name.value;
@@ -24,6 +28,7 @@
 		if (window.opener && !window.opener.closed){
 			document.forms[0].name.value = window.opener.getCellValue(0);
 		}
+		focusText();
 	}
 	
 	function updateAnswerInSession(row, value){

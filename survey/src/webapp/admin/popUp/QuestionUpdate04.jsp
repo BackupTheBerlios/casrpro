@@ -11,7 +11,12 @@
 <script language="JavaScript" type="text/javascript">
 <!--
 
-function fillOpenerRow(){
+	function focusText(){
+		document.forms[0].name.focus();
+	}
+	
+
+	function fillOpenerRow(){
 		var name = document.forms[0].name.value;
 		var type = "Abierta";
 		var image = document.forms[0].image.value;
@@ -61,7 +66,7 @@ function updateOpenQuestionInSection(name, image, quesTxt, txtType, row){
 </script>
 </head>
 
-<body style="background-color: #FFFFFF;">
+<body style="background-color: #FFFFFF;" onload="focusText();">
 <br>
 <table width="550" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
 <form method="post" name="formMain">

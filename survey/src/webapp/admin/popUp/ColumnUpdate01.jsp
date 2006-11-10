@@ -8,6 +8,10 @@
 <script language="JavaScript" src="../../js/simpleAjax.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
+
+	function focusText(){
+		document.forms[0].name.focus();
+	}
 	
 	function fillOpenerCol(){
 		var name = document.forms[0].name.value;
@@ -24,6 +28,7 @@
 		if (window.opener && !window.opener.closed){
 			document.forms[0].name.value = window.opener.getColCellValue(0);
 		}
+		focusText();
 	}
 	
 	function updateColumnInSession(row, value){

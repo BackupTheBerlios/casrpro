@@ -9,7 +9,12 @@
 <script language="JavaScript" src="../../js/simpleAjax.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
-function selectTipo(obj) {
+
+	function focusText(){
+		document.forms[0].name.focus();
+	}
+
+	function selectTipo(obj) {
 	var dn = getObject('divNone');
 	var di = getObject('divInd');
 	var dt = getObject('divTot');
@@ -160,7 +165,7 @@ var row = table.insertRow(lastRow);
 </script>
 </head>
 
-<body style="background-color: #FFFFFF;">
+<body style="background-color: #FFFFFF;" onload="focusText();">
 <br>
 <table width="550" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
 <form method="POST" name="formMain">
