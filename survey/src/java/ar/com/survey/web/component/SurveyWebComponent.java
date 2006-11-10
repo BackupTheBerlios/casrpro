@@ -10,7 +10,9 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.hibernate.collection.PersistentList;
+import org.hibernate.exception.ConstraintViolationException;
 
 import ar.com.survey.admin.ISurveyComponent;
 import ar.com.survey.admin.SurveyComponent;
@@ -31,6 +33,8 @@ import ar.com.survey.web.struts.form.SurveyForm;
 
 public class SurveyWebComponent {
 
+	private static final Logger log = Logger.getLogger(SurveyWebComponent.class);
+	
 	private ISurveyComponent surveyComponent;
 
 	public SurveyWebComponent() {
@@ -109,9 +113,10 @@ public class SurveyWebComponent {
 	 * @param request
 	 * @param sform
 	 */
-	public void updatePersistedSurvey(HttpServletRequest request,
+	public boolean updatePersistedSurvey(HttpServletRequest request,
 			SurveyForm sform) {
 		Survey survey;
+		boolean retValue = false;
 		HttpSession session = request.getSession();
 		if (sform.getSectionName() != null
 				&& !sform.getSectionName().equals(""))
@@ -130,9 +135,20 @@ public class SurveyWebComponent {
 				survey.setDescription(sform.getDescription());
 			}
 		}
-		surveyComponent.updateSurvey(survey);
+		try {
+			surveyComponent.updateSurvey(survey);
+			retValue = true;
+		}
+		catch(ConstraintViolationException cve){
+			log.info("Error al actualizar survey, por constraint: " + cve.getConstraintName());
+		}
+		catch(RuntimeException e){
+			log.info("Error al actualizar survey: " + e.getMessage());
+		}
+		
 		session.removeAttribute("currentSection");
 		session.removeAttribute("currentSurvey");
+		return retValue;
 	}
 
 	private Survey addSectionToSurvey(HttpServletRequest request,
@@ -482,6 +498,7 @@ public class SurveyWebComponent {
 
 		session.setAttribute("currentSection", section);
 		session.removeAttribute("answers");
+		session.setAttribute("answers", null);
 	}
 
 	public void updateNumericQuestionInSection(HttpServletRequest request) {
@@ -539,6 +556,7 @@ public class SurveyWebComponent {
 
 		session.setAttribute("currentSection", section);
 		session.removeAttribute("answers");
+		session.setAttribute("answers", null);
 	}
 
 	public void addStringListQuestionToSection(HttpServletRequest request) {
@@ -581,6 +599,7 @@ public class SurveyWebComponent {
 
 		session.setAttribute("currentSection", section);
 		session.removeAttribute("answers");
+		session.setAttribute("answers", null);
 	}
 
 	public void updateStringListQuestionInSection(HttpServletRequest request) {
@@ -626,6 +645,7 @@ public class SurveyWebComponent {
 		section.setQuestions(quests);
 		session.setAttribute("currentSection", section);
 		session.removeAttribute("answers");
+		session.setAttribute("answers", null);
 	}
 
 	public void addCheckBoxQuestionToSection(HttpServletRequest request) {
@@ -667,6 +687,7 @@ public class SurveyWebComponent {
 		section.setQuestions(quests);
 		session.setAttribute("currentSection", section);
 		session.removeAttribute("answers");
+		session.setAttribute("answers", null);
 	}
 
 	public void updateCheckBoxQuestionInSection(HttpServletRequest request) {
@@ -708,6 +729,7 @@ public class SurveyWebComponent {
 		section.setQuestions(quests);
 		session.setAttribute("currentSection", section);
 		session.removeAttribute("answers");
+		session.setAttribute("answers", null);
 	}
 
 	public void addMatrixQuestionToSection(HttpServletRequest request) {
@@ -819,6 +841,8 @@ public class SurveyWebComponent {
 		session.setAttribute("currentSection", section);
 		session.removeAttribute("answers");
 		session.removeAttribute("columns");
+		session.setAttribute("answers", null);
+		session.setAttribute("columns", null);
 	}
 
 	public void removeQuestionInSection(HttpServletRequest request) {

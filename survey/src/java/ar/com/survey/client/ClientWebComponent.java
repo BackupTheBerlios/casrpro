@@ -132,9 +132,6 @@ public class ClientWebComponent {
 			Iterator iter2 = af.iterator();
 			while (iter2.hasNext()) {
 				Field f = (Field) iter2.next();
-//				logger.info("Question: " + f.getQuestion().getTitle());
-//				logger.info("value: " + f.getValue());
-//				logger.info("Pos: " + f.getXpos() + " " + f.getYpos());
 				col.add(f);
 			}
 		}
