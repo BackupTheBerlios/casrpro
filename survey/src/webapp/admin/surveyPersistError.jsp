@@ -1,0 +1,2 @@
+<br><br><center><h3>Integrity constraint violation, could not update persisted survey!!!<BR>
+Check that you are not trying to delete a question or section that has Fields associated with them.</h3></center><br>

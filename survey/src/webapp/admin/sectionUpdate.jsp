@@ -42,14 +42,17 @@ function selectQuestion() {
 				break;
 		case 3: url = 'popUp/QuestionNew06.jsp'; 
 				windowHeight = 600;
+				scroll = "yes";
 				break;
 		case 4: url = 'popUp/QuestionNew02.jsp'; 
 				windowHeight = 600;
+				scroll = "yes";
 				break;
 		case 5: url = 'popUp/QuestionNew05.jsp'; 
 				break;
 		case 6: url = 'popUp/QuestionNew01.jsp'; 
 				windowHeight = 600;
+				scroll = "yes";
 				break;
 	}
 
@@ -73,6 +76,22 @@ function editRow(rowNum){
 	var windowHeight = 500;
 	var scroll = "no";
 	if(type=="Matriz" || type=="Matriz " || type.indexOf("Matriz")!=-1){ 
+		windowHeight = 650;
+		scroll = "yes";
+	}
+	else if(type=="Sin Respuesta" || type=="Sin Respuesta " || type.indexOf("Sin Respuesta")!=-1){ 
+		windowHeight = 500;
+		scroll = "no";
+	}
+	else if(type=="Múltiple" || type=="Múltiple " || type.indexOf("ltiple")!=-1){ 
+		windowHeight = 650;
+		scroll = "yes";
+	}
+	else if(type=="Numérica" || type=="Numérica " || type.indexOf("rica")!=-1){ 
+		windowHeight = 650;
+		scroll = "yes";
+	}
+	else if(type=="Única" || type=="Única " || type.indexOf("nica")!=-1){ 
 		windowHeight = 650;
 		scroll = "yes";
 	}

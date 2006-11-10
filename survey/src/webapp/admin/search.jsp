@@ -6,40 +6,6 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="ar.com.survey.model.enums.SurveyState" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>Panel de Opiniones asd</title>
-<style type="text/css">
-<!--
-body,td {
-	color: #666666;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-}
-body {
-	background-color: #CCCCCC;
-	/*background-image: url(grass11.jpg);*/
-}
-a {
-	font-family: Arial, Helvetica, sans-serif;
-	color: #666666;
-}
-a:link {
-	text-decoration: none;
-}
-a:visited {
-	text-decoration: none;
-}
-a:hover {
-	text-decoration: underline;
-}
-a:active {
-	text-decoration: none;
-}
--->
-</style>
-
 <script language="JavaScript" type="text/javascript">
 <!--
 
@@ -61,18 +27,8 @@ function editSurvey(surveyName){
 
 -->
 </script>
-</head>
 
-<body>
-<table width="780" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
-  <tr>
-    <td width="780" height="60" align="center">HEADER</td>
-
-  </tr>
-  <tr>
-    <td width="780" height="20" align="center"><a href="index.html">Home</a> | <a href="survey.do">Nuevo Cuestionario</a> | <a href="search.do">Listar Cuestionarios</a> | <a href="#">Logout</a></td>
-  </tr>
-
+<table width="780" border="0" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
   <tr>
     <td width="780" height="420" align="center" valign="top">
     <html:form action="/admin/search">
@@ -171,9 +127,4 @@ function editSurvey(surveyName){
 	</c:if>
 	</td>
   </tr>
-  <tr>
-    <td width="780" height="20" align="center">FOOTER</td>
-  </tr>
 </table>
-</body>
-</html>
