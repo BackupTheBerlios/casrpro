@@ -55,16 +55,21 @@ public class FillAction extends DispatchAction {
 	public ActionForward fill(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+
+		HttpSession session = request.getSession();
+		if (session.getAttribute("CurrentClientSurvey") != null)
+			return mapping.findForward("concurrentSurvey");
+		
 		ClientWebComponent cwp = new ClientWebComponent();
 		ActionForward mapp = cwp.getSurveyPage(request.getParameter("sid"),
 				request.getParameter("token"), request.getSession(), mapping);
-		HttpSession session = request.getSession();
 		ArrayList answers = new ArrayList();
 		if (mapp.equals(mapping.findForward("answers"))) {
 			FillForm fform = (FillForm) form;
 			FlowManageDTO flowDTO = flowManager.getNextStep(fform, request
 					.getSession());
 			request.setAttribute("flowDTO", flowDTO);
+			session.removeAttribute("answers");
 			session.setAttribute("answers", answers);
 		}
 		return mapp;
@@ -77,31 +82,35 @@ public class FillAction extends DispatchAction {
 		FillForm fform = (FillForm) form;
 		HttpSession session = request.getSession();
 
-		if(session.getAttribute("answers")==null)
+		if (session.getAttribute("CurrentClientSurvey") == null)
 			return mapping.findForward("invalidSession");
-		
+
 		ArrayList answers = (ArrayList) session.getAttribute("answers");
-		
+
 		// iterate the questions and fill fields as required
 
-		Section section = (Section) session.getAttribute("CurrentClientSection");
+		Section section = (Section) session
+				.getAttribute("CurrentClientSection");
 		Iterator iter = section.getQuestions().iterator();
 		int index = 1;
+		int lastString = 0;
 		while (iter.hasNext()) {
 			Question question = (Question) iter.next();
 			if (question instanceof TextAreaQuestion) {
 				TextAreaQuestion qs = (TextAreaQuestion) question;
+				String[] values = fform.getTxtAnswer();
 				Field field = FieldFactory.stringField(
-						fform.getTxtAnswer()[index - 1], question);
+						fform.getTxtAnswer()[lastString], question);
+				lastString++;
 				Collection<Field> col = new ArrayList<Field>(1);
 				col.add(field);
 				answers.add(col);
 			} else if (question instanceof StringQuestion) {
 				StringQuestion qs = (StringQuestion) question;
 				String[] values = fform.getTxtAnswer();
-				int tempIndex = index - 2;
-				Field field = FieldFactory.stringField(
-						values[tempIndex], question);
+				Field field = FieldFactory.stringField(values[lastString],
+						question);
+				lastString++;
 				Collection<Field> col = new ArrayList<Field>(1);
 				col.add(field);
 				answers.add(col);
@@ -229,20 +238,8 @@ public class FillAction extends DispatchAction {
 				Collection<Field> col = new ArrayList<Field>();
 				for (int z = 0; z < items; z++) {
 					String key = "value" + (z + 1) + "1";
-//					for (int y = 0; y < cols; y++) {
-//						String tkey = key + (y + 1);
-//						if (matrix.get(tkey) != null) {
-//							BooleanField bfield = ((String) matrix.get(tkey))
-//									.equals("") ? FieldFactory.booleanField(
-//									false, question, y, z) : FieldFactory.booleanField(
-//									true, question, y, z);
-//							col.add(bfield);
-//						}
-//						else {
-//							col.add(FieldFactory.booleanField(false, question, y, z));
-//						}
-//					}
-					StringField sf = FieldFactory.stringField((String) matrix.get(key), question);
+					StringField sf = FieldFactory.stringField((String) matrix
+							.get(key), question);
 					col.add(sf);
 				}
 				answers.add(col);
@@ -257,28 +254,42 @@ public class FillAction extends DispatchAction {
 		ClientWebComponent cwp = new ClientWebComponent();
 		cwp.getNextSurveySection(request.getSession(), flowDTO.getSection());
 		request.setAttribute("flowDTO", flowDTO);
-		
+
 		// add results to session
 		fform.reset(mapping, request);
-		
+
 		return mapping.findForward("answers");
 	}
-	
+
 	public ActionForward finish(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+
+		ActionForward forward = fillNext(mapping, form, request, response);
+		if(forward.getName().equals("answers"))
+			forward = mapping.findForward("finish");
 		
+		ClientWebComponent cwp = new ClientWebComponent();
+		cwp.persistAnswers(request.getSession());
+		return forward;
+	}
+
+	public ActionForward finishOld(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
 		FillForm fform = (FillForm) form;
 		HttpSession session = request.getSession();
 
-		if(session.getAttribute("answers")==null)
+		if (session.getAttribute("answers") == null)
 			return mapping.findForward("invalidSession");
-		
+
 		ArrayList answers = (ArrayList) session.getAttribute("answers");
-		
+
 		// iterate the questions and fill fields as required
 
-		Section section = (Section) session.getAttribute("CurrentClientSection");
+		Section section = (Section) session
+				.getAttribute("CurrentClientSection");
 		Iterator iter = section.getQuestions().iterator();
 		int index = 1;
 		while (iter.hasNext()) {
@@ -293,7 +304,7 @@ public class FillAction extends DispatchAction {
 			} else if (question instanceof StringQuestion) {
 				StringQuestion qs = (StringQuestion) question;
 				Field field = FieldFactory.stringField(
-						fform.getTxtAnswer()[index - 2], question);
+						fform.getTxtAnswer()[index - 1], question);
 				Collection<Field> col = new ArrayList<Field>(1);
 				col.add(field);
 				answers.add(col);
@@ -421,20 +432,8 @@ public class FillAction extends DispatchAction {
 				Collection<Field> col = new ArrayList<Field>();
 				for (int z = 0; z < items; z++) {
 					String key = "value" + (z + 1) + "1";
-//					for (int y = 0; y < cols; y++) {
-//						String tkey = key + (y + 1);
-//						if (matrix.get(tkey) != null) {
-//							BooleanField bfield = ((String) matrix.get(tkey))
-//									.equals("") ? FieldFactory.booleanField(
-//									false, question, y, z) : FieldFactory.booleanField(
-//									true, question, y, z);
-//							col.add(bfield);
-//						}
-//						else {
-//							col.add(FieldFactory.booleanField(false, question, y, z));
-//						}
-//					}
-					StringField sf = FieldFactory.stringField((String) matrix.get(key), question);
+					StringField sf = FieldFactory.stringField((String) matrix
+							.get(key), question);
 					col.add(sf);
 				}
 				answers.add(col);
@@ -444,7 +443,7 @@ public class FillAction extends DispatchAction {
 
 		// add results to session
 		fform.reset(mapping, request);
-		
+
 		ClientWebComponent cwp = new ClientWebComponent();
 		cwp.persistAnswers(session);
 		return mapping.findForward("finish");

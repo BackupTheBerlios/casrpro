@@ -108,7 +108,10 @@ public class SurveyAction extends DispatchAction {
 		SurveyForm sform = (SurveyForm) form;
 		ActionForward forward = mapping.findForward("persistOk"); 
 		try{
-			new SurveyWebComponent().updatePersistedSurvey(request, sform);
+			SurveyWebComponent swc = new SurveyWebComponent();
+			if(!swc.updatePersistedSurvey(request, sform)){
+				forward = mapping.findForward("persistError");
+			}
 		} catch(DuplicateEntityException dee){
 			forward = mapping.findForward("persistDuplicated");
 		}
