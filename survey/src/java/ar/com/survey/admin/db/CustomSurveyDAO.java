@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 
 import ar.com.survey.model.Survey;
 import ar.com.survey.model.SurveyDAO;
@@ -163,4 +164,21 @@ public class CustomSurveyDAO extends SurveyDAO {
 			throw re;
 		}
 	}
+	
+	 public void createOrUpdate(Survey transientInstance) {
+	        log.debug("persisting Survey instance");
+	        try {
+	            sessionFactory.getCurrentSession().saveOrUpdate(transientInstance);
+	            sessionFactory.getCurrentSession().flush();
+	            log.debug("persist successful");
+	        }
+	        catch (ConstraintViolationException cve) {
+	            log.error("persist failed: " + cve.getMessage());
+	            throw cve;
+	        }
+	        catch (RuntimeException re) {
+	            log.error("persist failed: " + re.getMessage());
+	            throw re;
+	        }
+	    }
 }
