@@ -23,3 +23,9 @@ a:hover {
 a:active {
 	text-decoration: none;
 }
+.logoHeader {
+	background-image: url(http://www.paneldeopiniones.com/pages/Images/logo_2.jpg);
+	background-repeat: no-repeat;
+	height: 65px;
+	width: 170px;
+}

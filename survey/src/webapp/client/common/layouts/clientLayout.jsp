@@ -12,7 +12,7 @@ javascript:window.history.forward(1);
 </script>
 </head>
 
-<body>
+<body onload="cleanForm();">
 <table width="700" border="0" cellpadding="2" cellspacing="0">
 <tr>
     <td width="700" height="65" class="logoHeader"></td>
