@@ -236,12 +236,12 @@ function verifyQuota(){
 
 function validateSection(){
 
-	var sectionName1 = document.forms[0].sectionName;
+	var sectionName1 = document.forms[0].sectionName.value;
 	var tableAnswers = document.getElementById("preguntas");
 	var lastRowFound = tableAnswers.rows.length;
 	
 	if(sectionName1=="" || sectionName1==" "){
-		alert("Debe ingresar un nombre para la secci?n!");
+		alert("Debe ingresar un nombre para la seccion!");
 		return false;
 	}
 	

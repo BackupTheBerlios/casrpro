@@ -69,7 +69,8 @@ function getReadyStateHandler(req, responseXmlHandler) {
       } else {
 
         // An HTTP problem has occurred
-        alert("HTTP error: "+req.status);
+        // only for debugging errors 
+        // alert("HTTP error: "+req.status);
       }
     }
   }

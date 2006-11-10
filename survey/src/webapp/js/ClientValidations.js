@@ -124,3 +124,24 @@ function isValidForm(isSubmit){
 		document.forms[0].submit();
 	}
 }
+
+function cleanForm(){
+
+    if(document.forms.length>0){
+		var elements = document.forms[0].elements;
+		var index = 0;
+		while (index < elements.length){
+			var elem = elements[index];
+			if(elem.type=="checkbox"){
+				elem.checked=false;
+			} 
+			else if(elem.type=="radio"){
+				elem.checked=false;
+			}
+			else if(elem.type=="text" || elem.type=="textarea"){
+				elem.value="";
+			}
+			index++;
+		}
+	}
+}
