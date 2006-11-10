@@ -19,7 +19,7 @@
 
 	<global-forwards>
 		<forward name="adminError" path=".admiError"/>
-<!--        <forward name="global_dealerIdSelection" path="/dealerIdSelection.do" />                         -->
+		<forward name="clientError" path=".clientError"/>
 	</global-forwards>
 
 	<!-- Action Mappings -->
@@ -47,9 +47,9 @@
 		    parameter="method"
 		    name="searchForm"
 		    validate="true"
-		    input="/admin/search.jsp"
+		    input=".searchSurvey"
 		    scope="request">
-   		    <forward name="searchForm" path="/admin/search.jsp"/>
+   		    <forward name="searchForm" path=".searchSurvey"/>
 		</action>
 		
 		<action
@@ -63,6 +63,7 @@
    		    <forward name="newSurvey" path=".newSurvey"/>
    		    <forward name="newSection" path=".newSection"/>
    		    <forward name="persistOk" path=".persistOk"/>
+   		    <forward name="persistError" path=".persistError"/>
    		    <forward name="removeOk" path=".removeOk"/>
    		    <forward name="editSurvey" path=".editSurvey"/>
    		    <forward name="editSection" path=".editSection"/>
@@ -96,6 +97,7 @@
    		    <forward name="clientVoted" path=".clientError"/>
    		    <forward name="invalidSession" path=".clientError"/>
    		    <forward name="finish" path=".clientClose"/>
+   		    <forward name="concurrentSurvey" path=".clientConcurrent"/>
 		</action>
 		
 	</action-mappings>

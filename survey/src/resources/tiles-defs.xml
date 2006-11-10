@@ -51,12 +51,20 @@
         <put name="body"   value="/admin/surveyPersistOk.jsp" />
     </definition>
     
+    <definition name=".persistError" extends=".adminLayout">
+        <put name="body"   value="/admin/surveyPersistError.jsp" />
+    </definition>
+    
     <definition name=".persistDuplicated" extends=".adminLayout">
         <put name="body"   value="/admin/surveyPersistDuplicated.jsp" />
     </definition>
     
     <definition name=".removeOk" extends=".adminLayout">
         <put name="body"   value="/admin/removeOk.jsp" />
+    </definition>
+    
+     <definition name=".searchSurvey" extends=".adminLayout">
+        <put name="body"   value="/admin/search.jsp" />
     </definition>
 
 <!-- End of Survey definitions -->
@@ -73,6 +81,10 @@
     
      <definition name=".clientClose" extends=".clientLayout">
             <put name="body" value="/client/surveyFinish.jsp" />
+    </definition>
+    
+    <definition name=".clientConcurrent" extends=".clientLayout">
+            <put name="body" value="/client/surveyConcurrent.jsp" />
     </definition>
 
 <!-- End of client definitions -->
