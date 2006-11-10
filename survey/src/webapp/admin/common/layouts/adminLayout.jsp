@@ -16,7 +16,7 @@ javascript:window.history.forward(1);
 <body>
 <table width="780" border="1" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
   <tr>
-    <td width="780" height="60" align="center"><tiles:insert attribute='header' /></td>
+    <td width="780" height="60" align="left" class="logoHeader"><tiles:insert attribute='header' /></td>
   </tr>
   <tr>
     <td width="780" height="20" align="center"><tiles:insert attribute='menu' /></td>
