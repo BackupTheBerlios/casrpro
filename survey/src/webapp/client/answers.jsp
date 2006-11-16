@@ -5,7 +5,7 @@
   <td width="700" valign="top" class="surveyspace">
 <html:form action="/client/fill">
 <table border="0" cellspacing="2" cellpadding="2" width="100%">
- <c:forEach items="${ sessionScope.CurrentClientSection.questions }" var="question" varStatus="status">
+ <c:forEach items="${ CurrentClientSection.questions }" var="question" varStatus="status">
   <tr>
 	<td colspan="2"><hr size="3" width="675" color="#4B4E51" noshade></td>
   </tr>
