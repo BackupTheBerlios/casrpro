@@ -5,8 +5,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 
 import ar.com.survey.admin.db.CustomSurveyDAO;
@@ -28,12 +26,12 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 	private static final Logger logger = Logger
 			.getLogger(FlowManagerFacadeImpl.class);
 
-	public FlowManageDTO getNextStep(FillForm fillForm, HttpSession session) {
+	public FlowManageDTO getNextStep(FillForm fillForm, ClientSessionManager csm) {
 
 		FlowManageDTO flowDTO = null;
-		Survey survey = (Survey) session.getAttribute("CurrentClientSurvey");
+		Survey survey = (Survey) csm.getAttribute("CurrentClientSurvey");
 
-		Section section = (Section) session
+		Section section = (Section) csm
 				.getAttribute("CurrentClientSection");
 		String quotaScript = section.getQuotaMgmtScript();
 		String flowScript = section.getFlowMgmtScript();
@@ -49,7 +47,7 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 						temp = temp.substring(temp.indexOf("\r\n") + 2);
 					commands.add(temp);
 				}
-				nextSection = findMatch(fillForm, session, commands);
+				nextSection = findMatch(fillForm, csm, commands);
 			}
 
 			if (nextSection == null && flowScript != null
@@ -62,7 +60,7 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 						temp = temp.substring(temp.indexOf("\r\n") + 2);
 					commands.add(temp);
 				}
-				nextSection = findMatch(fillForm, session, commands);
+				nextSection = findMatch(fillForm, csm, commands);
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -99,12 +97,12 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 	 * should be a ++ or a -- if the if compares a question (p) command, then
 	 * the operation should be a number indicating the next section to jump to
 	 */
-	private String findMatch(FillForm fillForm, HttpSession session,
+	private String findMatch(FillForm fillForm, ClientSessionManager csm,
 			ArrayList<String> commands) {
 
 		String nextPos = null;
 		Iterator iter = commands.iterator();
-		Section section = (Section) session
+		Section section = (Section) csm
 				.getAttribute("CurrentClientSection");
 		while (iter.hasNext() && nextPos == null) {
 			LineParser st = new LineParser((String) iter.next(), ' ');
@@ -141,21 +139,21 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 								nextPos = operation;
 							} catch (NumberFormatException nfe) {
 								ArrayList<String> quotas = null;
-								if (session.getAttribute("quotaUpdates") != null) {
-									quotas = (ArrayList<String>) session
+								if (csm.getAttribute("quotaUpdates") != null) {
+									quotas = (ArrayList<String>) csm
 											.getAttribute("quotaUpdates");
 								} else {
 									quotas = new ArrayList<String>();
 								}
 								if (!quotas.contains(operation))
 									quotas.add(operation);
-								session.setAttribute("quotaUpdates", quotas);
+								csm.setAttribute("quotaUpdates", quotas);
 							}
 						}
 					} else if (operator.charAt(0) == 'q') {
 
 						int qIndex = Integer.parseInt(operator.substring(1)) - 1;
-						Survey s = (Survey) session
+						Survey s = (Survey) csm
 								.getAttribute("CurrentClientSurvey");
 						s = new CustomSurveyDAO().findBySurrogateKey(s);
 						Iterator<Quota> qIter = s.getQuotas().iterator();
@@ -191,21 +189,21 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 								nextPos = operation;
 							} catch (NumberFormatException nfe) {
 								ArrayList<String> quotas = null;
-								if (session.getAttribute("quotaUpdates") != null) {
-									quotas = (ArrayList<String>) session
+								if (csm.getAttribute("quotaUpdates") != null) {
+									quotas = (ArrayList<String>) csm
 											.getAttribute("quotaUpdates");
 								} else {
 									quotas = new ArrayList<String>();
 								}
 								if (!quotas.contains(operation))
 									quotas.add(operation);
-								session.setAttribute("quotaUpdates", quotas);
+								csm.setAttribute("quotaUpdates", quotas);
 							}
 						}
 					} else if (operator.charAt(0) == 'q') {
 
 						int qIndex = Integer.parseInt(operator.substring(1)) - 1;
-						Survey s = (Survey) session
+						Survey s = (Survey) csm
 								.getAttribute("CurrentClientSurvey");
 						s = new CustomSurveyDAO().findBySurrogateKey(s);
 						Iterator<Quota> qIter = s.getQuotas().iterator();
@@ -242,21 +240,21 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 								nextPos = operation;
 							} catch (NumberFormatException nfe) {
 								ArrayList<String> quotas = null;
-								if (session.getAttribute("quotaUpdates") != null) {
-									quotas = (ArrayList<String>) session
+								if (csm.getAttribute("quotaUpdates") != null) {
+									quotas = (ArrayList<String>) csm
 											.getAttribute("quotaUpdates");
 								} else {
 									quotas = new ArrayList<String>();
 								}
 								if (!quotas.contains(operation))
 									quotas.add(operation);
-								session.setAttribute("quotaUpdates", quotas);
+								csm.setAttribute("quotaUpdates", quotas);
 							}
 						}
 					} else if (operator.charAt(0) == 'q') {
 
 						int qIndex = Integer.parseInt(operator.substring(1)) - 1;
-						Survey s = (Survey) session
+						Survey s = (Survey) csm
 								.getAttribute("CurrentClientSurvey");
 						s = new CustomSurveyDAO().findBySurrogateKey(s);
 						Iterator<Quota> qIter = s.getQuotas().iterator();
@@ -291,21 +289,21 @@ public class FlowManagerFacadeImpl implements IFlowManager {
 								nextPos = operation;
 							} catch (NumberFormatException nfe) {
 								ArrayList<String> quotas = null;
-								if (session.getAttribute("quotaUpdates") != null) {
-									quotas = (ArrayList<String>) session
+								if (csm.getAttribute("quotaUpdates") != null) {
+									quotas = (ArrayList<String>) csm
 											.getAttribute("quotaUpdates");
 								} else {
 									quotas = new ArrayList<String>();
 								}
 								if (!quotas.contains(operation))
 									quotas.add(operation);
-								session.setAttribute("quotaUpdates", quotas);
+								csm.setAttribute("quotaUpdates", quotas);
 							}
 						}
 					} else if (operator.charAt(0) == 'q') {
 
 						int qIndex = Integer.parseInt(operator.substring(1)) - 1;
-						Survey s = (Survey) session
+						Survey s = (Survey) csm
 								.getAttribute("CurrentClientSurvey");
 						s = new CustomSurveyDAO().findBySurrogateKey(s);
 						Iterator<Quota> qIter = s.getQuotas().iterator();

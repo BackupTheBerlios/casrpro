@@ -1,17 +1,15 @@
 package ar.com.survey.client;
 
-import javax.servlet.http.HttpSession;
-
 import ar.com.survey.client.dto.FlowManageDTO;
 import ar.com.survey.model.Survey;
 import ar.com.survey.web.struts.form.FillForm;
 
 public class FlowManagerDummyFacade implements IFlowManager {
 	
-	public FlowManageDTO getNextStep(FillForm fillForm, HttpSession session) {
+	public FlowManageDTO getNextStep(FillForm fillForm, ClientSessionManager csm) {
 		
 		FlowManageDTO flowDTO = null;
-		Survey survey = (Survey) session.getAttribute("CurrentSurvey");
+		Survey survey = (Survey) csm.getAttribute("CurrentSurvey");
 		int pos = (fillForm.getNextPos()==null) ? 0 : Integer.parseInt(fillForm.getNextPos());
 		int size = survey.getSections().size();
 		int result = size - pos;

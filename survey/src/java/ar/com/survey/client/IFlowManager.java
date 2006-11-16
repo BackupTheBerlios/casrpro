@@ -1,7 +1,5 @@
 package ar.com.survey.client;
 
-import javax.servlet.http.HttpSession;
-
 import ar.com.survey.client.dto.FlowManageDTO;
 import ar.com.survey.web.struts.form.FillForm;
 
@@ -18,7 +16,7 @@ public interface IFlowManager {
 	 * @param session
 	 * @return
 	 */
-	public FlowManageDTO getNextStep(FillForm fillForm, HttpSession session);
+	public FlowManageDTO getNextStep(FillForm fillForm, ClientSessionManager csm);
 	
 	public static final String NEXT = "Siguiente";
 	public static final String FINISH = "Finalizar";

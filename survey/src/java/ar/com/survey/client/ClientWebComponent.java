@@ -5,10 +5,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
-import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
@@ -17,14 +15,27 @@ import ar.com.survey.admin.db.CustomSurveyDAO;
 import ar.com.survey.model.FilledSurvey;
 import ar.com.survey.model.Person;
 import ar.com.survey.model.PersonDAO;
+import ar.com.survey.model.Question;
 import ar.com.survey.model.Quota;
+import ar.com.survey.model.Section;
 import ar.com.survey.model.Survey;
 import ar.com.survey.model.SurveyDAO;
 import ar.com.survey.model.enums.FilledSurveyStatus;
 import ar.com.survey.model.enums.RestrictionType;
 import ar.com.survey.model.enums.SurveyState;
+import ar.com.survey.questions.fields.BooleanField;
 import ar.com.survey.questions.fields.Field;
+import ar.com.survey.questions.fields.FieldFactory;
+import ar.com.survey.questions.fields.NumberField;
+import ar.com.survey.questions.fields.StringField;
+import ar.com.survey.questions.list.CheckBoxListQuestion;
+import ar.com.survey.questions.list.NumberListQuestion;
+import ar.com.survey.questions.list.StringListQuestion;
+import ar.com.survey.questions.matrix.CheckBoxMatrixQuestion;
+import ar.com.survey.questions.single.StringQuestion;
+import ar.com.survey.questions.single.TextAreaQuestion;
 import ar.com.survey.util.DbPropsImpl;
+import ar.com.survey.web.struts.form.FillForm;
 
 public class ClientWebComponent {
 
@@ -34,8 +45,6 @@ public class ClientWebComponent {
 
 	private CustomFilledSurveyDAO fDAO;
 
-	private static Logger logger = Logger.getLogger(ClientWebComponent.class);
-
 	public ClientWebComponent() {
 		sDAO = new CustomSurveyDAO();
 		pDAO = new PersonDAO();
@@ -43,7 +52,7 @@ public class ClientWebComponent {
 	}
 
 	public ActionForward getSurveyPage(String name, String token,
-			HttpSession session, ActionMapping mapping) {
+			ClientSessionManager csm, ActionMapping mapping) {
 
 		Survey survey = new Survey();
 		survey.setName(name);
@@ -65,7 +74,7 @@ public class ClientWebComponent {
 					anonymous.setEmail(new DbPropsImpl()
 							.getValue("AnonymousEmail"));
 					anonymous = pDAO.findBySurrogateKey(anonymous);
-					session.setAttribute("Person", anonymous);
+					csm.setAttribute("Person", anonymous);
 				} else {
 					// Restricted, check token if valid and then check that did
 					// not vote before
@@ -85,14 +94,14 @@ public class ClientWebComponent {
 						if (fs!=null)
 								return mapping.findForward("clientVoted");
 						else {
-							session.setAttribute("Person", person);
-							session.setAttribute("Person", person);
+							csm.setAttribute("Person", person);
+							csm.setAttribute("Person", person);
 						}
 					} else
 						return mapping.findForward("incorrectToken");
 				}
-				session.setAttribute("CurrentClientSurvey", survey);
-				session.setAttribute("CurrentClientSection", survey.getSection(0));
+				csm.setAttribute("CurrentClientSurvey", survey);
+				csm.setAttribute("CurrentClientSection", survey.getSection(0));
 				return mapping.findForward("answers");
 			}
 
@@ -103,28 +112,189 @@ public class ClientWebComponent {
 			DbPropsImpl db = new DbPropsImpl();
 			anonymous.setEmail(db.getValue("AnonymousEmail"));
 			anonymous = pDAO.findBySurrogateKey(anonymous);
-			session.setAttribute("Person", anonymous);
-			session.setAttribute("CurrentClientSurvey", survey);
-			session.setAttribute("CurrentClientSection", survey.getSection(0));
+			csm.setAttribute("Person", anonymous);
+			csm.setAttribute("CurrentClientSurvey", survey);
+			csm.setAttribute("CurrentClientSection", survey.getSection(0));
 			return mapping.findForward("answers");
 		}
 	}
 
-	public boolean getNextSurveySection(HttpSession session, int sectionId) {
+	public boolean getNextSurveySection(ClientSessionManager csm, int sectionId) {
 		boolean retVal = true;
-		Survey surv = (Survey) session.getAttribute("CurrentClientSurvey");
+		Survey surv = (Survey) csm.getAttribute("CurrentClientSurvey");
 		if (surv.getSections().size() >= sectionId)
-			session.setAttribute("CurrentClientSection", surv
+			csm.setAttribute("CurrentClientSection", surv
 					.getSection(sectionId - 1));
 		else
 			retVal = false;
 		return retVal;
 	}
 
-	public void persistAnswers(HttpSession session) {
-		Person person = (Person) session.getAttribute("Person");
-		Survey survey = (Survey) session.getAttribute("CurrentClientSurvey");
-		ArrayList answers = (ArrayList) session.getAttribute("answers");
+	public void addAnswersToSession(ArrayList answers, Section section, FillForm fform){
+		
+		// iterate the questions and fill fields as required
+		Iterator iter = section.getQuestions().iterator();
+		int index = 1;
+		int lastString = 0;
+		while (iter.hasNext()) {
+			Question question = (Question) iter.next();
+			if (question instanceof TextAreaQuestion) {
+				TextAreaQuestion qs = (TextAreaQuestion) question;
+				String[] values = fform.getTxtAnswer();
+				Field field = FieldFactory.stringField(
+						fform.getTxtAnswer()[lastString], question);
+				lastString++;
+				Collection<Field> col = new ArrayList<Field>(1);
+				col.add(field);
+				answers.add(col);
+			} else if (question instanceof StringQuestion) {
+				StringQuestion qs = (StringQuestion) question;
+				String[] values = fform.getTxtAnswer();
+				Field field = FieldFactory.stringField(values[lastString],
+						question);
+				lastString++;
+				Collection<Field> col = new ArrayList<Field>(1);
+				col.add(field);
+				answers.add(col);
+			} else if (question instanceof NumberListQuestion) {
+				String[] numbers = null;
+				switch (index) {
+				case 1:
+					numbers = fform.getNumber1();
+					break;
+				case 2:
+					numbers = fform.getNumber2();
+					break;
+				case 3:
+					numbers = fform.getNumber3();
+					break;
+				case 4:
+					numbers = fform.getNumber4();
+					break;
+				default:
+					numbers = fform.getNumber5();
+					break;
+				}
+				Collection<Field> col = new ArrayList<Field>(numbers.length);
+				for (int i = 0; i < numbers.length; i++) {
+					NumberField field = FieldFactory.numberField(Integer
+							.parseInt(numbers[i]), question, 0);
+					col.add(field);
+				}
+				answers.add(col);
+			} else if (question instanceof StringListQuestion) {
+				StringListQuestion qs = (StringListQuestion) question;
+				String selected = null;
+				switch (index) {
+				case 1:
+					selected = fform.getUnique1();
+					break;
+				case 2:
+					selected = fform.getUnique2();
+					break;
+				case 3:
+					selected = fform.getUnique3();
+					break;
+				case 4:
+					selected = fform.getUnique4();
+					break;
+				default:
+					selected = fform.getUnique5();
+					break;
+				}
+				List<String> items = qs.getItems();
+				Collection<Field> col = new ArrayList<Field>(items.size());
+				Iterator iterator = items.iterator();
+				int innerIndex = 0;
+				while (iterator.hasNext()) {
+					String temp = (String) iterator.next();
+					BooleanField bfield = selected.equals(temp) ? FieldFactory
+							.booleanField(true, question, innerIndex)
+							: FieldFactory.booleanField(false, question,
+									innerIndex);
+					col.add(bfield);
+					innerIndex++;
+				}
+				answers.add(col);
+			} else if (question instanceof CheckBoxListQuestion) {
+				CheckBoxListQuestion cq = (CheckBoxListQuestion) question;
+				String[] selected = null;
+				switch (index) {
+				case 1:
+					selected = fform.getCheck1();
+					break;
+				case 2:
+					selected = fform.getCheck2();
+					break;
+				case 3:
+					selected = fform.getCheck3();
+					break;
+				case 4:
+					selected = fform.getCheck4();
+					break;
+				default:
+					selected = fform.getCheck5();
+					break;
+				}
+				int innerIndex = 0;
+				List<String> items = cq.getItems();
+				Collection<Field> col = new ArrayList<Field>(items.size());
+				Iterator iterator = items.iterator();
+				while (iterator.hasNext()) {
+					String temp = (String) iterator.next();
+
+					boolean found = false;
+					for (int x = 0; x < selected.length; x++) {
+						if (selected[x].equals(temp))
+							found = true;
+					}
+					BooleanField bfield = found ? FieldFactory.booleanField(
+							true, question, innerIndex) : FieldFactory
+							.booleanField(false, question, innerIndex);
+					col.add(bfield);
+					innerIndex++;
+				}
+				answers.add(col);
+			} else if (question instanceof CheckBoxMatrixQuestion) {
+				CheckBoxMatrixQuestion cx = (CheckBoxMatrixQuestion) question;
+				Map matrix = null;
+				int items = cx.getItems().size();
+				int cols = cx.getColumnsTitles().size();
+				switch (index) {
+				case 1:
+					matrix = fform.getMatrix1();
+					break;
+				case 2:
+					matrix = fform.getMatrix2();
+					break;
+				case 3:
+					matrix = fform.getMatrix3();
+					break;
+				case 4:
+					matrix = fform.getMatrix4();
+					break;
+				default:
+					matrix = fform.getMatrix5();
+					break;
+				}
+				Collection<Field> col = new ArrayList<Field>();
+				for (int z = 0; z < items; z++) {
+					String key = "value" + (z + 1) + "1";
+					StringField sf = FieldFactory.stringField((String) matrix
+							.get(key), question);
+					col.add(sf);
+				}
+				answers.add(col);
+			}
+			index++;
+		}
+		
+	}
+	
+	public void persistAnswers(ClientSessionManager csm) {
+		Person person = (Person) csm.getAttribute("Person");
+		Survey survey = (Survey) csm.getAttribute("CurrentClientSurvey");
+		ArrayList answers = (ArrayList) csm.getAttribute("answers");
 		Collection<Field> col = new ArrayList<Field>();
 		Iterator iter = answers.iterator();
 		while (iter.hasNext()) {
@@ -150,9 +320,8 @@ public class ClientWebComponent {
 		
 		// udpdate quotas in session
 		
-		if (session.getAttribute("quotaUpdates") != null) {
-			ArrayList<String> quotas = (ArrayList<String>) session
-					.getAttribute("quotaUpdates");
+		if (csm.getAttribute("quotaUpdates") != null) {
+			ArrayList<String> quotas = (ArrayList<String>) csm.getAttribute("quotaUpdates");
 			Iterator qiter = quotas.iterator();
 			while(qiter.hasNext()){
 				String quota = (String) qiter.next();
@@ -160,8 +329,7 @@ public class ClientWebComponent {
 					int pos = quota.indexOf("--");
 					int qpos = Integer.parseInt(quota.substring(1,pos))-1;
 					
-					Survey s = (Survey) session
-							.getAttribute("CurrentClientSurvey");
+					Survey s = (Survey) csm.getAttribute("CurrentClientSurvey");
 					s = new CustomSurveyDAO().findBySurrogateKey(s);
 					Iterator<Quota> qIter = s.getQuotas().iterator();
 					int index = 0;
@@ -179,8 +347,7 @@ public class ClientWebComponent {
 					int pos = quota.indexOf("++");
 					int qpos = Integer.parseInt(quota.substring(1,pos))-1;
 					
-					Survey s = (Survey) session
-							.getAttribute("CurrentClientSurvey");
+					Survey s = (Survey) csm.getAttribute("CurrentClientSurvey");
 					s = new CustomSurveyDAO().findBySurrogateKey(s);
 					Iterator<Quota> qIter = s.getQuotas().iterator();
 					int index = 0;
@@ -195,16 +362,18 @@ public class ClientWebComponent {
 				}
 			}
 			
-			session.removeAttribute("quotaUpdates");
+			csm.removeAttribute("quotaUpdates");
 			
 		}
 		
 		// remove attrs and invalidate session
-		session.removeAttribute("CurrentClientSurvey");
-		session.removeAttribute("answers");
-		session.removeAttribute("Person");
-		session.removeAttribute("CurrentClientSection");
+		csm.removeAttribute("CurrentClientSurvey");
+		csm.removeAttribute("answers");
+		csm.removeAttribute("Person");
+		csm.removeAttribute("CurrentClientSection");
 		// session.invalidate();
 	}
+	
+	
 
 }
