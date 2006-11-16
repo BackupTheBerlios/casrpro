@@ -11,15 +11,17 @@
 	</form-beans>
 
 	<global-exceptions>
-<!--	    <exception key="java.lang.Exception" 
+	    <exception key="survey.general.error" 
 	               type="java.lang.Exception" 
-	               handler="com.aon.awg.menuadmin.exceptionhandlers.MenuAdminExceptionHandler">
-	    </exception> -->
+	               path=".clientGeneralError"
+	               handler="ar.com.survey.util.SurveyExceptionHandler">
+	    </exception>
 	</global-exceptions>
 
 	<global-forwards>
 		<forward name="adminError" path=".admiError"/>
 		<forward name="clientError" path=".clientError"/>
+		<forward name="clientGeneralError" path=".clientGeneralError"/>
 	</global-forwards>
 
 	<!-- Action Mappings -->

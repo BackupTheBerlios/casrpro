@@ -86,6 +86,10 @@
     <definition name=".clientConcurrent" extends=".clientLayout">
             <put name="body" value="/client/surveyConcurrent.jsp" />
     </definition>
+    
+    <definition name=".clientGeneralError" extends=".clientLayout">
+            <put name="body" value="/client/clientError.jsp" />
+    </definition>
 
 <!-- End of client definitions -->
 </tiles-definitions>

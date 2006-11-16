@@ -22,7 +22,7 @@
     </appender>
 
     <logger name="ar" additivity="false">
-        <level value="debug" />
+        <level value="ERROR" />
         <appender-ref ref="STDOUT" />
     </logger>
     <logger name="org" additivity="false">
@@ -32,7 +32,7 @@
 
 
     <root>
-        <level value="info" />
+        <level value="ERROR" />
         <appender-ref ref="STDOUT" />
     </root>
 

@@ -14,11 +14,11 @@
             <meta attribute="scope-get"></meta>
             <generator class="hilo" />
         </id>
-        <version name="version" type="integer" access="field">
+        <!--  version name="version" type="integer" access="field">
             <meta attribute="property-type">int</meta>
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
-        </version>
+        </version -->
 
         <property name="name" type="string" unique="false"
             unique-key="surrogateKey">
@@ -62,11 +62,11 @@
             <generator class="hilo" />
 
         </id>
-        <version name="version" access="field">
+        <!--<version name="version" access="field">
             <meta attribute="property-type">int</meta>
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
-        </version>
+        </version-->
         <property name="name" type="string" unique-key="surrogateKey">
             <meta attribute="use-in-tostring">true</meta>
             <meta attribute="use-in-equals">true</meta>
@@ -104,11 +104,11 @@
             <meta attribute="scope-get"></meta>
             <generator class="hilo" />
         </id>
-        <version name="version" access="field">
+        <!--<version name="version" access="field">
             <meta attribute="property-type">int</meta>
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
-        </version>
+        </version-->
         <property name="name" type="string" unique="false"
             unique-key="surrogateKey">
             <meta attribute="use-in-equals">true</meta>
@@ -141,11 +141,11 @@
             <generator class="hilo" />
         </id>
         <discriminator column="object_type" type="string"></discriminator>
-        <version name="version" access="field">
+        <!-- <version name="version" access="field">
             <meta attribute="property-type">int</meta>
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
-        </version>
+        </version> -->
         <property name="title" type="string"></property>
         <property name="image" type="string"></property>
         <property name="description" type="string"></property>
@@ -211,7 +211,7 @@
         </id>
         <discriminator column="object_type" type="string"></discriminator>
         <!--TODO y los orphans ?? -->
-        <many-to-one name="question" class="Question" column="survey_id" cascade="all">
+        <many-to-one name="question" class="Question" column="survey_id" cascade="all" insert="false" update="false">
         </many-to-one>
         <property name="ypos" type="int"></property>
         <property name="xpos" type="int"></property>
@@ -236,12 +236,12 @@
             <meta attribute="scope-get"></meta>
             <generator class="hilo" />
         </id>
-        <version name="version" access="field">
+        <!-- <version name="version" access="field">
             <meta attribute="property-type">int</meta>
 
             <meta attribute="scope-set"></meta>
             <meta attribute="scope-get"></meta>
-        </version>
+        </version> -->
         <property name="email" type="string" unique="false" not-null="true"
             unique-key="surrogateKey">
             <meta attribute="use-in-tostring">true</meta>
