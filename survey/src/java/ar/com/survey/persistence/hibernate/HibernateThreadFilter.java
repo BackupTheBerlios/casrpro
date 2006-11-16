@@ -1,17 +1,17 @@
 package ar.com.survey.persistence.hibernate;
 
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
-
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.StaleObjectStateException;
 
@@ -81,7 +81,10 @@ public class HibernateThreadFilter implements Filter {
             }
 
             // Let others handle it... maybe another interceptor for exceptions?
-            throw new ServletException(ex);
+            // throw new ServletException(ex);
+            HttpServletRequest req = (HttpServletRequest) request;
+            RequestDispatcher rd = req.getRequestDispatcher("fill.do?method=clientError");
+            rd.forward(request, response);
         }
     }
 
