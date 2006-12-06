@@ -69,6 +69,30 @@
 
 <!-- End of Survey definitions -->
 
+<!-- Reports definitions -->
+
+     <definition name=".reportsList" extends=".adminLayout">
+        <put name="body"   value="/admin/reportsList.jsp" />
+    </definition>
+    
+    <definition name=".countFS" extends=".adminLayout">
+        <put name="body"   value="/admin/reportsCountFS.jsp" />
+    </definition>
+    
+         <definition name=".listCFS" extends=".adminLayout">
+        <put name="body"   value="/admin/reportsListCFS.jsp" />
+    </definition>
+    
+         <definition name=".listUFS" extends=".adminLayout">
+        <put name="body"   value="/admin/reportsListUFS.jsp" />
+    </definition>
+    
+         <definition name=".listPersons" extends=".adminLayout">
+        <put name="body"   value="/admin/reportsListPersons.jsp" />
+    </definition>
+
+<!-- End of reports definitions -->
+
 <!-- Start of client definitions -->
 
 	<definition name=".answers" extends=".clientLayout">
