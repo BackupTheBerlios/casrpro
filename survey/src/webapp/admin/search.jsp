@@ -27,6 +27,10 @@ function editSurvey(surveyName){
 
 -->
 </script>
+<link rel="stylesheet" type="text/css" media="all" href="../css/calendar/calendar-win2k-1.css" title="win2k-1" />
+<script type="text/javascript" src="../js/calendar/calendar.js"></script>
+<script type="text/javascript" src="../js/calendar/lang/calendar-es.js"></script>
+<script type="text/javascript" src="../js/calendar/calendar-setup.js"></script>
 
 <table width="780" border="0" align="center" cellpadding="2" cellspacing="0" bgcolor="#FFFFFF">
   <tr>
@@ -58,9 +62,18 @@ function editSurvey(surveyName){
 				<tr>
 					<td width="150" align="left">Fecha de Creación</td>
 
-					<td width="175" align="left"><html:text property="creationDate" size="10" maxlength="11" /></td>
-					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
+					<td width="175" align="left"><html:text styleId="cd_field" property="creationDate" size="10" maxlength="11" /></td>
+					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" id="d_trigger" width="22" height="21" border="0" alt="" /></a></td>
 				</tr>
+				<script type="text/javascript">
+    				Calendar.setup({
+				        inputField     :    "cd_field",     // id of the input field
+  			            ifFormat       :    "%d/%m/%Y",       // format of the input field
+				        button         :    "d_trigger",  // trigger for the calendar (button ID)
+        			    showsTime      :    false,
+				        singleClick    :    true
+				    });
+				</script>
 				<tr>
 					<td width="100" align="left">Status</td>
 					<td colspan="2" align="left">

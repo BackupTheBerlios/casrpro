@@ -7,6 +7,10 @@
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean" %>
 <script type="text/javascript" language="JavaScript" src="../js/validations.js"></script>
+<link rel="stylesheet" type="text/css" media="all" href="../css/calendar/calendar-win2k-1.css" title="win2k-1" />
+<script type="text/javascript" src="../js/calendar/calendar.js"></script>
+<script type="text/javascript" src="../js/calendar/lang/calendar-es.js"></script>
+<script type="text/javascript" src="../js/calendar/calendar-setup.js"></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 
@@ -211,13 +215,31 @@ function submitForm(hiddenValue){
 				</tr>
 				<tr>
 					<td width="150" align="left">Fecha de Apertura</td>
-					<td width="160" align="left"><html:text property="startDate" maxlength="10" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date()) %>" /></td>
-					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
+					<td width="160" align="left"><html:text styleId="s_date" property="startDate" maxlength="10" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date()) %>" /></td>
+					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" id="si_date" height="21" border="0" alt="" /></a></td>
 					<td width="30" align="left">&nbsp;</td>
 					<td width="150" align="left">Fecha de Cierre</td>
-					<td width="160" align="left"><html:text property="endDate" maxlength="10" /></td>
-					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
+					<td width="160" align="left"><html:text styleId="e_date" property="endDate" maxlength="10" /></td>
+					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" id="ei_date" width="22" height="21" border="0" alt="" /></a></td>
 				</tr>
+				<script type="text/javascript">
+    				Calendar.setup({
+				        inputField     :    "s_date",     // id of the input field
+  			            ifFormat       :    "%d/%m/%Y",       // format of the input field
+				        button         :    "si_date",  // trigger for the calendar (button ID)
+        			    showsTime      :    false,
+				        singleClick    :    true
+				    });
+				</script>
+				<script type="text/javascript">
+    				Calendar.setup({
+				        inputField     :    "e_date",     // id of the input field
+  			            ifFormat       :    "%d/%m/%Y",       // format of the input field
+				        button         :    "ei_date",  // trigger for the calendar (button ID)
+        			    showsTime      :    false,
+				        singleClick    :    true
+				    });
+				</script>
 				<tr>
 					<td width="150" align="left">Uso de token</td>
 					<td colspan="6" align="left">
@@ -356,13 +378,31 @@ function submitForm(hiddenValue){
 				</tr>
 				<tr>
 					<td width="150" align="left">Fecha de Apertura</td>
-					<td width="160" align="left"><html:text property="startDate" maxlength="10" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(survey.getStartDate().getTime()) %>" /></td>
-					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
+					<td width="160" align="left"><html:text styleId="s_date" property="startDate" maxlength="10" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(survey.getStartDate().getTime()) %>" /></td>
+					<td width="25"><a href="#"><img id="si_date" src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
 					<td width="30" align="left">&nbsp;</td>
 					<td width="150" align="left">Fecha de Cierre</td>
-					<td width="160" align="left"><html:text property="endDate" maxlength="10" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(survey.getFinishDate().getTime()) %>" /></td>
-					<td width="25"><a href="#"><img src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
+					<td width="160" align="left"><html:text styleId="e_date" property="endDate" maxlength="10" value="<%= new SimpleDateFormat("dd/MM/yyyy").format(survey.getFinishDate().getTime()) %>" /></td>
+					<td width="25"><a href="#"><img id="ei_date" src="../img/calendar_icon.gif" width="22" height="21" border="0" alt="" /></a></td>
 				</tr>
+				<script type="text/javascript">
+    				Calendar.setup({
+				        inputField     :    "s_date",     // id of the input field
+  			            ifFormat       :    "%d/%m/%Y",       // format of the input field
+				        button         :    "si_date",  // trigger for the calendar (button ID)
+        			    showsTime      :    false,
+				        singleClick    :    true
+				    });
+				</script>
+				<script type="text/javascript">
+    				Calendar.setup({
+				        inputField     :    "e_date",     // id of the input field
+  			            ifFormat       :    "%d/%m/%Y",       // format of the input field
+				        button         :    "ei_date",  // trigger for the calendar (button ID)
+        			    showsTime      :    false,
+				        singleClick    :    true
+				    });
+				</script>
 				<tr>
 					<td width="150" align="left">Agregar Cuota</td>
 					<td colspan="6" align="left">
