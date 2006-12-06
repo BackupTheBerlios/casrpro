@@ -9,6 +9,11 @@
   <tr>
 	<td colspan="2"><hr size="3" width="675" color="#4B4E51" noshade></td>
   </tr>
+  <c:if test="${!empty question.image}" >
+  <tr>
+	<td colspan="2"><img src="../img/${ question.image }" width="40" height="40" border="0" /></td>
+  </tr>
+  </c:if>
   <tr>
    <td class="question" colspan="2">${ question.description }</td>
   </tr>

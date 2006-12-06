@@ -43,10 +43,10 @@ function isValidForm(isSubmit){
 						total += parseInt(elem.value,10);
 						var valName = tname + "validationType";
 						if(document.forms[0].elements[valName].value=='individual'){
-							var max = document.forms[0].elements[tname + "max"].value;
-							var min = document.forms[0].elements[tname + "min"].value;
+							var max = parseInt(document.forms[0].elements[tname + "max"].value, 10);
+							var min = parseInt(document.forms[0].elements[tname + "min"].value, 10);
 							if(elem.value>max || elem.value<min){
-								alert("Debe ingresar un valor menor a " + max + " y mayor a " + min);
+								alert("Debe ingresar un valor menor o igual a " + max + " y mayor o igual a " + min);
 								return false;
 							}
 						}
