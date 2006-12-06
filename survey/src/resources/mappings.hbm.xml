@@ -211,7 +211,7 @@
         </id>
         <discriminator column="object_type" type="string"></discriminator>
         <!--TODO y los orphans ?? -->
-        <many-to-one name="question" class="Question" column="survey_id" cascade="all" insert="false" update="false">
+        <many-to-one name="question" class="Question" column="survey_id" cascade="all" insert="true" update="false">
         </many-to-one>
         <property name="ypos" type="int"></property>
         <property name="xpos" type="int"></property>
@@ -286,13 +286,13 @@
     <class name="FilledSurvey">
         <meta attribute="extends">ar.com.survey.model.AbstractFilledSurvey</meta>
         <id name="id" type="long" access="field" unsaved-value="0">
-            <meta attribute="scope-set"></meta>
-            <meta attribute="scope-get"></meta>
+            <!-- <meta attribute="scope-set"></meta>
+            <meta attribute="scope-get"></meta> -->
             <generator class="hilo" />
         </id>
         <bag name="fields" cascade="all-delete-orphan" inverse="false">
-            <meta attribute="scope-set">protected</meta>
-            <meta attribute="scope-get">protected</meta>
+            <!-- <meta attribute="scope-set">protected</meta>
+            <meta attribute="scope-get">protected</meta> -->
             <key column="question_id" not-null="true" />
             <one-to-many class="ar.com.survey.questions.fields.Field" />
         </bag>
