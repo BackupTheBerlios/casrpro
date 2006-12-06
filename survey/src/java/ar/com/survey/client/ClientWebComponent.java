@@ -374,6 +374,262 @@ public class ClientWebComponent {
 		// session.invalidate();
 	}
 	
+	/**
+	 * 
+	 * This method persists temporal answers to disk, this includes just the last section's answers
+	 * 
+	 * @param answers
+	 * @param section
+	 * @param fform
+	 */
+	public void persistSectionAnswers(FilledSurvey fs, Section section, FillForm fform, ClientSessionManager csm){
+		
+		Collection<Field> col = new ArrayList<Field>();
+		// iterate the questions and fill fields as required
+		Iterator iter = section.getQuestions().iterator();
+		int index = 1;
+		int lastString = 0;
+		while (iter.hasNext()) {
+			Question question = (Question) iter.next();
+			if (question instanceof TextAreaQuestion) {
+				TextAreaQuestion qs = (TextAreaQuestion) question;
+				String[] values = fform.getTxtAnswer();
+				Field field = FieldFactory.stringField(
+						fform.getTxtAnswer()[lastString], question);
+				lastString++;
+				col.add(field);
+			} else if (question instanceof StringQuestion) {
+				StringQuestion qs = (StringQuestion) question;
+				String[] values = fform.getTxtAnswer();
+				Field field = FieldFactory.stringField(values[lastString],
+						question);
+				lastString++;
+				col.add(field);
+			} else if (question instanceof NumberListQuestion) {
+				String[] numbers = null;
+				switch (index) {
+				case 1:
+					numbers = fform.getNumber1();
+					break;
+				case 2:
+					numbers = fform.getNumber2();
+					break;
+				case 3:
+					numbers = fform.getNumber3();
+					break;
+				case 4:
+					numbers = fform.getNumber4();
+					break;
+				default:
+					numbers = fform.getNumber5();
+					break;
+				}
+				for (int i = 0; i < numbers.length; i++) {
+					NumberField field = FieldFactory.numberField(Integer
+							.parseInt(numbers[i]), question, 0);
+					col.add(field);
+				}
+			} else if (question instanceof StringListQuestion) {
+				StringListQuestion qs = (StringListQuestion) question;
+				String selected = null;
+				switch (index) {
+				case 1:
+					selected = fform.getUnique1();
+					break;
+				case 2:
+					selected = fform.getUnique2();
+					break;
+				case 3:
+					selected = fform.getUnique3();
+					break;
+				case 4:
+					selected = fform.getUnique4();
+					break;
+				default:
+					selected = fform.getUnique5();
+					break;
+				}
+				List<String> items = qs.getItems();
+				Iterator iterator = items.iterator();
+				int innerIndex = 0;
+				while (iterator.hasNext()) {
+					String temp = (String) iterator.next();
+					BooleanField bfield = selected.equals(temp) ? FieldFactory
+							.booleanField(true, question, innerIndex)
+							: FieldFactory.booleanField(false, question,
+									innerIndex);
+					col.add(bfield);
+					innerIndex++;
+				}
+			} else if (question instanceof CheckBoxListQuestion) {
+				CheckBoxListQuestion cq = (CheckBoxListQuestion) question;
+				String[] selected = null;
+				switch (index) {
+				case 1:
+					selected = fform.getCheck1();
+					break;
+				case 2:
+					selected = fform.getCheck2();
+					break;
+				case 3:
+					selected = fform.getCheck3();
+					break;
+				case 4:
+					selected = fform.getCheck4();
+					break;
+				default:
+					selected = fform.getCheck5();
+					break;
+				}
+				int innerIndex = 0;
+				List<String> items = cq.getItems();
+				Iterator iterator = items.iterator();
+				while (iterator.hasNext()) {
+					String temp = (String) iterator.next();
+
+					boolean found = false;
+					for (int x = 0; x < selected.length; x++) {
+						if (selected[x].equals(temp))
+							found = true;
+					}
+					BooleanField bfield = found ? FieldFactory.booleanField(
+							true, question, innerIndex) : FieldFactory
+							.booleanField(false, question, innerIndex);
+					col.add(bfield);
+					innerIndex++;
+				}
+			} else if (question instanceof CheckBoxMatrixQuestion) {
+				CheckBoxMatrixQuestion cx = (CheckBoxMatrixQuestion) question;
+				Map matrix = null;
+				int items = cx.getItems().size();
+				int cols = cx.getColumnsTitles().size();
+				switch (index) {
+				case 1:
+					matrix = fform.getMatrix1();
+					break;
+				case 2:
+					matrix = fform.getMatrix2();
+					break;
+				case 3:
+					matrix = fform.getMatrix3();
+					break;
+				case 4:
+					matrix = fform.getMatrix4();
+					break;
+				default:
+					matrix = fform.getMatrix5();
+					break;
+				}
+				for (int z = 0; z < items; z++) {
+					String key = "value" + (z + 1) + "1";
+					StringField sf = FieldFactory.stringField((String) matrix
+							.get(key), question);
+					col.add(sf);
+				}
+			}
+			index++;
+		}
+		
+		// persist this section's fields to db
+		// fs.getState().equals(FilledSurveyStatus.INCOMPLETO.getCode())
+		fs = fDAO.findById(fs.getId());
+		if(fs!=null){
+			Iterator itc = col.iterator();
+			while(itc.hasNext()){
+				fs.getFields().add((Field)itc.next());
+			}
+			new CustomFilledSurveyDAO().createOrUpdate(fs);
+		}
+		else {
+			Person person = (Person) csm.getAttribute("Person");
+			Survey survey = (Survey) csm.getAttribute("CurrentClientSurvey");
+			person = new PersonDAO().findBySurrogateKey(person);
+			survey = new SurveyDAO().findBySurrogateKey(survey);
+			fs = new FilledSurvey(col, Calendar.getInstance(),
+					null,
+					FilledSurveyStatus.INCOMPLETO.getCode(), 0, person, survey);
+			Collection<FilledSurvey> cols = survey.getFilledSurveys2();
+			if(cols!=null)
+				cols.add(fs);
+			Collection<FilledSurvey> ccols = person.getFilledSurveys();
+			ccols.add(fs);
+			
+			new SurveyDAO().createOrUpdate(survey);
+			
+			new CustomFilledSurveyDAO().createNew(fs);
+		}
+		
+		csm.setAttribute("FilledSurvey", fs);
+		
+		
+	}
 	
+	public void finishSurvey(ClientSessionManager csm) {
+		Person person = (Person) csm.getAttribute("Person");
+		Survey survey = (Survey) csm.getAttribute("CurrentClientSurvey");
+		person = new PersonDAO().findBySurrogateKey(person);
+		survey = new SurveyDAO().findBySurrogateKey(survey);
+		
+		FilledSurvey fs = (FilledSurvey) csm.getAttribute("FilledSurvey");
+		fs = fDAO.findById(fs.getId());
+		fs.setState(FilledSurveyStatus.COMPLETADO.getCode());
+		fs.setFinishDate(Calendar.getInstance());
+		fDAO.createOrUpdate(fs);
+		
+		// udpdate quotas in session
+		
+		if (csm.getAttribute("quotaUpdates") != null) {
+			ArrayList<String> quotas = (ArrayList<String>) csm.getAttribute("quotaUpdates");
+			Iterator qiter = quotas.iterator();
+			while(qiter.hasNext()){
+				String quota = (String) qiter.next();
+				if(quota.indexOf("--")!=-1){
+					int pos = quota.indexOf("--");
+					int qpos = Integer.parseInt(quota.substring(1,pos))-1;
+					
+					Survey s = (Survey) csm.getAttribute("CurrentClientSurvey");
+					s = new CustomSurveyDAO().findBySurrogateKey(s);
+					Iterator<Quota> qIter = s.getQuotas().iterator();
+					int index = 0;
+					while (qIter.hasNext()) {
+						Quota q = qIter.next();
+						if (qpos == index) {
+							q.setCompleted(q.getCompleted()-1);
+							break;
+						}
+						index++;
+					}
+					
+				}
+				else {
+					int pos = quota.indexOf("++");
+					int qpos = Integer.parseInt(quota.substring(1,pos))-1;
+					
+					Survey s = (Survey) csm.getAttribute("CurrentClientSurvey");
+					s = new CustomSurveyDAO().findBySurrogateKey(s);
+					Iterator<Quota> qIter = s.getQuotas().iterator();
+					int index = 0;
+					while (qIter.hasNext()) {
+						Quota q = qIter.next();
+						if (qpos == index) {
+							q.setCompleted(q.getCompleted()+1);
+							break;
+						}
+						index++;
+					}
+				}
+			}
+			
+			csm.removeAttribute("quotaUpdates");
+			
+		}
+		
+		// remove attrs and invalidate session
+		csm.removeAttribute("CurrentClientSurvey");
+		csm.removeAttribute("Person");
+		csm.removeAttribute("CurrentClientSection");
+		csm.removeAttribute("FilledSurvey");
+		// session.invalidate();
+	}
 
 }

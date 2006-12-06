@@ -18,6 +18,7 @@ import ar.com.survey.client.ClientSessionManager;
 import ar.com.survey.client.ClientWebComponent;
 import ar.com.survey.client.IFlowManager;
 import ar.com.survey.client.dto.FlowManageDTO;
+import ar.com.survey.model.FilledSurvey;
 import ar.com.survey.model.Section;
 import ar.com.survey.web.struts.form.FillForm;
 
@@ -48,7 +49,8 @@ public class FillAction extends DispatchAction {
 			csm.setAttribute("answers", answers);
 		}
 		session.setAttribute("csm", csm);
-		request.setAttribute("CurrentClientSection", csm.getAttribute("CurrentClientSection"));
+		request.setAttribute("CurrentClientSection", csm
+				.getAttribute("CurrentClientSection"));
 		return mapp;
 	}
 
@@ -77,8 +79,14 @@ public class FillAction extends DispatchAction {
 		Section section = (Section) csm.getAttribute("CurrentClientSection");
 
 		if (!sectionsFilled.contains(section.getName())) {
-			ArrayList answers = (ArrayList) csm.getAttribute("answers");
-			cwp.addAnswersToSession(answers, section, fform);
+			// this code is deprecated, now we persist answers as they are sent
+			// to the app server
+			// ArrayList answers = (ArrayList) csm.getAttribute("answers");
+			// cwp.addAnswersToSession(answers, section, fform);
+			FilledSurvey fs = csm.containsAttribute("FilledSurvey") ? (FilledSurvey) csm
+					.getAttribute("FilledSurvey")
+					: new FilledSurvey();
+			cwp.persistSectionAnswers(fs, section, fform, csm);
 			csm.setAttribute("sectionsFilled", sectionsFilled);
 		}
 
@@ -93,7 +101,8 @@ public class FillAction extends DispatchAction {
 		fform.reset(mapping, request);
 
 		session.setAttribute("csm", csm);
-		request.setAttribute("CurrentClientSection", csm.getAttribute("CurrentClientSection"));
+		request.setAttribute("CurrentClientSection", csm
+				.getAttribute("CurrentClientSection"));
 
 		return mapping.findForward("answers");
 	}
@@ -108,11 +117,14 @@ public class FillAction extends DispatchAction {
 		HttpSession session = request.getSession();
 		ClientSessionManager csm = (ClientSessionManager) session
 				.getAttribute("csm");
-		if (forward.getName().equals("answers")){
+		if (forward.getName().equals("answers")) {
 			forward = mapping.findForward("finish");
-			request.setAttribute("CurrentClientSection", csm.getAttribute("CurrentClientSection"));
+			request.setAttribute("CurrentClientSection", csm
+					.getAttribute("CurrentClientSection"));
 		}
-		cwp.persistAnswers(csm);
+		// This new version does not use the session to persist answers
+		//cwp.persistAnswers(csm);
+		cwp.finishSurvey(csm);
 		session.setAttribute("csm", csm);
 		return forward;
 	}
@@ -124,7 +136,7 @@ public class FillAction extends DispatchAction {
 		return mapping.findForward("clientGeneralError");
 
 	}
-	
+
 	protected ActionForward unspecified(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse reponse)
 			throws Exception {

@@ -52,7 +52,6 @@ public class DummySurveyComponent implements ISurveyComponent {
 	}
 
 	public Survey getSurvey(String name) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
