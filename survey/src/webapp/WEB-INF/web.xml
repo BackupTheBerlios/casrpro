@@ -12,11 +12,23 @@
     </listener>
 
 	<filter>
+		<filter-name>Http Filter</filter-name>
+		<filter-class>
+			ar.com.survey.client.HttpFilter
+		</filter-class>
+	</filter>
+
+	<filter>
 		<filter-name>Hibernate Filter</filter-name>
 		<filter-class>
 			ar.com.survey.persistence.hibernate.HibernateThreadFilter
 		</filter-class>
 	</filter>
+
+	<filter-mapping>
+		<filter-name>Http Filter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
 
 	<filter-mapping>
 		<filter-name>Hibernate Filter</filter-name>
