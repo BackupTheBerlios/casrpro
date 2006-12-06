@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE jasperReport
+  PUBLIC "-//JasperReports//DTD Report Design//EN"
+  "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport name="Survey_Simple_Report">
+<parameter name="reportName" class="java.lang.String"/>
+<parameter name="copyright" class="java.lang.String"/>
+<pageHeader>
+     <band height="30">
+        <rectangle>
+            <reportElement x="0" y="0" width="555" height="25"/>
+            <graphicElement/>
+        </rectangle>
+          <textField>
+            <reportElement x="0" y="0" width="555" height="25"/>
+            <textElement textAlignment="Center">
+                <font fontName="Helvetica" size="18"/>
+            </textElement>
+           <textFieldExpression class="java.lang.String">$P{reportName}</textFieldExpression>
+           </textField>
+    </band>
+</pageHeader>
+ <detail>
+    <band height="150">
+      <staticText>
+        <reportElement x="180" y="0" width="200" height="20"/>
+        <text><![CDATA[$P{bodyContent}!]]></text>
+      </staticText>
+    </band>
+  </detail>
+  <pageFooter>
+  <band height="20">
+        <line>       
+        <reportElement x="0" y="0" width="555" height="0" />
+        <graphicElement pen="1Point" />
+        </line>
+          <textField>
+            <reportElement x="0" y="0" width="555" height="20"/>
+            <textElement textAlignment="Center">
+                <font fontName="Helvetica" size="10"/>
+            </textElement>
+           <textFieldExpression class="java.lang.String">$P{copyright}</textFieldExpression>
+           </textField>
+    </band>
+  </pageFooter>
+</jasperReport>
