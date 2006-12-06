@@ -10,6 +10,10 @@ public class StringField extends Field {
 	public StringField(String s) {
 		this.string = s;
 	}
+	
+	public StringField() {
+	}
+	
 	@Override
 	public String getValue() {
 		return this.string;

@@ -10,6 +10,9 @@ public class NumberField extends Field{
 	public NumberField(int v) {
 		this.number = v;
 	}
+	
+	public NumberField() {
+	}
 
 	@Override
 	public String getValue() {

@@ -10,6 +10,8 @@ public class BooleanField extends Field {
 	public BooleanField(boolean s) {
 		this.selected = s;
 	}
+	public BooleanField() {
+	}
 	public boolean isSelected() {
 		return selected;
 	}
