@@ -21,6 +21,7 @@ public class SurveyExceptionHandler extends ExceptionHandler {
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException {
 
+		exception.printStackTrace();
 		log.error(exception);
 		return super.execute(exception, exceptionConfig, mapping, form, request, response);
 	}
