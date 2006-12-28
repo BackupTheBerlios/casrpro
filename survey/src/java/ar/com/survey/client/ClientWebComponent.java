@@ -24,6 +24,7 @@ import ar.com.survey.model.enums.FilledSurveyStatus;
 import ar.com.survey.model.enums.RestrictionType;
 import ar.com.survey.model.enums.SurveyState;
 import ar.com.survey.questions.fields.BooleanField;
+import ar.com.survey.questions.fields.CheckBoxField;
 import ar.com.survey.questions.fields.Field;
 import ar.com.survey.questions.fields.FieldFactory;
 import ar.com.survey.questions.fields.NumberField;
@@ -394,7 +395,7 @@ public class ClientWebComponent {
 			if (question instanceof TextAreaQuestion) {
 				TextAreaQuestion qs = (TextAreaQuestion) question;
 				String[] values = fform.getTxtAnswer();
-				Field field = FieldFactory.stringField(
+				Field field = FieldFactory.textAreaField(
 						fform.getTxtAnswer()[lastString], question);
 				lastString++;
 				col.add(field);
@@ -427,6 +428,7 @@ public class ClientWebComponent {
 				for (int i = 0; i < numbers.length; i++) {
 					NumberField field = FieldFactory.numberField(Integer
 							.parseInt(numbers[i]), question, 0);
+					field.setYpos(i);
 					col.add(field);
 				}
 			} else if (question instanceof StringListQuestion) {
@@ -458,7 +460,10 @@ public class ClientWebComponent {
 							.booleanField(true, question, innerIndex)
 							: FieldFactory.booleanField(false, question,
 									innerIndex);
-					col.add(bfield);
+					bfield.setYpos(innerIndex);
+					bfield.setXpos(0);
+					if(bfield.isSelected())
+						col.add(bfield);
 					innerIndex++;
 				}
 			} else if (question instanceof CheckBoxListQuestion) {
@@ -492,10 +497,12 @@ public class ClientWebComponent {
 						if (selected[x].equals(temp))
 							found = true;
 					}
-					BooleanField bfield = found ? FieldFactory.booleanField(
+					CheckBoxField cfield = found ? FieldFactory.checkBoxField(
 							true, question, innerIndex) : FieldFactory
-							.booleanField(false, question, innerIndex);
-					col.add(bfield);
+							.checkBoxField(false, question, innerIndex);
+					cfield.setYpos(innerIndex);
+					cfield.setXpos(0);
+					col.add(cfield);
 					innerIndex++;
 				}
 			} else if (question instanceof CheckBoxMatrixQuestion) {
@@ -522,9 +529,12 @@ public class ClientWebComponent {
 				}
 				for (int z = 0; z < items; z++) {
 					String key = "value" + (z + 1) + "1";
-					StringField sf = FieldFactory.stringField((String) matrix
-							.get(key), question);
-					col.add(sf);
+					String temp = (String) matrix.get(key);
+					String tempKey = "value" + (z+1);
+					int x = Integer.parseInt(temp.substring(temp.indexOf(tempKey)+tempKey.length()));
+					x--;
+					BooleanField bf = FieldFactory.booleanField(true, question, x, z);					
+					col.add(bf);
 				}
 			}
 			index++;

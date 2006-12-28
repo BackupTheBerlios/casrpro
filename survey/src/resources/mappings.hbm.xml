@@ -225,6 +225,12 @@
         <subclass name="ar.com.survey.questions.fields.BooleanField" discriminator-value="RadioField">
             <property name="selected" type="boolean"/>
         </subclass>
+        <subclass name="ar.com.survey.questions.fields.CheckBoxField" discriminator-value="CheckBoxField">
+            <property name="selected" type="boolean"/>
+        </subclass>
+        <subclass name="ar.com.survey.questions.fields.TextAreaField" discriminator-value="TextAreaField">
+            <property name="string" type="text"/>
+        </subclass>
     </class>
     <class name="Person">
         <meta attribute="class-code">

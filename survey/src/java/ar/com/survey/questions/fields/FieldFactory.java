@@ -6,7 +6,7 @@ public class FieldFactory {
 
 	private FieldFactory() {
 	}
-
+	
 	public static BooleanField booleanField(boolean value, Question q) {
 		return booleanField(value,q,0,0);
 	}
@@ -15,6 +15,20 @@ public class FieldFactory {
 	}
 	public static BooleanField booleanField(boolean value, Question q, int x, int y) {
 		BooleanField field = new BooleanField(value);
+		field.setQuestion(q);
+		field.setXpos(x);
+		field.setYpos(y);
+		return field;
+	}
+	
+	public static CheckBoxField checkBoxField(boolean value, Question q) {
+		return checkBoxField(value,q,0,0);
+	}
+	public static CheckBoxField checkBoxField(boolean value, Question q, int x) {
+		return checkBoxField(value,q,x,0);
+	}
+	public static CheckBoxField checkBoxField(boolean value, Question q, int x, int y) {
+		CheckBoxField field = new CheckBoxField(value);
 		field.setQuestion(q);
 		field.setXpos(x);
 		field.setYpos(y);
@@ -50,6 +64,19 @@ public class FieldFactory {
 		return field;
 	}
 
+	public static TextAreaField textAreaField(String value, Question q) {
+		return textAreaField(value,q,0,0);
+	}
+	public static TextAreaField textAreaField(String value, Question q, int x) {
+		return textAreaField(value,q,x,0);
+	}
+	public static TextAreaField textAreaField(String value, Question q, int x, int y) {
+		TextAreaField field = new TextAreaField(value);
+		field.setQuestion(q);
+		field.setXpos(x);
+		field.setYpos(y);
+		return field;
+	}
 
 
 }
